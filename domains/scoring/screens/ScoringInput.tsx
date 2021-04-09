@@ -1,26 +1,47 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-paper'
+import {FlatList, StyleSheet, View} from 'react-native';
+
 import ErrorView from "../../../components/ErrorView";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useDispatch} from "react-redux";
+import Scoring from "../model/scoring";
+import ScoringPlayer from "./components/ScoringPlayer";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {Text} from "react-native-paper";
 
 const ScoringInput = ({navigation}) => {
-    const [errorMsg, setErrorMsg] = useState('')
+    const dispatch = useDispatch();
+    const keys : Array<string> = ["round", "bonus", "egg", "food", "nectar", "bird", "card"]
 
     return (
-        <View style={styles.main}>
-            <Text>Wertung des Spiels</Text>
-            <ErrorView errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
-        </View>
+        <SafeAreaView style={styles.main}>
+            <FlatList
+                data={keys}
+                keyExtractor={(x, i) => i.toString()}
+                renderItem={({ item }) => {
+                    return (
+                        <View style={styles.pointGoals}>
+                            <Text>{item}</Text>
+                        </View>
+                    )
+                }}
+            />
+            <ScoringPlayer keys={keys}/>
+        </SafeAreaView>
     )
 }
+
+
 
 
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: "row"
+    },
+    pointGoals: {
+        padding: 10,
+        borderWidth: 1
     }
 })
 
