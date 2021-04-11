@@ -1,47 +1,65 @@
 import React, {useState} from 'react';
-import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
-import {Text} from 'react-native-paper'
+import {FlatList, StyleSheet, View} from 'react-native';
+import {HelperText, Text, TextInput} from 'react-native-paper'
 import ErrorView from "../../../../components/ErrorView";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch} from "react-redux";
-import Scoring from "../../model/scoring";
-import {Item} from "react-native-paper/lib/typescript/components/List/List";
+import ScoringField from "../../model/scoringField";
+import {INITIAL_SCORING_FIELDS} from "../../model/INITIAL_SCORING_FIELDS";
+import helpers from "../../../../constants/Functions";
 
 type Props = {
-    keys: Array<string>
+
 };
 
-const ScoringPlayer = ({ keys }: Props) => {
-
-    const initialPoints : Map<string, number> = new Map()
-    keys.forEach((key: string) => {
-        initialPoints.set(key, 0)
-    })
-
-    const initialValidators : Map<string, boolean> = new Map()
-    keys.forEach((key: string) => {
-        initialValidators.set(key, true)
-    })
-
-
+const ScoringPlayer = ({ }: Props) => {
 
     const dispatch = useDispatch();
     const [errorMsg, setErrorMsg] = useState('')
-    const [points, setPoints] = useState<Map<string, number>>(initialPoints)
-    const [validators, setValidators] = useState<Map<string, boolean>>(initialValidators)
+    const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS)
 
+    const setOneField = (fieldKey: string, newValue: string) => {
+        const updatedFieldIndex = scoringFields.findIndex(field => field.key === fieldKey)
+        const updatedField = new ScoringField(
+            fieldKey,
+            newValue,
+            helpers.isNumber(newValue)
+        )
 
-//Array.from(points.keys())
+        const updatedFields = [...scoringFields]
+        updatedFields[updatedFieldIndex] = updatedField
+
+        setScoringFields(updatedFields)
+    }
+
     return (
         <View style={styles.main}>
 
             <FlatList
-                data={keys}
+                data={scoringFields}
                 keyExtractor={(x, i) => i.toString()}
-                renderItem={({ item }) => {
+                initialNumToRender={7}
+                scrollEnabled={false}
+                renderItem={({ item }: { item: ScoringField }) => {
                     return (
-                        <View style={styles.pointGoals}>
-                            <Text>{item}</Text>
+                        <View key={item.key} style={styles.pointGoals}>
+                            <TextInput
+                                style={styles.textInput}
+                                value={item.value}
+                                onChangeText={input => setOneField(item.key, input)}
+                                onFocus={() => {
+                                    if(item.value === "0"){
+                                        setOneField(item.key, "")
+                                    }
+                                }}
+                                onEndEditing={() => {
+                                    if(item.value === ""){
+                                        setOneField(item.key, "0")
+                                    }
+                                }}
+                                keyboardType={"decimal-pad"}
+                                error={!item.isValid}
+                            />
                         </View>
                     )
                 }}
@@ -62,6 +80,9 @@ const styles = StyleSheet.create({
     pointGoals: {
         padding: 10,
         borderWidth: 1
+    },
+    textInput: {
+        height: 100
     }
 })
 
