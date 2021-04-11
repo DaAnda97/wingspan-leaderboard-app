@@ -21,29 +21,22 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
     // methods
     const setOneField = (fieldKey: string, newValue: string) => {
         const updatedFieldIndex = scoringFields.findIndex(field => field.key === fieldKey)
+        const isNumber = helpers.isNumber(newValue)
+
         const updatedField = new ScoringField(
             fieldKey,
             newValue,
-            helpers.isNumber(newValue)
+            isNumber ? parseInt(newValue) : 0,
+            isNumber
         )
 
         const updatedFields = [...scoringFields]
         updatedFields[updatedFieldIndex] = updatedField
 
-        updateTotalScore()
+        setTotalScore(updatedFields.reduce((sum, {intValue}) => sum + intValue, 0))
         setScoringFields(updatedFields)
     }
 
-    const updateTotalScore = () => {
-        if (!Array.from(scoringFields.map(field => field.isValid)).includes(false)) {
-            const totalScore : number = scoringFields
-                .map(field => field.value)
-                .map(value => Number.parseInt(value))
-                .reduce((sum, current) => sum + current, 0)
-
-            setTotalScore(totalScore)
-        }
-    }
 
     return (
         <View style={styles.categoryContainer}>
@@ -72,9 +65,9 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
                                 error={!scoringField.isValid}
                             />
                             {!scoringField.isValid &&
-                                <HelperText style={styles.helperText} type={scoringField.isValid ? "info" : "error"}>
-                                    Keine Zahl
-                                </HelperText>
+                            <HelperText style={styles.helperText} type={scoringField.isValid ? "info" : "error"}>
+                                Keine Zahl
+                            </HelperText>
                             }
                         </View>
                     )
@@ -101,7 +94,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         height: 40,
     },
-    playerText : {
+    playerText: {
         color: Colors.primary
     },
     verticalCell: {
