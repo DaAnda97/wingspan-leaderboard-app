@@ -5,15 +5,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useDispatch, useSelector} from "react-redux";
 import ScoringPlayer from "./components/ScoringPlayer";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {IconButton, Text} from "react-native-paper";
-import {SCORING_INPUT_KEYS} from "../model/INITIAL_SCORING_FIELDS";
+import {Divider, IconButton, Subheading, Text, Title} from "react-native-paper";
+import {SCORING_FIELD_NAMES} from "../model/SCORING_CONSTANTS";
 import Colors from "../../../constants/Colors";
 import Player from "../../player/model/player";
 import SelectPlayers from "./components/SelectPlayers";
+import ScoringFieldName from "../model/scoringFieldName";
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch();
-    const keys = SCORING_INPUT_KEYS
+    const names = SCORING_FIELD_NAMES
 
     const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(false)
     const [players, setPlayers] = useState<Array<Player>>([])
@@ -22,20 +23,25 @@ const ScoringInput = ({navigation}) => {
         <SafeAreaView style={styles.main}>
             <ScrollView>
                 <View style={styles.scrollView}>
+
                     <View style={styles.categoryContainer}>
                         <View style={styles.playerRow}>
                             <Text> </Text>
                         </View>
                         {
-                            keys.map(( key:string ) => {
+                            names.map(( name: ScoringFieldName ) => {
                                 return(
-                                    <View key={key} style={styles.verticalCell}>
-                                        <Text style={styles.textStyle}>{key}</Text>
+                                    <View key={name.key} style={styles.verticalCell}>
+                                        <Text style={styles.textStyle}>{name.name}</Text>
                                     </View>
                                 )
                             })
                         }
+                        <View style={{...styles.verticalCell, borderTopWidth: 0.5, marginTop: 10}}>
+                            <Subheading>GESAMT:</Subheading>
+                        </View>
                     </View>
+
 
                     {
                         players.map( (player : Player) => {
@@ -51,6 +57,7 @@ const ScoringInput = ({navigation}) => {
                             setIsAddPlayersShown(true)
                         }}/>
                     </View>
+
                 </View>
             </ScrollView>
 
@@ -79,15 +86,14 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     categoryContainer: {
-        flex: 1,
+        width: 95
     },
     playerRow: {
         height: 40
     },
     verticalCell: {
         minHeight: 50,
-        maxWidth: 100,
-        height: Dimensions.get("screen").height / 9,
+        height: Dimensions.get("screen").height / 10,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",

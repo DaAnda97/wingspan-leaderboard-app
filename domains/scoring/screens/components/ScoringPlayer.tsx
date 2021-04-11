@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import {HelperText, Subheading, Text, TextInput} from 'react-native-paper'
+import {Divider, HelperText, Subheading, Text, TextInput, Title} from 'react-native-paper'
 import ScoringField from "../../model/scoringField";
-import {INITIAL_SCORING_FIELDS} from "../../model/INITIAL_SCORING_FIELDS";
+import {INITIAL_SCORING_FIELDS} from "../../model/SCORING_CONSTANTS";
 import helpers from "../../../../constants/Functions";
 import Colors from "../../../../constants/Colors";
 
@@ -14,6 +14,11 @@ type Props = {
 const ScoringPlayer = ({playerId, playerName}: Props) => {
     const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS)
 
+    // states
+    const [totalScore, setTotalScore] = useState<number>(0)
+
+
+    // methods
     const setOneField = (fieldKey: string, newValue: string) => {
         const updatedFieldIndex = scoringFields.findIndex(field => field.key === fieldKey)
         const updatedField = new ScoringField(
@@ -25,7 +30,19 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
         const updatedFields = [...scoringFields]
         updatedFields[updatedFieldIndex] = updatedField
 
+        updateTotalScore()
         setScoringFields(updatedFields)
+    }
+
+    const updateTotalScore = () => {
+        if (!Array.from(scoringFields.map(field => field.isValid)).includes(false)) {
+            const totalScore : number = scoringFields
+                .map(field => field.value)
+                .map(value => Number.parseInt(value))
+                .reduce((sum, current) => sum + current, 0)
+
+            setTotalScore(totalScore)
+        }
     }
 
     return (
@@ -63,6 +80,12 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
                     )
                 })
             }
+            <View style={styles.scoreCell}>
+                <Title>
+                    {totalScore}
+                </Title>
+            </View>
+
         </View>
     )
 }
@@ -83,7 +106,7 @@ const styles = StyleSheet.create({
     },
     verticalCell: {
         minHeight: 50,
-        height: Dimensions.get("screen").height / 9,
+        height: Dimensions.get("screen").height / 10,
     },
     textInput: {
         flex: 1,
@@ -94,7 +117,16 @@ const styles = StyleSheet.create({
     },
     helperText: {
         alignSelf: "center",
-    }
+    },
+    scoreCell: {
+        minHeight: 50,
+        height: Dimensions.get("screen").height / 10,
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        borderTopWidth: 0.5,
+        marginTop: 10
+    },
 })
 
 export default ScoringPlayer

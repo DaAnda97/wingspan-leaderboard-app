@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Dimensions, Platform, StyleSheet, View} from 'react-native';
 import {Button, Checkbox, Dialog, Paragraph, Portal} from "react-native-paper";
 import Colors from "../../../../constants/Colors";
 import Player from "../../../player/model/player";
@@ -19,17 +19,20 @@ type Props = {
 const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPlayers}: Props) => {
     const allPlayer = useSelector((state: RootState) => state.players.allPlayer)
 
+    // initial
     let initialCheckablePlayers: Map<string, boolean> = new Map()
     allPlayer.forEach(player => {
         initialCheckablePlayers.set(player.id, players.includes(player))
     })
 
-
+    // states
     const [checkablePlayers, setCheckablePlayers] = useState<Map<string, boolean>>(initialCheckablePlayers)
 
+    // methods
     const setOneCheckablePlayer = (playerId: string, updatedIsChecked: boolean) => {
         const updatedCheckablePlayers = new Map(checkablePlayers)
         updatedCheckablePlayers.set(playerId, updatedIsChecked)
+
 
         setCheckablePlayers(updatedCheckablePlayers)
     }
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
     verticalCentered: {
         flexDirection: 'row',
         alignItems: 'center',
-    }
+    },
 })
 
 export default SelectPlayers

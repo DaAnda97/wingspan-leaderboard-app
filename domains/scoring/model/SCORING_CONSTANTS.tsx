@@ -1,6 +1,17 @@
 import ScoringField from "./scoringField";
+import ScoringFieldName from "./scoringFieldName";
 
 export const SCORING_INPUT_KEYS : Array<string> = ["round", "bonus", "egg", "food", "nectar", "bird", "card"]
+
+export const SCORING_FIELD_NAMES : Array<ScoringFieldName> = [
+    new ScoringFieldName("round", "Rundenzeile"),
+    new ScoringFieldName("bonus", "Bonuskarten"),
+    new ScoringFieldName("egg", "Eier auf Vögel"),
+    new ScoringFieldName("food", "gelagertes Futter"),
+    new ScoringFieldName("nectar", "erspielter Nektar"),
+    new ScoringFieldName("bird", "Vogelpunkte"),
+    new ScoringFieldName("card", "Karten unter Vögeln")
+];
 
 export const INITIAL_SCORING_FIELDS : Array<ScoringField> = [
     new ScoringField(
@@ -38,4 +49,4 @@ export const INITIAL_SCORING_FIELDS : Array<ScoringField> = [
         "0",
         true
     ),
-]
+];
