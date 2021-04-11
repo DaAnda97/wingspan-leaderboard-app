@@ -6,6 +6,7 @@ import Player from "../../../player/model/player";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../main/store/RootReducer";
 import TouchableComponent from "../../../../components/TouchableComponent";
+import helpers from "../../../../constants/Functions";
 
 type Props = {
     isAddPlayersShown: boolean
@@ -23,6 +24,7 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPla
         initialCheckablePlayers.set(player.id, players.includes(player))
     })
 
+
     const [checkablePlayers, setCheckablePlayers] = useState<Map<string, boolean>>(initialCheckablePlayers)
 
     const setOneCheckablePlayer = (playerId: string, updatedIsChecked: boolean) => {
@@ -30,6 +32,19 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPla
         updatedCheckablePlayers.set(playerId, updatedIsChecked)
 
         setCheckablePlayers(updatedCheckablePlayers)
+    }
+
+    const onSubmit = () => {
+        let updatedPlayers : Array<Player> = []
+        checkablePlayers.forEach((isChecked: boolean, id:string) => {
+            if(isChecked){
+                const playerToAdd : Player = allPlayer.find(player => player.id === id) ?? helpers.throwError("Error in Player id")
+                updatedPlayers = [...updatedPlayers, playerToAdd]
+            }
+        })
+
+        setPlayers(updatedPlayers)
+        setIsAddPlayersShown(false)
     }
 
 
@@ -43,14 +58,14 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPla
                             allPlayer.map((player: Player) => {
                                     return (
                                         <TouchableComponent key={player.id} style={styles.touchableContainer}
-                                                            onPress={() => setOneCheckablePlayer(player.name, !checkablePlayers.get(player.id))} >
+                                                            onPress={() => setOneCheckablePlayer(player.id, !checkablePlayers.get(player.id))} >
                                             <View style={styles.verticalCentered}>
                                                 <Paragraph>{player.name}</Paragraph>
                                             </View>
                                             <Checkbox.Android
                                                 status={checkablePlayers.get(player.id) ? 'checked' : 'unchecked'}
                                                 onPress={() => {
-                                                    setOneCheckablePlayer(player.name, !checkablePlayers.get(player.id));
+                                                    setOneCheckablePlayer(player.id, !checkablePlayers.get(player.id));
                                                 }}
                                             />
                                         </TouchableComponent>
@@ -63,7 +78,7 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPla
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button onPress={() => setIsAddPlayersShown(false)}>Abbrechen</Button>
-                    <Button color={Colors.primary} onPress={() => setPlayers([])}>Bestätigen</Button>
+                    <Button color={Colors.primary} onPress={onSubmit}>Bestätigen</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>

@@ -10,7 +10,6 @@ import {SCORING_INPUT_KEYS} from "../model/INITIAL_SCORING_FIELDS";
 import Colors from "../../../constants/Colors";
 import Player from "../../player/model/player";
 import SelectPlayers from "./components/SelectPlayers";
-import {RootState} from "../../main/store/RootReducer";
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch();
@@ -38,7 +37,14 @@ const ScoringInput = ({navigation}) => {
                         }
                     </View>
 
-                    <ScoringPlayer/>
+                    {
+                        players.map( (player : Player) => {
+                            return (
+                                <ScoringPlayer key={player.id} playerId={player.id} playerName={player.name}/>
+                            )
+                        })
+                    }
+
 
                     <View>
                         <IconButton icon={"account-multiple-plus"} color={Colors.primary} onPress={() => {
@@ -80,6 +86,7 @@ const styles = StyleSheet.create({
     },
     verticalCell: {
         minHeight: 50,
+        maxWidth: 100,
         height: Dimensions.get("screen").height / 9,
         flex: 1,
         alignItems: "center",

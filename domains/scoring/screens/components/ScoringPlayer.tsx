@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
-import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import {HelperText, Subheading, Text, TextInput} from 'react-native-paper'
 import ScoringField from "../../model/scoringField";
 import {INITIAL_SCORING_FIELDS} from "../../model/INITIAL_SCORING_FIELDS";
 import helpers from "../../../../constants/Functions";
 import Colors from "../../../../constants/Colors";
 
-type Props = {};
+type Props = {
+    playerId: string,
+    playerName: string
+};
 
-const ScoringPlayer = ({}: Props) => {
+const ScoringPlayer = ({playerId, playerName}: Props) => {
     const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS)
 
     const setOneField = (fieldKey: string, newValue: string) => {
@@ -28,7 +31,7 @@ const ScoringPlayer = ({}: Props) => {
     return (
         <View style={styles.categoryContainer}>
             <View style={styles.playerRow}>
-                <Subheading style={styles.playerText}>Spieler 1</Subheading>
+                <Subheading style={styles.playerText}>{playerName}</Subheading>
             </View>
             {
                 scoringFields.map((scoringField: ScoringField) => {
