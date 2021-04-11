@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {Dimensions, FlatList, ScrollView, StyleSheet, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch} from "react-redux";
@@ -16,18 +16,21 @@ const ScoringInput = ({navigation}) => {
         <SafeAreaView style={styles.main}>
             <ScrollView>
                 <View style={styles.scrollView}>
-                    <FlatList
-                        data={keys}
-                        scrollEnabled={false}
-                        keyExtractor={(x, i) => i.toString()}
-                        renderItem={({ item }) => {
-                            return (
-                                <View style={styles.pointGoals}>
-                                    <Text style={styles.textStyle}>{item}</Text>
-                                </View>
-                            )
-                        }}
-                    />
+                    <View style={styles.categoryContainer}>
+                        <View style={styles.playerRow}>
+                            <Text> </Text>
+                        </View>
+                        {
+                            keys.map(( key:string ) => {
+                                return(
+                                    <View key={key} style={styles.verticalCell}>
+                                        <Text style={styles.textStyle}>{key}</Text>
+                                    </View>
+                                )
+                            })
+                        }
+                    </View>
+
                     <ScoringPlayer/>
                 </View>
             </ScrollView>
@@ -41,18 +44,25 @@ const ScoringInput = ({navigation}) => {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-
     },
     scrollView: {
         flex: 1,
         flexDirection: "row"
     },
-    pointGoals: {
-        padding: 10,
-        borderWidth: 1,
+    categoryContainer: {
+        flex: 1,
+    },
+    playerRow: {
+        height: 40
+    },
+    verticalCell: {
+        minHeight: 50,
+        height: Dimensions.get("screen").height / 9,
+        alignItems: "center",
     },
     textStyle: {
-        height: 100
+        flex: 1,
+        margin: 5
     }
 })
 

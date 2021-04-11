@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import {HelperText, Text, TextInput} from 'react-native-paper'
 import ErrorView from "../../../../components/ErrorView";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -33,39 +33,35 @@ const ScoringPlayer = ({ }: Props) => {
     }
 
     return (
-        <View style={styles.main}>
-
-            <FlatList
-                data={scoringFields}
-                keyExtractor={(x, i) => i.toString()}
-                initialNumToRender={7}
-                scrollEnabled={false}
-                renderItem={({ item }: { item: ScoringField }) => {
-                    return (
-                        <View key={item.key} style={styles.pointGoals}>
-                            <TextInput
-                                style={styles.textInput}
-                                value={item.value}
-                                onChangeText={input => setOneField(item.key, input)}
-                                onFocus={() => {
-                                    if(item.value === "0"){
-                                        setOneField(item.key, "")
-                                    }
-                                }}
-                                onEndEditing={() => {
-                                    if(item.value === ""){
-                                        setOneField(item.key, "0")
-                                    }
-                                }}
-                                keyboardType={"decimal-pad"}
-                                error={!item.isValid}
-                            />
+        <View style={styles.categoryContainer}>
+            <View style={styles.playerRow}>
+                <Text>Spieler 1</Text>
+            </View>
+            {
+                scoringFields.map(( scoringField: ScoringField ) => {
+                    return(
+                        <View key={scoringField.key} style={styles.verticalCell} >
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={scoringField.value}
+                                    onChangeText={input => setOneField(scoringField.key, input)}
+                                    onFocus={() => {
+                                        if(scoringField.value === "0"){
+                                            setOneField(scoringField.key, "")
+                                        }
+                                    }}
+                                    onEndEditing={() => {
+                                        if(scoringField.value === ""){
+                                            setOneField(scoringField.key, "0")
+                                        }
+                                    }}
+                                    keyboardType={"decimal-pad"}
+                                    error={!scoringField.isValid}
+                                />
                         </View>
                     )
-                }}
-            />
-
-            <ErrorView errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
+                })
+            }
         </View>
     )
 }
@@ -74,15 +70,19 @@ const ScoringPlayer = ({ }: Props) => {
 
 
 const styles = StyleSheet.create({
-    main: {
+    categoryContainer: {
         flex: 1,
     },
-    pointGoals: {
-        padding: 10,
-        borderWidth: 1
+    playerRow: {
+        height: 40
+    },
+    verticalCell: {
+        minHeight: 50,
+        height: Dimensions.get("screen").height / 9,
     },
     textInput: {
-        height: 100
+        flex: 1,
+        margin: 5
     }
 })
 
