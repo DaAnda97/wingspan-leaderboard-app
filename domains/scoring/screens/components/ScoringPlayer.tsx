@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {Ref, useState, createRef} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import { TextInput as RNTextInput } from 'react-native';
 import {Divider, HelperText, Subheading, Text, TextInput, Title} from 'react-native-paper'
 import ScoringField from "../../model/scoringField";
 import {INITIAL_SCORING_FIELDS} from "../../model/SCORING_CONSTANTS";
@@ -8,11 +9,28 @@ import Colors from "../../../../constants/Colors";
 
 type Props = {
     playerId: string,
-    playerName: string
+    playerName: string,
+
 };
 
 const ScoringPlayer = ({playerId, playerName}: Props) => {
     const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS)
+
+    const inputRefs = [
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+    ]
+    const goToNext = (index) => {
+        if(index < inputRefs.length-1) {
+            inputRefs[index+1].current?.focus()
+        }
+    }
+
 
     // states
     const [totalScore, setTotalScore] = useState<number>(0)
@@ -44,13 +62,18 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
                 <Subheading style={styles.playerText}>{playerName}</Subheading>
             </View>
             {
-                scoringFields.map((scoringField: ScoringField) => {
+                scoringFields.map((scoringField: ScoringField, index: number) => {
                     return (
                         <View key={scoringField.key} style={styles.verticalCell}>
                             <TextInput
                                 style={styles.textInput}
                                 value={scoringField.value}
-                                onChangeText={input => setOneField(scoringField.key, input)}
+                                error={!scoringField.isValid}
+                                keyboardType={"decimal-pad"}
+
+                                onChangeText={input =>
+                                    setOneField(scoringField.key, input)
+                                }
                                 onFocus={() => {
                                     if (scoringField.value === "0") {
                                         setOneField(scoringField.key, "")
@@ -61,8 +84,11 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
                                         setOneField(scoringField.key, "0")
                                     }
                                 }}
-                                keyboardType={"decimal-pad"}
-                                error={!scoringField.isValid}
+
+                                //focus next
+                                ref={inputRefs[index]}
+                                onSubmitEditing={() => goToNext(index)}
+                                returnKeyType={"next"}
                             />
                             {!scoringField.isValid &&
                             <HelperText style={styles.helperText} type={scoringField.isValid ? "info" : "error"}>

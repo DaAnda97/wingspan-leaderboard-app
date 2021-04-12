@@ -1,8 +1,6 @@
 import ScoringField from "./scoringField";
 import ScoringFieldName from "./scoringFieldName";
 
-export const SCORING_INPUT_KEYS : Array<string> = ["round", "bonus", "egg", "food", "nectar", "bird", "card"]
-
 export const SCORING_FIELD_NAMES : Array<ScoringFieldName> = [
     new ScoringFieldName("round", "Rundenzeile"),
     new ScoringFieldName("bonus", "Bonuskarten"),

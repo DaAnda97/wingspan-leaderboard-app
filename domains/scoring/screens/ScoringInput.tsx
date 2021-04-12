@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {Dimensions, FlatList, ScrollView, StyleSheet, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import ScoringPlayer from "./components/ScoringPlayer";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Divider, IconButton, Subheading, Text, Title} from "react-native-paper";
+import {IconButton, Subheading, Text} from "react-native-paper";
 import {SCORING_FIELD_NAMES} from "../model/SCORING_CONSTANTS";
 import Colors from "../../../constants/Colors";
 import Player from "../../player/model/player";
@@ -16,8 +16,9 @@ const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch();
     const names = SCORING_FIELD_NAMES
 
-    const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(false)
     const [players, setPlayers] = useState<Array<Player>>([])
+    const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(true)
+
 
     return (
         <SafeAreaView style={styles.main}>
