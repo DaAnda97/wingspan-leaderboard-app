@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useDispatch} from "react-redux";
 import ScoringPlayer from "./components/ScoringPlayer";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {IconButton, Subheading, Text} from "react-native-paper";
+import {IconButton, Subheading, Text, Title} from "react-native-paper";
 import {INPUT_REFS, SCORING_FIELD_NAMES} from "../model/SCORING_CONSTANTS";
 import Colors from "../../../constants/Colors";
 import Player from "../../player/model/player";
@@ -20,7 +20,7 @@ const ScoringInput = ({navigation}) => {
     const [players, setPlayers] = useState<Array<Player>>([])
     const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(true)
 
-    
+
     const goToNext = (colIndex, playerIndex) => {
         if(playerIndex < players.length-1){
             inputRefs[playerIndex + 1][colIndex].current?.focus()
@@ -33,6 +33,25 @@ const ScoringInput = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.main}>
+            <View style={styles.header}>
+                <IconButton
+                    icon={"account-multiple-plus"}
+                    color={Colors.primary}
+                    size={30}
+                    onPress={() => {
+                        setIsAddPlayersShown(true)
+                    }}
+                />
+                <Title>Spielwertung</Title>
+                <IconButton
+                    icon={"content-save"}
+                    color={Colors.primary}
+                    size={30}
+                    onPress={() => {
+
+                    }}
+                />
+            </View>
             <ScrollView>
                 <View style={styles.scrollView}>
 
@@ -70,13 +89,6 @@ const ScoringInput = ({navigation}) => {
                         })
                     }
 
-
-                    <View>
-                        <IconButton icon={"account-multiple-plus"} color={Colors.primary} onPress={() => {
-                            setIsAddPlayersShown(true)
-                        }}/>
-                    </View>
-
                 </View>
             </ScrollView>
 
@@ -98,6 +110,14 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
     },
+    header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: Colors.inactive,
+        padding: 10,
+        marginBottom: 5
+    },
     scrollView: {
         flex: 1,
         flexDirection: "row"
@@ -110,7 +130,7 @@ const styles = StyleSheet.create({
     },
     verticalCell: {
         minHeight: 50,
-        height: Dimensions.get("screen").height / 10,
+        height: Dimensions.get("screen").height / 11,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",

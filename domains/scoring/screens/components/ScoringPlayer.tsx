@@ -78,7 +78,7 @@ const ScoringPlayer = ({playerIndex, playerId, playerName, inputRefs, goToNext}:
                             />
                             {!scoringField.isValid &&
                             <HelperText style={styles.helperText} type={scoringField.isValid ? "info" : "error"}>
-                                Keine Zahl
+                                Fehler
                             </HelperText>
                             }
                         </View>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     },
     verticalCell: {
         minHeight: 50,
-        height: Dimensions.get("screen").height / 10,
+        height: Dimensions.get("screen").height / 11,
     },
     textInput: {
         flex: 1,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     scoreCell: {
         minHeight: 50,
-        height: Dimensions.get("screen").height / 10,
+        height: Dimensions.get("screen").height / 11,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
