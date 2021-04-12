@@ -1,4 +1,4 @@
-import React, {Ref, useState, createRef} from 'react';
+import React, {Ref, useState, createRef, RefObject} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import { TextInput as RNTextInput } from 'react-native';
 import {Divider, HelperText, Subheading, Text, TextInput, Title} from 'react-native-paper'
@@ -8,29 +8,15 @@ import helpers from "../../../../constants/Functions";
 import Colors from "../../../../constants/Colors";
 
 type Props = {
+    playerIndex: number,
     playerId: string,
     playerName: string,
-
+    inputRefs: RefObject<RNTextInput>[]
+    goToNext: (colIndex: number, playerIndex: number) => void
 };
 
-const ScoringPlayer = ({playerId, playerName}: Props) => {
+const ScoringPlayer = ({playerIndex, playerId, playerName, inputRefs, goToNext}: Props) => {
     const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS)
-
-    const inputRefs = [
-        React.createRef<RNTextInput>(),
-        React.createRef<RNTextInput>(),
-        React.createRef<RNTextInput>(),
-        React.createRef<RNTextInput>(),
-        React.createRef<RNTextInput>(),
-        React.createRef<RNTextInput>(),
-        React.createRef<RNTextInput>(),
-    ]
-    const goToNext = (index) => {
-        if(index < inputRefs.length-1) {
-            inputRefs[index+1].current?.focus()
-        }
-    }
-
 
     // states
     const [totalScore, setTotalScore] = useState<number>(0)
@@ -62,7 +48,7 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
                 <Subheading style={styles.playerText}>{playerName}</Subheading>
             </View>
             {
-                scoringFields.map((scoringField: ScoringField, index: number) => {
+                scoringFields.map((scoringField: ScoringField, colIndex: number) => {
                     return (
                         <View key={scoringField.key} style={styles.verticalCell}>
                             <TextInput
@@ -86,8 +72,8 @@ const ScoringPlayer = ({playerId, playerName}: Props) => {
                                 }}
 
                                 //focus next
-                                ref={inputRefs[index]}
-                                onSubmitEditing={() => goToNext(index)}
+                                ref={inputRefs[colIndex]}
+                                onSubmitEditing={() => goToNext(colIndex, playerIndex)}
                                 returnKeyType={"next"}
                             />
                             {!scoringField.isValid &&

@@ -1,5 +1,7 @@
 import ScoringField from "./scoringField";
 import ScoringFieldName from "./scoringFieldName";
+import React from "react";
+import {TextInput as RNTextInput} from "react-native";
 
 export const SCORING_FIELD_NAMES : Array<ScoringFieldName> = [
     new ScoringFieldName("round", "Rundenzeile"),
@@ -55,3 +57,51 @@ export const INITIAL_SCORING_FIELDS : Array<ScoringField> = [
         true
     ),
 ];
+
+export const INPUT_REFS = [
+    [
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+    ],
+    [
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+    ],
+    [
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+    ],
+    [
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+    ],
+    [
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+        React.createRef<RNTextInput>(),
+    ],
+]
