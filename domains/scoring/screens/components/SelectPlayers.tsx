@@ -16,32 +16,61 @@ type Props = {
     setPlayers: (selectedPlayers: Array<Player>) => void
 };
 
+type Status = "unchecked" | "indeterminate" | "checked";
+class CheckablePlayer {
+    constructor(
+        public id : string,
+        public name: string,
+        public status: Status
+    ) {
+    }
+}
+
+
 const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPlayers}: Props) => {
     const allPlayer = useSelector((state: RootState) => state.players.allPlayer)
 
+
     // initial
-    let initialCheckablePlayers: Map<string, boolean> = new Map()
+    let initialCheckablePlayers: Array<CheckablePlayer> = []
     allPlayer.forEach(player => {
-        initialCheckablePlayers.set(player.id, players.includes(player))
+        initialCheckablePlayers.push(
+            new CheckablePlayer(
+                player.id,
+                player.name,
+                players.includes(player) ? "checked" : "unchecked"))
     })
 
+
     // states
-    const [checkablePlayers, setCheckablePlayers] = useState<Map<string, boolean>>(initialCheckablePlayers)
+    const [checkablePlayers, setCheckablePlayers] = useState<Array<CheckablePlayer>>(initialCheckablePlayers)
+
 
     // methods
-    const setOneCheckablePlayer = (playerId: string, updatedIsChecked: boolean) => {
-        const updatedCheckablePlayers = new Map(checkablePlayers)
-        updatedCheckablePlayers.set(playerId, updatedIsChecked)
+    const setOneCheckablePlayer = (playerId: string) => {
+        const checkedPlayersSum = checkablePlayers.reduce((sum, {status}) => sum + (status === "checked" ? 1 : 0), 0)
+        const updatedIndex = checkablePlayers.findIndex(checkablePlayer => checkablePlayer.id === playerId)
 
+        if(checkedPlayersSum < 5 || (checkedPlayersSum == 5 && checkablePlayers[updatedIndex].status === "checked")){
+            const updatedCheckablePlayer = new CheckablePlayer(
+                playerId,
+                checkablePlayers[updatedIndex].name,
+                checkablePlayers[updatedIndex].status === "checked" ? "unchecked" : "checked"
+            )
 
-        setCheckablePlayers(updatedCheckablePlayers)
+            const updatedCheckablePlayers = [...checkablePlayers]
+            updatedCheckablePlayers[updatedIndex] = updatedCheckablePlayer
+
+            setCheckablePlayers(updatedCheckablePlayers)
+        }
     }
 
     const onSubmit = () => {
         let updatedPlayers : Array<Player> = []
-        checkablePlayers.forEach((isChecked: boolean, id:string) => {
-            if(isChecked){
-                const playerToAdd : Player = allPlayer.find(player => player.id === id) ?? helpers.throwError("Error in Player id")
+        checkablePlayers.forEach( (checkablePlayer : CheckablePlayer) => {
+            if(checkablePlayer.status === "checked"){
+                const playerToAdd : Player = allPlayer.find(player => player.id === checkablePlayer.id)
+                    ?? helpers.throwError("Error in Player id")
                 updatedPlayers = [...updatedPlayers, playerToAdd]
             }
         })
@@ -58,18 +87,16 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPla
                 <Dialog.Content >
                     <View style={styles.content}>
                         {
-                            allPlayer.map((player: Player) => {
+                            checkablePlayers.map((player: CheckablePlayer) => {
                                     return (
                                         <TouchableComponent key={player.id} style={styles.touchableContainer}
-                                                            onPress={() => setOneCheckablePlayer(player.id, !checkablePlayers.get(player.id))} >
+                                                            onPress={() => setOneCheckablePlayer(player.id)}>
                                             <View style={styles.verticalCentered}>
                                                 <Paragraph>{player.name}</Paragraph>
                                             </View>
                                             <Checkbox.Android
-                                                status={checkablePlayers.get(player.id) ? 'checked' : 'unchecked'}
-                                                onPress={() => {
-                                                    setOneCheckablePlayer(player.id, !checkablePlayers.get(player.id));
-                                                }}
+                                                status={player.status}
+                                                onPress={() => {setOneCheckablePlayer(player.id)}}
                                             />
                                         </TouchableComponent>
                                     )
