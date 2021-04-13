@@ -3,6 +3,7 @@ import Scoring from "../domains/scoring/model/scoring";
 const SCORES = [
     new Scoring(
         "s1",
+        "ss1",
         "p1",
         10,
         5,

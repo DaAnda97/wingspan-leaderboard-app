@@ -1,6 +1,7 @@
 class Scoring {
     constructor(
         public id: string,
+        public scoringSheetId: string,
         public playerId: string,
         public roundPoints: number,
         public bonusPoints: number,

@@ -19,6 +19,7 @@ const ScoringInput = ({navigation}) => {
 
     const [players, setPlayers] = useState<Array<Player>>([])
     const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(true)
+    const [scoringSheetId] = useState(Math.random().toString(36).substring(2))
 
 
     const goToNext = (colIndex, playerIndex) => {
@@ -52,13 +53,29 @@ const ScoringInput = ({navigation}) => {
                     }}
                 />
             </View>
+
+            <View style={styles.nameView}>
+                <View style={styles.categoryContainer}>
+                    <Text> </Text>
+                </View>
+                {
+                    players.map((player: Player) => {
+                        return (
+                            <View key={player.id} style={styles.playerRow}>
+                                <Subheading style={styles.playerText}>{player.name}</Subheading>
+                            </View>
+                        )
+                    })
+                }
+
+            </View>
+
+
+
             <ScrollView>
                 <View style={styles.scrollView}>
 
                     <View style={styles.categoryContainer}>
-                        <View style={styles.playerRow}>
-                            <Text> </Text>
-                        </View>
                         {
                             names.map((name: ScoringFieldName) => {
                                 return (
@@ -81,7 +98,8 @@ const ScoringInput = ({navigation}) => {
                                     key={player.id}
                                     playerIndex={playerIndex}
                                     playerId={player.id}
-                                    playerName={player.name}
+                                    scoringId={scoringSheetId + "_" + player.id}
+                                    scoringSheetId={scoringSheetId}
                                     inputRefs={inputRefs[playerIndex]}
                                     goToNext={goToNext}
                                 />
@@ -96,6 +114,7 @@ const ScoringInput = ({navigation}) => {
             <SelectPlayers
                 isAddPlayersShown={isAddPlayersShown}
                 setIsAddPlayersShown={setIsAddPlayersShown}
+                scoringSheetId={scoringSheetId}
                 players={players}
                 setPlayers={setPlayers}
             />
@@ -118,6 +137,9 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 5
     },
+    nameView: {
+        flexDirection: "row"
+    },
     scrollView: {
         flex: 1,
         flexDirection: "row"
@@ -126,7 +148,13 @@ const styles = StyleSheet.create({
         width: 95
     },
     playerRow: {
-        height: 40
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        height: 40,
+    },
+    playerText: {
+        color: Colors.primary
     },
     verticalCell: {
         minHeight: 50,

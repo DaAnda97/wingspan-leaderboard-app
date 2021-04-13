@@ -1,16 +1,18 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Dimensions, Platform, StyleSheet, View} from 'react-native';
 import {Button, Checkbox, Dialog, Paragraph, Portal} from "react-native-paper";
 import Colors from "../../../../constants/Colors";
 import Player from "../../../player/model/player";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../main/store/RootReducer";
 import TouchableComponent from "../../../../components/TouchableComponent";
 import helpers from "../../../../constants/Functions";
+import * as scoringActions from "../../store/scoringActions"
 
 type Props = {
     isAddPlayersShown: boolean
     setIsAddPlayersShown: (isShown: boolean) => void
+    scoringSheetId: string
 
     players: Array<Player>
     setPlayers: (selectedPlayers: Array<Player>) => void
@@ -27,7 +29,8 @@ class CheckablePlayer {
 }
 
 
-const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPlayers}: Props) => {
+const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId, players, setPlayers}: Props) => {
+    const dispatch = useDispatch();
     const allPlayer = useSelector((state: RootState) => state.players.allPlayer)
 
 
@@ -76,8 +79,16 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, players, setPla
         })
 
         setPlayers(updatedPlayers)
+        updatedPlayers.forEach( (player: Player) => {createNewScoringPlayer(player.id)})
+
         setIsAddPlayersShown(false)
     }
+
+    const createNewScoringPlayer = useCallback((playerId: string) => {
+        dispatch(
+            scoringActions.createScoring(scoringSheetId, playerId)
+        );
+    }, [dispatch]);
 
 
     return (

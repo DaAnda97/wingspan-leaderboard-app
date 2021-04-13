@@ -1,4 +1,4 @@
-import React, {Ref, useState, createRef, RefObject} from 'react';
+import React, {Ref, useState, createRef, RefObject, useCallback} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import { TextInput as RNTextInput } from 'react-native';
 import {Divider, HelperText, Subheading, Text, TextInput, Title} from 'react-native-paper'
@@ -6,16 +6,20 @@ import ScoringField from "../../model/scoringField";
 import {INITIAL_SCORING_FIELDS} from "../../model/SCORING_CONSTANTS";
 import helpers from "../../../../constants/Functions";
 import Colors from "../../../../constants/Colors";
+import * as scoringActions from "../../store/scoringActions";
+import {useDispatch} from "react-redux";
 
 type Props = {
     playerIndex: number,
     playerId: string,
-    playerName: string,
+    scoringId: string,
+    scoringSheetId: string,
     inputRefs: RefObject<RNTextInput>[]
     goToNext: (colIndex: number, playerIndex: number) => void
 };
 
-const ScoringPlayer = ({playerIndex, playerId, playerName, inputRefs, goToNext}: Props) => {
+const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputRefs, goToNext}: Props) => {
+    const dispatch = useDispatch();
     const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS)
 
     // states
@@ -41,12 +45,26 @@ const ScoringPlayer = ({playerIndex, playerId, playerName, inputRefs, goToNext}:
         setScoringFields(updatedFields)
     }
 
+    const updateScoringPlayer = useCallback( (updatedFields : Array<ScoringField>) => {
+        dispatch(
+            scoringActions.updateScoring(
+                scoringId,
+                scoringSheetId,
+                playerId,
+                updatedFields.find(field => field.key === "round")?.intValue || 0,
+                updatedFields.find(field => field.key === "bonus")?.intValue || 0,
+                updatedFields.find(field => field.key === "egg")?.intValue || 0,
+                updatedFields.find(field => field.key === "food")?.intValue || 0,
+                updatedFields.find(field => field.key === "nectar")?.intValue || 0,
+                updatedFields.find(field => field.key === "birds")?.intValue || 0,
+                updatedFields.find(field => field.key === "card")?.intValue || 0,
+                )
+        );
+    }, [dispatch, playerId, scoringSheetId, scoringId]);
+
 
     return (
         <View style={styles.categoryContainer}>
-            <View style={styles.playerRow}>
-                <Subheading style={styles.playerText}>{playerName}</Subheading>
-            </View>
             {
                 scoringFields.map((scoringField: ScoringField, colIndex: number) => {
                     return (
@@ -105,9 +123,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         height: 40,
-    },
-    playerText: {
-        color: Colors.primary
     },
     verticalCell: {
         minHeight: 50,
