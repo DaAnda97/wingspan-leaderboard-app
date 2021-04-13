@@ -1,10 +1,8 @@
 import Scoring from "../model/scoring";
-import SCORES from "../../../data/scores";
 import {CREATE_SCORING, DELETE_SCORING, UPDATE_SCORING} from "./scoringActions";
 
 const initialState = {
-    //allScores: Array<Scoring>()
-    allScores: SCORES
+    allScores: Array<Scoring>()
 }
 
 
@@ -12,23 +10,29 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
         case CREATE_SCORING:
-            const newScoring: Scoring = new Scoring(
-                action.scoringData.scoringSheetId + "_" + action.scoringData.playerId,
-                action.scoringData.scoringSheetId,
-                action.scoringData.playerId,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-            );
+            const scoringId = action.scoringData.scoringSheetId + "_" + action.scoringData.playerId
+            const includesId = state.allScores.find(score => score.id === scoringId)
 
-            return {
-                ...state,
-                allDoings: [newScoring, ...state.allScores]
-            };
+            if (!includesId){
+                const newScoring: Scoring = new Scoring(
+                    scoringId,
+                    action.scoringData.scoringSheetId,
+                    action.scoringData.playerId,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                );
+
+                return {
+                    ...state,
+                    allScores: [newScoring, ...state.allScores]
+                };
+            }
+
 
 
         case UPDATE_SCORING:

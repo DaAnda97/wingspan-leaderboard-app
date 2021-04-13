@@ -6,9 +6,19 @@ import Colors from "./constants/Colors";
 import TabScreenNavigator from "./domains/main/navigation/TapScreenNavigator";
 import {applyMiddleware, createStore} from "redux";
 import {rootReducer} from "./domains/main/store/RootReducer";
-import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import {SafeAreaProvider} from "react-native-safe-area-context";
+import {composeWithDevTools} from 'redux-devtools-extension';
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
+let store;
+if (__DEV__) {
+    store =
+        createStore(
+            rootReducer,
+            composeWithDevTools(applyMiddleware(ReduxThunk))
+        )
+} else {
+    store = createStore(rootReducer, applyMiddleware(ReduxThunk))
+}
 
 
 const theme = {

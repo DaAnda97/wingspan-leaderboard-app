@@ -70,23 +70,34 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId,
 
     const onSubmit = () => {
         let updatedPlayers : Array<Player> = []
+
         checkablePlayers.forEach( (checkablePlayer : CheckablePlayer) => {
+            const currentPlayer : Player = allPlayer.find(player => player.id === checkablePlayer.id)
+                ?? helpers.throwError("Error in Player id")
+
             if(checkablePlayer.status === "checked"){
-                const playerToAdd : Player = allPlayer.find(player => player.id === checkablePlayer.id)
-                    ?? helpers.throwError("Error in Player id")
-                updatedPlayers = [...updatedPlayers, playerToAdd]
+                updatedPlayers = [...updatedPlayers, currentPlayer]
+                createNewScoringPlayer(currentPlayer.id)
             }
+            else if (checkablePlayer.status === "unchecked"){
+                deleteScoringPlayer(currentPlayer.id)
+            }
+
         })
 
         setPlayers(updatedPlayers)
-        updatedPlayers.forEach( (player: Player) => {createNewScoringPlayer(player.id)})
-
         setIsAddPlayersShown(false)
     }
 
     const createNewScoringPlayer = useCallback((playerId: string) => {
         dispatch(
             scoringActions.createScoring(scoringSheetId, playerId)
+        );
+    }, [dispatch]);
+
+    const deleteScoringPlayer = useCallback((playerId: string) => {
+        dispatch(
+            scoringActions.deleteScoring(scoringSheetId, playerId)
         );
     }, [dispatch]);
 

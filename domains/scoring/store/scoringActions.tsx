@@ -16,7 +16,7 @@ export const createScoring = (scoringSheetId: string, playerId: string) => {
 export const updateScoring = (id: string, scoringSheetId: string, playerId: string, roundPoints: number, bonusPoints: number,
                               eggPoints: number, foodPoints: number, nectarPoints: number, birdsPoints: number, cardPoints: number) => {
     return {
-        type: CREATE_SCORING,
+        type: UPDATE_SCORING,
         id: id,
         scoringData: {
             scoringSheetId,
@@ -32,9 +32,9 @@ export const updateScoring = (id: string, scoringSheetId: string, playerId: stri
     };
 };
 
-export const deleteScoring = id => {
+export const deleteScoring = (scoringId: string, playerId: string) => {
     return {
         type: DELETE_SCORING,
-        id: id
+        id: (scoringId + "_" + playerId)
     };
 };

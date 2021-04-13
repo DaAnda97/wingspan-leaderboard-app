@@ -35,7 +35,7 @@ const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
             fieldKey,
             newValue,
             isNumber ? parseInt(newValue) : 0,
-            isNumber
+            isNumber || newValue === ""
         )
 
         const updatedFields = [...scoringFields]
@@ -43,6 +43,7 @@ const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
 
         setTotalScore(updatedFields.reduce((sum, {intValue}) => sum + intValue, 0))
         setScoringFields(updatedFields)
+        updateScoringPlayer(updatedFields)
     }
 
     const updateScoringPlayer = useCallback( (updatedFields : Array<ScoringField>) => {
@@ -56,7 +57,7 @@ const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
                 updatedFields.find(field => field.key === "egg")?.intValue || 0,
                 updatedFields.find(field => field.key === "food")?.intValue || 0,
                 updatedFields.find(field => field.key === "nectar")?.intValue || 0,
-                updatedFields.find(field => field.key === "birds")?.intValue || 0,
+                updatedFields.find(field => field.key === "bird")?.intValue || 0,
                 updatedFields.find(field => field.key === "card")?.intValue || 0,
                 )
         );
