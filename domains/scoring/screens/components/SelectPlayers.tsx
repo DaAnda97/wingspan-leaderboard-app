@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Dimensions, Platform, StyleSheet, View} from 'react-native';
 import {Button, Checkbox, Dialog, Paragraph, Portal} from "react-native-paper";
 import Colors from "../../../../constants/Colors";
@@ -13,9 +13,6 @@ type Props = {
     isAddPlayersShown: boolean
     setIsAddPlayersShown: (isShown: boolean) => void
     scoringSheetId: string
-
-    players: Array<Player>
-    setPlayers: (selectedPlayers: Array<Player>) => void
 };
 
 type Status = "unchecked" | "indeterminate" | "checked";
@@ -29,9 +26,10 @@ class CheckablePlayer {
 }
 
 
-const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId, players, setPlayers}: Props) => {
+const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId}: Props) => {
     const dispatch = useDispatch();
     const allPlayer = useSelector((state: RootState) => state.players.allPlayer)
+    const scoresOfSheet = useSelector((state: RootState) => state.scores.allScores).filter(scoring => scoring.scoringSheetId === scoringSheetId)
 
 
     // initial
@@ -41,7 +39,8 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId,
             new CheckablePlayer(
                 player.id,
                 player.name,
-                players.includes(player) ? "checked" : "unchecked"))
+                scoresOfSheet.find(scoring => scoring.playerId === player.id) == undefined ? "unchecked" : "checked"
+            ))
     })
 
 
@@ -51,43 +50,44 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId,
 
     // methods
     const setOneCheckablePlayer = (playerId: string) => {
-        const checkedPlayersSum = checkablePlayers.reduce((sum, {status}) => sum + (status === "checked" ? 1 : 0), 0)
-        const updatedIndex = checkablePlayers.findIndex(checkablePlayer => checkablePlayer.id === playerId)
+        const checkedPlayersSum : number = checkablePlayers.reduce((sum, {status}) => sum + (status === "checked" ? 1 : 0), 0)
+        const selectedCheckablePlayer = checkablePlayers.find(checkablePlayer => checkablePlayer.id === playerId)
+                ?? helpers.throwError("Error in SelectPlayers: playerId not in checkablePlayers")
 
-        if(checkedPlayersSum < 5 || (checkedPlayersSum == 5 && checkablePlayers[updatedIndex].status === "checked")){
-            const updatedCheckablePlayer = new CheckablePlayer(
-                playerId,
-                checkablePlayers[updatedIndex].name,
-                checkablePlayers[updatedIndex].status === "checked" ? "unchecked" : "checked"
-            )
+        if(selectedCheckablePlayer.status === "checked" && checkedPlayersSum <= 5){
+            const selectedScoring = scoresOfSheet.find(scoring => scoring.scoringSheetId === scoringSheetId && scoring.playerId === playerId)
+                ?? helpers.throwError("Error in SelectPlayers: no matching scoring not in scoresOfSheet")
 
-            const updatedCheckablePlayers = [...checkablePlayers]
-            updatedCheckablePlayers[updatedIndex] = updatedCheckablePlayer
-
-            setCheckablePlayers(updatedCheckablePlayers)
+            updateCheckablePlayer(playerId, "unchecked")
+            deleteScoringPlayer(selectedScoring.id)
         }
+        else if (selectedCheckablePlayer.status === "unchecked" && checkedPlayersSum < 5){
+            updateCheckablePlayer(playerId, "checked")
+            createNewScoringPlayer(playerId)
+        }
+
+
     }
 
-    const onSubmit = () => {
-        let updatedPlayers : Array<Player> = []
+    const updateCheckablePlayer = (playerId: string, newStatus: Status) => {
+        const updatedIndex : number = checkablePlayers.findIndex(checkablePlayer => checkablePlayer.id === playerId)
 
-        checkablePlayers.forEach( (checkablePlayer : CheckablePlayer) => {
-            const currentPlayer : Player = allPlayer.find(player => player.id === checkablePlayer.id)
-                ?? helpers.throwError("Error in Player id")
+        const updatedCheckablePlayer = new CheckablePlayer(
+            playerId,
+            checkablePlayers[updatedIndex].name,
+            newStatus
+        )
 
-            if(checkablePlayer.status === "checked"){
-                updatedPlayers = [...updatedPlayers, currentPlayer]
-                createNewScoringPlayer(currentPlayer.id)
-            }
-            else if (checkablePlayer.status === "unchecked"){
-                deleteScoringPlayer(currentPlayer.id)
-            }
+        const updatedCheckablePlayers = [...checkablePlayers]
+        updatedCheckablePlayers[updatedIndex] = updatedCheckablePlayer
 
-        })
+        setCheckablePlayers(updatedCheckablePlayers)
 
-        setPlayers(updatedPlayers)
-        setIsAddPlayersShown(false)
     }
+
+
+
+
 
     const createNewScoringPlayer = useCallback((playerId: string) => {
         dispatch(
@@ -95,12 +95,30 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId,
         );
     }, [dispatch]);
 
-    const deleteScoringPlayer = useCallback((playerId: string) => {
+    const deleteScoringPlayer = useCallback((scoringId: string) => {
         dispatch(
-            scoringActions.deleteScoring(scoringSheetId, playerId)
+            scoringActions.deleteScoring(scoringId)
         );
     }, [dispatch]);
 
+    const indeterminateUnselectableFields = useCallback(() => {
+        const checkedPlayersSum : number = checkablePlayers.reduce((sum, {status}) => sum + (status === "checked" ? 1 : 0), 0)
+        if(checkedPlayersSum == 5){
+            checkablePlayers.filter(cPlayer => cPlayer.status === "unchecked")
+                .forEach(cPlayer => {updateCheckablePlayer(cPlayer.id, "indeterminate")})
+        }
+        if(checkedPlayersSum == 4){
+            checkablePlayers.filter(cPlayer => cPlayer.status === "indeterminate")
+                .forEach(cPlayer => {updateCheckablePlayer(cPlayer.id, "unchecked")})
+        }
+    }, [checkablePlayers])
+
+
+
+
+    useEffect(() => {
+        indeterminateUnselectableFields()
+    }, [indeterminateUnselectableFields])
 
     return (
         <Portal>
@@ -129,8 +147,7 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId,
 
                 </Dialog.Content>
                 <Dialog.Actions>
-                    <Button onPress={() => setIsAddPlayersShown(false)}>Abbrechen</Button>
-                    <Button color={Colors.primary} onPress={onSubmit}>Bestätigen</Button>
+                    <Button color={Colors.primary} onPress={() => setIsAddPlayersShown(false)}>OK</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>

@@ -10,33 +10,30 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
         case CREATE_SCORING:
-            const scoringId = action.scoringData.scoringSheetId + "_" + action.scoringData.playerId
-            const includesId = state.allScores.find(score => score.id === scoringId)
+            const newScoring: Scoring = new Scoring(
+                Math.random().toString(36).substring(2),
+                action.scoringData.scoringSheetId,
+                action.scoringData.playerId,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            );
 
-            if (!includesId){
-                const newScoring: Scoring = new Scoring(
-                    scoringId,
-                    action.scoringData.scoringSheetId,
-                    action.scoringData.playerId,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                );
-
-                return {
-                    ...state,
-                    allScores: [newScoring, ...state.allScores]
-                };
-            }
-
+            return {
+                ...state,
+                allScores: [...state.allScores, newScoring]
+            };
 
 
         case UPDATE_SCORING:
             const updatedScoringIndex = state.allScores.findIndex(score => score.id === action.id)
+            const totalScore = action.scoringData.roundPoints + action.scoringData.bonusPoints + action.scoringData.eggPoints
+                + action.scoringData.foodPoints + action.scoringData.nectarPoints + action.scoringData.birdsPoints + action.scoringData.cardPoints
 
             const updatedScoring: Scoring = new Scoring(
                 action.id,
@@ -48,7 +45,8 @@ export default (state = initialState, action) => {
                 action.scoringData.foodPoints,
                 action.scoringData.nectarPoints,
                 action.scoringData.birdsPoints,
-                action.scoringData.cardPoints
+                action.scoringData.cardPoints,
+                totalScore
             );
 
             const updatedScores = [...state.allScores]

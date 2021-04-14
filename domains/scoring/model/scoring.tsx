@@ -9,7 +9,8 @@ class Scoring {
         public foodPoints: number,
         public nectarPoints: number,
         public birdsPoints: number,
-        public cardPoints: number
+        public cardPoints: number,
+        public totalScore: number
     ) {
     }
 }

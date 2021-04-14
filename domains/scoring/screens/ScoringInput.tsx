@@ -2,28 +2,33 @@ import React, {useState} from 'react';
 import {Dimensions, FlatList, ScrollView, StyleSheet, TextInput as RNTextInput, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ScoringPlayer from "./components/ScoringPlayer";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {IconButton, Subheading, Text, Title} from "react-native-paper";
+import {Divider, IconButton, Subheading, Text, Title} from "react-native-paper";
 import {INPUT_REFS, SCORING_FIELD_NAMES} from "../model/SCORING_CONSTANTS";
 import Colors from "../../../constants/Colors";
-import Player from "../../player/model/player";
 import SelectPlayers from "./components/SelectPlayers";
 import ScoringFieldName from "../model/scoringFieldName";
+import {RootState} from "../../main/store/RootReducer";
+import Scoring from "../model/scoring";
+import helpers from "../../../constants/Functions";
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch();
     const names = SCORING_FIELD_NAMES
     const inputRefs = INPUT_REFS
 
-    const [players, setPlayers] = useState<Array<Player>>([])
     const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(true)
     const [scoringSheetId] = useState(Math.random().toString(36).substring(2))
 
+    const allPlayer = useSelector((state: RootState) => state.players.allPlayer)
+    const scores = useSelector((state : RootState) => state.scores.allScores)
+        .filter(scoring => scoring.scoringSheetId === scoringSheetId)
+
 
     const goToNext = (colIndex, playerIndex) => {
-        if(playerIndex < players.length-1){
+        if(playerIndex < scores.length-1){
             inputRefs[playerIndex + 1][colIndex].current?.focus()
         } else {
             if(colIndex < inputRefs[0].length-1){
@@ -56,13 +61,22 @@ const ScoringInput = ({navigation}) => {
 
             <View style={styles.nameView}>
                 <View style={styles.categoryContainer}>
-                    <Text> </Text>
+                    <Subheading> </Subheading>
+                    <View style={{...styles.verticalCell}}>
+                        <Subheading>GESAMT:</Subheading>
+                    </View>
                 </View>
                 {
-                    players.map((player: Player) => {
+                    scores.map((scoring: Scoring) => {
+                        const currentPlayer = allPlayer.find(player => player.id === scoring.playerId)
+                                    ?? helpers.throwError("Error in ScoringInput: playerId not in allPlayers")
                         return (
-                            <View key={player.id} style={styles.playerRow}>
-                                <Subheading style={styles.playerText}>{player.name}</Subheading>
+                            <View key={scoring.id} style={styles.playerRow}>
+                                <Subheading style={styles.playerText}>{currentPlayer.name}</Subheading>
+                                <View style={{...styles.verticalCell}}>
+                                    <Subheading>{scoring.totalScore}</Subheading>
+                                </View>
+
                             </View>
                         )
                     })
@@ -70,7 +84,7 @@ const ScoringInput = ({navigation}) => {
 
             </View>
 
-
+            <Divider/>
 
             <ScrollView>
                 <View style={styles.scrollView}>
@@ -85,22 +99,19 @@ const ScoringInput = ({navigation}) => {
                                 )
                             })
                         }
-                        <View style={{...styles.verticalCell, borderTopWidth: 0.5, marginTop: 10}}>
-                            <Subheading>GESAMT:</Subheading>
-                        </View>
                     </View>
 
 
                     {
-                        players.map((player: Player, playerIndex: number) => {
+                        scores.map((scoring : Scoring, index : number) => {
                             return (
                                 <ScoringPlayer
-                                    key={player.id}
-                                    playerIndex={playerIndex}
-                                    playerId={player.id}
-                                    scoringId={scoringSheetId + "_" + player.id}
+                                    key={scoring.id}
+                                    playerIndex={index}
+                                    playerId={scoring.playerId}
+                                    scoringId={scoring.id}
                                     scoringSheetId={scoringSheetId}
-                                    inputRefs={inputRefs[playerIndex]}
+                                    inputRefs={inputRefs[index]}
                                     goToNext={goToNext}
                                 />
                             )
@@ -115,8 +126,6 @@ const ScoringInput = ({navigation}) => {
                 isAddPlayersShown={isAddPlayersShown}
                 setIsAddPlayersShown={setIsAddPlayersShown}
                 scoringSheetId={scoringSheetId}
-                players={players}
-                setPlayers={setPlayers}
             />
             }
 
@@ -151,10 +160,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        height: 40,
+        minHeight: 50,
+        height: Dimensions.get("screen").height / 11,
     },
     playerText: {
-        color: Colors.primary
+        color: Colors.primary,
     },
     verticalCell: {
         minHeight: 50,

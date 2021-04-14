@@ -20,11 +20,9 @@ type Props = {
 
 const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputRefs, goToNext}: Props) => {
     const dispatch = useDispatch();
+
+    //states
     const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS)
-
-    // states
-    const [totalScore, setTotalScore] = useState<number>(0)
-
 
     // methods
     const setOneField = (fieldKey: string, newValue: string) => {
@@ -41,7 +39,6 @@ const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
         const updatedFields = [...scoringFields]
         updatedFields[updatedFieldIndex] = updatedField
 
-        setTotalScore(updatedFields.reduce((sum, {intValue}) => sum + intValue, 0))
         setScoringFields(updatedFields)
         updateScoringPlayer(updatedFields)
     }
@@ -104,11 +101,6 @@ const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
                     )
                 })
             }
-            <View style={styles.scoreCell}>
-                <Title>
-                    {totalScore}
-                </Title>
-            </View>
 
         </View>
     )
@@ -138,16 +130,7 @@ const styles = StyleSheet.create({
     },
     helperText: {
         alignSelf: "center",
-    },
-    scoreCell: {
-        minHeight: 50,
-        height: Dimensions.get("screen").height / 11,
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        borderTopWidth: 0.5,
-        marginTop: 10
-    },
+    }
 })
 
 export default ScoringPlayer
