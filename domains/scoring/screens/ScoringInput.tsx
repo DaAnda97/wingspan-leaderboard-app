@@ -12,7 +12,7 @@ import SelectPlayers from "./components/SelectPlayers";
 import ScoringFieldName from "../model/scoringFieldName";
 import {RootState} from "../../main/store/RootReducer";
 import Scoring from "../model/scoring";
-import helpers from "../../../constants/Functions";
+import NameRow from "./components/NameRow";
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch();
@@ -59,33 +59,7 @@ const ScoringInput = ({navigation}) => {
                 />
             </View>
 
-            <View style={styles.nameView}>
-                <View style={styles.categoryContainer}>
-                    <Subheading> </Subheading>
-                    {
-                        scores.length > 0 &&
-                        <View style={{...styles.verticalCell}}>
-                            <Subheading>GESAMT:</Subheading>
-                        </View>
-                    }
-                </View>
-                {
-                    scores.map((scoring: Scoring) => {
-                        const currentPlayer = allPlayer.find(player => player.id === scoring.playerId)
-                                    ?? helpers.throwError("Error in ScoringInput: playerId not in allPlayers")
-                        return (
-                            <View key={scoring.id} style={styles.playerRow}>
-                                <Subheading style={styles.playerText}>{currentPlayer.name}</Subheading>
-                                <View style={{...styles.verticalCell}}>
-                                    <Subheading>{scoring.totalScore}</Subheading>
-                                </View>
-
-                            </View>
-                        )
-                    })
-                }
-
-            </View>
+            <NameRow scores={scores} allPlayer={allPlayer}/>
 
             <Divider/>
 
@@ -125,11 +99,11 @@ const ScoringInput = ({navigation}) => {
             </ScrollView>
 
             {isAddPlayersShown &&
-            <SelectPlayers
-                isAddPlayersShown={isAddPlayersShown}
-                setIsAddPlayersShown={setIsAddPlayersShown}
-                scoringSheetId={scoringSheetId}
-            />
+                <SelectPlayers
+                    isAddPlayersShown={isAddPlayersShown}
+                    setIsAddPlayersShown={setIsAddPlayersShown}
+                    scoringSheetId={scoringSheetId}
+                />
             }
 
         </SafeAreaView>
@@ -149,25 +123,12 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 5
     },
-    nameView: {
-        flexDirection: "row"
-    },
     scrollView: {
         flex: 1,
         flexDirection: "row"
     },
     categoryContainer: {
         width: 95
-    },
-    playerRow: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: 50,
-        height: Dimensions.get("screen").height / 11,
-    },
-    playerText: {
-        color: Colors.primary,
     },
     verticalCell: {
         minHeight: 50,
