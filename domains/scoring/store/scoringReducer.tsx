@@ -1,5 +1,5 @@
 import Scoring from "../model/scoring";
-import {CREATE_SCORING, DELETE_SCORING, LOAD_SCORES_FROM_DB, UPDATE_SCORING} from "./scoringActions";
+import {CREATE_SCORING, DELETE_SCORING, UPDATE_SCORING, LOAD_SCORES_FROM_DB} from "./scoringActions";
 
 const initialState = {
     allScores: Array<Scoring>()
@@ -67,10 +67,9 @@ export default (state = initialState, action) => {
             };
 
         case LOAD_SCORES_FROM_DB:
-            console.log(action.allScores)
             return {
                 ...state,
-                allScores: action.allScores
+                allScores: action.loadedScores
             }
 
     }

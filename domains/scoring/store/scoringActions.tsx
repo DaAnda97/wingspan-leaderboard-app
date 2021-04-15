@@ -1,7 +1,7 @@
-import * as repoActions from "../repository/scoringRepository";
-import CustomError from "../../main/model/customError";
-import * as errorActions from "../../main/store/errorAction";
 import Scoring from "../model/scoring";
+import * as errorActions from "../../main/store/errorAction";
+import CustomError from "../../main/model/customError";
+import {loadAllScores} from "../repository/scoringRepository"
 
 export const CREATE_SCORING = 'CREATE_SCORING';
 export const UPDATE_SCORING = 'UPDATE_SCORING';
@@ -12,14 +12,12 @@ export const loadScoresFromDb = () => {
 
     return async dispatch => {
 
-        console.log("test")
-
-        const allScores = await repoActions.loadAllScores()
-            .catch((error : Error) =>
+        const allScores = await loadAllScores()
+            .catch((error) =>
                 errorActions.newError(new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error))))
             )
 
-        const allSavedScores = Array<Scoring>()
+        const loadedScores = Array<Scoring>()
         allScores.rows.forEach( scoring => {
             const savedScoring = new Scoring(
                 scoring.id,
@@ -35,15 +33,13 @@ export const loadScoresFromDb = () => {
                 scoring.totalScore
             )
 
-            allSavedScores.push(savedScoring)
+            loadedScores.push(savedScoring)
         })
-        return dispatch({
-            type: LOAD_SCORES_FROM_DB,
-            allScores: allSavedScores
-        })
+
+
+        dispatch({type: LOAD_SCORES_FROM_DB, loadedScores: loadedScores})
+
     }
-
-
 }
 
 export const createScoring = (scoringSheetId: string, playerId: string) => {
