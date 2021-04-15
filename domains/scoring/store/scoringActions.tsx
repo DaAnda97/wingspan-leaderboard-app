@@ -1,6 +1,3 @@
-import Scoring from "../model/scoring";
-import ScoringSheetEntity from "../model/scoringSheetEntity";
-
 export const CREATE_SCORING = 'CREATE_SCORING';
 export const UPDATE_SCORING = 'UPDATE_SCORING';
 export const DELETE_SCORING = 'DELETE_SCORING';

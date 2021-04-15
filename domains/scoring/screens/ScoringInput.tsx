@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, FlatList, ScrollView, StyleSheet, TextInput as RNTextInput, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from "react-redux";
@@ -56,7 +56,7 @@ const ScoringInput = ({navigation}) => {
                     color={Colors.primary}
                     size={30}
                     onPress={() => {
-                        //saveScores(scores)
+                        saveScores(scores)
                     }}
                 />
             </View>

@@ -20,9 +20,9 @@ const NameRow = ({scores, allPlayer}: Props) => {
                 <Subheading> </Subheading>
                 {
                     scores.length > 0 &&
-                    <View style={{...styles.verticalCell}}>
-                        <Subheading>GESAMT:</Subheading>
-                    </View>
+                        <View style={{...styles.verticalCell}}>
+                            <Subheading>GESAMT:</Subheading>
+                        </View>
                 }
             </View>
             {
@@ -30,7 +30,7 @@ const NameRow = ({scores, allPlayer}: Props) => {
                     const currentPlayer = allPlayer.find(player => player.id === scoring.playerId)
                         ?? helpers.throwError("Error in ScoringInput: playerId not in allPlayers")
                     return (
-                        <View key={scoring.id} style={styles.playerRow}>
+                        <View key={scoring.playerId} style={styles.playerRow}>
                             <Subheading style={styles.playerText}>{currentPlayer.name}</Subheading>
                             <View style={{...styles.verticalCell}}>
                                 <Subheading>{scoring.totalScore}</Subheading>
