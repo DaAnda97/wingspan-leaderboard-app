@@ -62,9 +62,12 @@ const ScoringInput = ({navigation}) => {
             <View style={styles.nameView}>
                 <View style={styles.categoryContainer}>
                     <Subheading> </Subheading>
-                    <View style={{...styles.verticalCell}}>
-                        <Subheading>GESAMT:</Subheading>
-                    </View>
+                    {
+                        scores.length > 0 &&
+                        <View style={{...styles.verticalCell}}>
+                            <Subheading>GESAMT:</Subheading>
+                        </View>
+                    }
                 </View>
                 {
                     scores.map((scoring: Scoring) => {
