@@ -56,6 +56,7 @@ const ScoringInput = ({navigation}) => {
                     color={Colors.primary}
                     size={30}
                     onPress={() => {
+                        console.log("saving")
                         saveScores(scores)
                     }}
                 />
@@ -70,9 +71,9 @@ const ScoringInput = ({navigation}) => {
 
                     <View style={styles.categoryContainer}>
                         {
-                            names.map((name: ScoringFieldName) => {
+                            names.map((name: ScoringFieldName, index: number) => {
                                 return (
-                                    <View key={name.key} style={styles.verticalCell}>
+                                    <View key={index + ""} style={styles.verticalCell}>
                                         <Text style={styles.textStyle}>{name.name}</Text>
                                     </View>
                                 )
