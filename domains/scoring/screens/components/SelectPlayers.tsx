@@ -26,51 +26,53 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId}
 
 
     // initial
-    let initialCheckablePlayers: Map<string, Status> = new Map()
-    allPlayer.forEach(player => {
-        initialCheckablePlayers.set(
-            player.id,
-            scoresOfSheet.find(scoring => scoring.playerId === player.id) == undefined ? "unchecked" : "checked"
-        )
-    })
+    const initialCheckablePlayers = useCallback(() => {
+        let initCheckablePlayers: Map<string, Status> = new Map()
+        allPlayer.forEach(player => {
+            initCheckablePlayers.set(
+                player.id,
+                scoresOfSheet.find(scoring => scoring.playerId === player.id) == undefined ? "unchecked" : "checked"
+            )
+        })
+        return initCheckablePlayers
+    }, [allPlayer, scoresOfSheet])
+
 
 
     // states
     const [checkablePlayers, setCheckablePlayers] = useState<Map<string, Status>>(initialCheckablePlayers)
     const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false)
 
-    console.log(checkablePlayers)
 
     // methods
-    const setOneCheckablePlayer = (playerId: string) => {
+    const createNewScoringPlayer = useCallback((playerId: string) => {
+        dispatch(
+            scoringActions.createScoring(scoringSheetId, playerId)
+        );
+    }, [dispatch, scoringSheetId]);
+
+    const deleteScoringPlayer = useCallback((playerId: string) => {
+        const thisScoring = scoresOfSheet.find(scoring => scoring.scoringSheetId === scoringSheetId && scoring.playerId === playerId)
+            ?? helpers.throwError(`Error in SelectPlayers: no matching scoring with sheetId: ${scoringSheetId} and playerId: ${playerId} not in scoresOfSheet: ${JSON.stringify(scoresOfSheet)}`)
+        dispatch(
+            scoringActions.deleteScoring(thisScoring.id)
+        );
+    }, [dispatch, scoresOfSheet]);
+
+
+    const setOneCheckablePlayer = useCallback((playerId: string) => {
         const updatedCheckablePlayers = new Map<string, Status>(checkablePlayers)
         if(checkablePlayers.get(playerId) === "checked" && scoresOfSheet.length <= 5){
-            const selectedScoring = scoresOfSheet.find(scoring => scoring.scoringSheetId === scoringSheetId && scoring.playerId === playerId)
-                ?? helpers.throwError("Error in SelectPlayers: no matching scoring not in scoresOfSheet")
-
             updatedCheckablePlayers.set(playerId, "unchecked")
-            deleteScoringPlayer(selectedScoring.id)
+            deleteScoringPlayer(playerId)
         }
         else if (checkablePlayers.get(playerId) === "unchecked" && scoresOfSheet.length < 5){
             updatedCheckablePlayers.set(playerId, "checked")
             createNewScoringPlayer(playerId)
         }
         setCheckablePlayers(updatedCheckablePlayers)
-    }
+    }, [checkablePlayers, scoresOfSheet, createNewScoringPlayer, deleteScoringPlayer])
 
-
-
-    const createNewScoringPlayer = useCallback((playerId: string) => {
-        dispatch(
-            scoringActions.createScoring(scoringSheetId, playerId)
-        );
-    }, [dispatch]);
-
-    const deleteScoringPlayer = useCallback((scoringId: string) => {
-        dispatch(
-            scoringActions.deleteScoring(scoringId)
-        );
-    }, [dispatch]);
 
     const indeterminateUnselectableFields = useCallback(() => {
         if(scoresOfSheet.length == 4 && isIndeterminate){
