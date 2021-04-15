@@ -8,6 +8,9 @@ import {applyMiddleware, createStore} from "redux";
 import {rootReducer} from "./domains/main/store/RootReducer";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {composeWithDevTools} from 'redux-devtools-extension';
+//import {drop} from "./constants/Database";
+
+//drop().then( () => console.log("Droped")).catch( (error: Error) => console.log(`notDroped: ${error}`))
 
 let store;
 if (__DEV__) {

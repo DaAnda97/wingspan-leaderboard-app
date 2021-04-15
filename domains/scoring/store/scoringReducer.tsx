@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
 
         case CREATE_SCORING:
             const newScoring: Scoring = new Scoring(
-                Math.random().toString(36).substring(2),
+                action.id,
                 action.scoringData.scoringSheetId,
                 action.scoringData.playerId,
                 0,

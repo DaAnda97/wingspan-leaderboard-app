@@ -14,8 +14,9 @@ import {RootState} from "../../main/store/RootReducer";
 import Scoring from "../model/scoring";
 import NameRow from "../components/NameRow";
 
+import {saveScores} from "../repository/scoringRepository"
+
 const ScoringInput = ({navigation}) => {
-    const dispatch = useDispatch();
     const names = SCORING_FIELD_NAMES
     const inputRefs = INPUT_REFS
 
@@ -23,6 +24,7 @@ const ScoringInput = ({navigation}) => {
     const [scoringSheetId] = useState(Math.random().toString(36).substring(2))
 
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers)
+        .filter(player => player.isActive)
     const scores = useSelector((state : RootState) => state.scores.allScores)
         .filter(scoring => scoring.scoringSheetId === scoringSheetId)
 
@@ -54,7 +56,7 @@ const ScoringInput = ({navigation}) => {
                     color={Colors.primary}
                     size={30}
                     onPress={() => {
-
+                        //saveScores(scores)
                     }}
                 />
             </View>

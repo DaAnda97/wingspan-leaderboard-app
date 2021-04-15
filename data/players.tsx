@@ -4,26 +4,32 @@ const PLAYERS = [
     new Player(
         "p1",
         "Andi",
+        true
     ),
     new Player(
         "p2",
         "Flo",
+        true
     ),
     new Player(
         "p3",
-        "Steffi"
+        "Steffi",
+        true
     ),
     new Player(
         "p4",
-        "Markus"
+        "Markus",
+        true
     ),
     new Player(
         "p5",
-        "Luki"
+        "Luki",
+        true
     ),
     new Player(
         "p6",
-        "Mo"
+        "Mo",
+        true
     )
 ]
 

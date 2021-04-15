@@ -34,7 +34,7 @@ const CheckablePlayers = ({allPlayer, setOneCheckablePlayer, checkablePlayers}: 
                             )
                         })
                      :
-                    <Text>Noch keine Spieler vorhanden. Lege zuerst Spieler an.</Text>
+                    <Text style={styles.defaultTextStyle}>Noch keine Spieler vorhanden. Lege zuerst Spieler an.</Text>
             }
             {
                 isAdding &&
@@ -93,7 +93,12 @@ const styles = StyleSheet.create({
     buttonStyle: {
         color: Colors.secondary,
         width: "100%"
+    },
+    defaultTextStyle: {
+        textAlign: 'center',
+        padding: 5
     }
+
 })
 
 export default CheckablePlayers

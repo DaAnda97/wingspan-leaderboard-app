@@ -17,7 +17,7 @@ type Props = {
 
 type Status = "unchecked" | "indeterminate" | "checked";
 
-const CheckablePlayer = ({player = new Player("", ""), setOneCheckablePlayer, status, setIsAdding}: Props) => {
+const CheckablePlayer = ({player = new Player("", "", true), setOneCheckablePlayer, status, setIsAdding}: Props) => {
     const dispatch = useDispatch();
     const [name, setName] = useState(player.name)
     const [isDeleteDialogShown, setIsDeleteDialogShown] = useState(false)
@@ -100,7 +100,7 @@ const CheckablePlayer = ({player = new Player("", ""), setOneCheckablePlayer, st
                 <IconButton size={23} icon={"pencil-outline"} color={Colors.secondary} onPress={() => {
                     setIsEditMode(true)
                 }}/>
-                <TouchableComponent key={player.id} style={styles.touchableContainer}
+                <TouchableComponent style={styles.touchableContainer}
                                     onPress={() => setOneCheckablePlayer(player.id)}>
                     <View style={styles.verticalCentered}>
                         <Paragraph>{player.name}</Paragraph>
