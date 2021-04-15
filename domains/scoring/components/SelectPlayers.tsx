@@ -1,14 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Dimensions, Platform, ScrollView, StyleSheet, View} from 'react-native';
-import {Button, Checkbox, Dialog, Paragraph, Portal} from "react-native-paper";
-import Colors from "../../../../constants/Colors";
-import Player from "../../../player/model/player";
+import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
+import {Button, Dialog, Portal} from "react-native-paper";
+import Colors from "../../../constants/Colors";
+import Player from "../../player/model/player";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../main/store/RootReducer";
-import TouchableComponent from "../../../../components/TouchableComponent";
-import helpers from "../../../../constants/Functions";
-import Styles from "../../../../constants/Styles";
-import * as scoringActions from "../../store/scoringActions"
+import {RootState} from "../../main/store/RootReducer";
+import helpers from "../../../constants/Functions";
+import Styles from "../../../constants/Styles";
+import * as scoringActions from "../store/scoringActions"
+import CheckablePlayers from "../../player/components/checkablePlayers";
+import CheckablePlayer from "../../player/components/checkablePlayer";
+import Status from "../../player/model/CheckBoxStatus";
 
 type Props = {
     isAddPlayersShown: boolean
@@ -16,12 +18,10 @@ type Props = {
     scoringSheetId: string
 };
 
-type Status = "unchecked" | "indeterminate" | "checked";
-
 
 const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId}: Props) => {
     const dispatch = useDispatch();
-    const allPlayer = useSelector((state: RootState) => state.players.allPlayer)
+    const allPlayer = useSelector((state: RootState) => state.players.allPlayers)
     const scoresOfSheet = useSelector((state: RootState) => state.scores.allScores).filter(scoring => scoring.scoringSheetId === scoringSheetId)
 
 
@@ -112,27 +112,11 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId}
         <Portal>
             <Dialog visible={isAddPlayersShown} onDismiss={() => setIsAddPlayersShown(false)}>
                 <Dialog.Title>Spieler auswählen</Dialog.Title>
-                <Dialog.Content >
+                <Dialog.Content>
 
                     <View style={styles.content}>
                         <ScrollView>
-                        {
-                            allPlayer.map((player: Player) => {
-                                    return (
-                                        <TouchableComponent key={player.id} style={styles.touchableContainer}
-                                                            onPress={() => setOneCheckablePlayer(player.id)}>
-                                            <View style={styles.verticalCentered}>
-                                                <Paragraph>{player.name}</Paragraph>
-                                            </View>
-                                            <Checkbox.Android
-                                                status={checkablePlayers.get(player.id) ?? "unchecked"}
-                                                onPress={() => {setOneCheckablePlayer(player.id)}}
-                                            />
-                                        </TouchableComponent>
-                                    )
-                                }
-                            )
-                        }
+                            <CheckablePlayers allPlayer={allPlayer} setOneCheckablePlayer={setOneCheckablePlayer} checkablePlayers={checkablePlayers} />
                         </ScrollView>
                     </View>
 
@@ -152,26 +136,6 @@ const styles = StyleSheet.create({
     content: {
         flexDirection: "column",
         maxHeight: (Dimensions.get("screen").height / 3) * 2
-    },
-    touchableContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 15,
-        elevation: 0,
-        borderRadius: 10,
-        marginVertical: 3,
-        marginHorizontal: 5,
-        borderWidth: 0.5,
-        borderColor: "#bbb",
-        overflow:
-            Platform.OS === 'android' && Platform.Version >= 21
-                ? 'hidden'
-                : 'visible',
-    },
-    verticalCentered: {
-        flexDirection: 'row',
-        alignItems: 'center',
     },
     buttonContainer: {
         borderWidth: 1,

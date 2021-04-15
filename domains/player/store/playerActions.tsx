@@ -3,26 +3,24 @@ export const UPDATE_PLAYER = 'UPDATE_PLAYER';
 export const DELETE_PLAYER = 'DELETE_PLAYER';
 
 
-export const createPlayer = () => {
+export const createPlayer = (name : string) => {
     return {
         type: CREATE_PLAYER,
-        playerData: {
-        }
+        name: name
     };
 };
 
-export const updatePlayer = (id: string) => {
+export const updatePlayer = (playerId: string, newName: string) => {
     return {
         type: UPDATE_PLAYER,
-        id: id,
-        playerData: {
-        }
+        id: playerId,
+        newName: newName
     };
 };
 
 export const deletePlayer = playerId => {
     return {
         type: DELETE_PLAYER,
-        did: playerId
+        id: playerId
     };
 };

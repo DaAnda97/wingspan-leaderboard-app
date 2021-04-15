@@ -8,7 +8,7 @@ const TouchableComponent = props => {
 
     if (platform === 'android') {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <TouchableNativeFeedback onPress={props.onPress} useForeground delayPressIn={500}>
                     <Surface style={props.style}>
                         {props.children}
@@ -18,7 +18,7 @@ const TouchableComponent = props => {
         );
     } else {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <TouchableOpacity onPress={props.onPress} activeOpacity={.5}>
                     <Surface style={props.style}>
                         {props.children}

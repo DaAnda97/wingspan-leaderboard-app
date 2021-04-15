@@ -1,15 +1,10 @@
-import React, {Ref, useState, createRef, RefObject, useCallback} from 'react';
+import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import {TextInput as RNTextInput} from 'react-native';
-import {Divider, HelperText, Subheading, Text, TextInput, Title} from 'react-native-paper'
-import ScoringField from "../../model/scoringField";
-import {INITIAL_SCORING_FIELDS} from "../../model/SCORING_CONSTANTS";
-import helpers from "../../../../constants/Functions";
-import Colors from "../../../../constants/Colors";
-import * as scoringActions from "../../store/scoringActions";
-import {useDispatch} from "react-redux";
-import Scoring from "../../model/scoring";
-import Player from "../../../player/model/player";
+import {Subheading} from 'react-native-paper'
+import helpers from "../../../constants/Functions";
+import Colors from "../../../constants/Colors";
+import Scoring from "../model/scoring";
+import Player from "../../player/model/player";
 
 type Props = {
     scores : Array<Scoring>

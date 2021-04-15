@@ -3,16 +3,16 @@ import {Dimensions, FlatList, ScrollView, StyleSheet, TextInput as RNTextInput, 
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from "react-redux";
-import ScoringPlayer from "./components/ScoringPlayer";
+import ScoringPlayer from "../components/ScoringPlayer";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Divider, IconButton, Subheading, Text, Title} from "react-native-paper";
 import {INPUT_REFS, SCORING_FIELD_NAMES} from "../model/SCORING_CONSTANTS";
 import Colors from "../../../constants/Colors";
-import SelectPlayers from "./components/SelectPlayers";
+import SelectPlayers from "../components/SelectPlayers";
 import ScoringFieldName from "../model/scoringFieldName";
 import {RootState} from "../../main/store/RootReducer";
 import Scoring from "../model/scoring";
-import NameRow from "./components/NameRow";
+import NameRow from "../components/NameRow";
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const ScoringInput = ({navigation}) => {
     const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(true)
     const [scoringSheetId] = useState(Math.random().toString(36).substring(2))
 
-    const allPlayer = useSelector((state: RootState) => state.players.allPlayer)
+    const allPlayer = useSelector((state: RootState) => state.players.allPlayers)
     const scores = useSelector((state : RootState) => state.scores.allScores)
         .filter(scoring => scoring.scoringSheetId === scoringSheetId)
 
