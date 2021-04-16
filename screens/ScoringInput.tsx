@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     categoryContainer: {
-        width: 95
+        width: 95,
+        alignItems: "flex-start",
     },
     score: {
         minHeight: 50,

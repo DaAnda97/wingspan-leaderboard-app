@@ -62,7 +62,7 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
 
 
     return (
-        <View style={styles.nameAndScore}>
+        <View style={styles.scoringColumn}>
             {
                 scoringFields.map((scoringField: ScoringField, colIndex: number) => {
                     return (
@@ -108,14 +108,8 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
 
 
 const styles = StyleSheet.create({
-    nameAndScore: {
+    scoringColumn: {
         flex: 1,
-    },
-    playerRow: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        height: 40,
     },
     score: {
         minHeight: 50,

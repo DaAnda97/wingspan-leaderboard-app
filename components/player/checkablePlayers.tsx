@@ -17,13 +17,12 @@ type Props = {
 
 const CheckablePlayers = ({scoringSheetId}: Props) => {
     const dispatch = useDispatch()
-    const [isAdding, setIsAdding] = useState(false)
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter(player => player.isActive)
     const scoresOfSheet = useSelector((state: RootState) => state.scores.allScores).filter(scoring => scoring.scoringSheetId === scoringSheetId)
 
 
     // initial
-    const initialCheckablePlayers = useCallback(() => {
+    const initialCheckablePlayers = () => {
         let initCheckablePlayers: Map<string, Status> = new Map()
         allPlayer.forEach(player => {
             initCheckablePlayers.set(
@@ -32,12 +31,13 @@ const CheckablePlayers = ({scoringSheetId}: Props) => {
             )
         })
         return initCheckablePlayers
-    }, [allPlayer, scoresOfSheet])
+    }
 
 
     // states
     const [checkablePlayers, setCheckablePlayers] = useState<Map<string, Status>>(initialCheckablePlayers)
     const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false)
+    const [isAdding, setIsAdding] = useState(false)
 
 
     // methods
@@ -45,7 +45,7 @@ const CheckablePlayers = ({scoringSheetId}: Props) => {
         dispatch(
             scoringActions.createScoring(scoringSheetId, playerId)
         );
-    }, [dispatch, scoringSheetId]);
+    }, [dispatch, scoresOfSheet, scoringSheetId, scoringActions]);
 
     const deleteScoringPlayer = useCallback((playerId: string) => {
         const thisScoring = scoresOfSheet.find(scoring => scoring.scoringSheetId === scoringSheetId && scoring.playerId === playerId)
@@ -53,7 +53,7 @@ const CheckablePlayers = ({scoringSheetId}: Props) => {
         dispatch(
             scoringActions.deleteScoring(thisScoring.id)
         );
-    }, [dispatch, scoresOfSheet]);
+    }, [dispatch, scoresOfSheet, scoringSheetId, scoringActions]);
 
 
     const setOneCheckablePlayer = useCallback((playerId: string) => {
@@ -102,26 +102,9 @@ const CheckablePlayers = ({scoringSheetId}: Props) => {
 
 
     return (
-        <View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    style={styles.buttonStyle}
-                    icon={"account-plus"}
-                    color={Colors.secondary}
-                    onPress={() => {
-                        setIsAdding(true)
-                    }}>
-                    Neuen Spieler anlegen
-                </Button>
-            </View>
-            {
-                isAdding &&
-                <CheckablePlayer
-                    setOneCheckablePlayer={setOneCheckablePlayer}
-                    status={"unchecked"}
-                    setIsAdding={setIsAdding}
-                />
-            }
+        <View style={styles.main}>
+
+
             {
                 allPlayer.length > 0 ?
                     allPlayer.map((player: Player) => {
@@ -139,6 +122,26 @@ const CheckablePlayers = ({scoringSheetId}: Props) => {
                     <Text style={styles.defaultTextStyle}>Noch keine Spieler vorhanden. Lege zuerst Spieler
                         an.</Text>
             }
+            {
+                isAdding ?
+                    <CheckablePlayer
+                        setOneCheckablePlayer={setOneCheckablePlayer}
+                        status={"unchecked"}
+                        setIsAdding={setIsAdding}
+                    /> :
+                    <View style={styles.buttonContainer}>
+                        <Button
+                            style={styles.buttonStyle}
+                            icon={"account-plus"}
+                            color={Colors.secondary}
+                            onPress={() => {
+                                setIsAdding(true)
+                            }}>
+                            Neuen Spieler anlegen
+                        </Button>
+                    </View>
+            }
+
 
         </View>
 
@@ -148,6 +151,9 @@ const CheckablePlayers = ({scoringSheetId}: Props) => {
 
 
 const styles = StyleSheet.create({
+    main: {
+
+    },
     touchableContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -169,15 +175,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonContainer: {
-        marginVertical: 10,
+        flex: 1,
+        margin: 10,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: Colors.secondary,
-        backgroundColor: Colors.secondaryBackground
+        backgroundColor: Colors.secondaryBackground,
+        alignItems: "center"
     },
     buttonStyle: {
         color: Colors.secondary,
-        width: "100%"
+        width: "90%",
     },
     defaultTextStyle: {
         textAlign: 'center',

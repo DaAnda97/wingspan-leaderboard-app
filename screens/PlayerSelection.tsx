@@ -60,11 +60,11 @@ const PlayerSelection = ({navigation}) => {
         )
     } else {
         return (
-            <SafeAreaView style={styles.main}>
+            <View style={styles.main}>
                 <ScrollView>
                     <CheckablePlayers scoringSheetId={scoringSheetId}/>
                 </ScrollView>
-            </SafeAreaView>
+            </View>
         )
     }
 
@@ -76,20 +76,6 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
     },
-    content: {
-        flexDirection: "column",
-        maxHeight: (Dimensions.get("screen").height / 3) * 2
-    },
-    buttonContainer: {
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: Colors.primary,
-        backgroundColor: Colors.primaryBackground
-    },
-    buttonStyle: {
-        color: Colors.primary,
-        width: "100%"
-    }
 })
 
 

@@ -4,7 +4,6 @@ import {Subheading} from 'react-native-paper'
 import helpers from "../../constants/Functions";
 import Colors from "../../constants/Colors";
 import Scoring from "../../models/scoring/scoring";
-import Player from "../../models/player/player";
 import {useSelector} from "react-redux";
 import {RootState} from "../../stores/main/RootReducer";
 
@@ -71,13 +70,15 @@ const styles = StyleSheet.create({
         color: Colors.secondary,
     },
     categoryContainer: {
-        width: 95
+        width: 95,
+        alignItems: "center",
+        marginBottom: 5
     },
     score: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        marginVertical: 20
+        marginBottom: 5
     }
 })
 
