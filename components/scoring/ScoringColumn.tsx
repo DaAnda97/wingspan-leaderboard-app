@@ -62,11 +62,11 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
 
 
     return (
-        <View style={styles.categoryContainer}>
+        <View style={styles.nameAndScore}>
             {
                 scoringFields.map((scoringField: ScoringField, colIndex: number) => {
                     return (
-                        <View key={colIndex + ""} style={styles.verticalCell}>
+                        <View key={colIndex + ""} style={styles.score}>
                             <TextInput
                                 style={styles.textInput}
                                 value={scoringField.value}
@@ -108,7 +108,7 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
 
 
 const styles = StyleSheet.create({
-    categoryContainer: {
+    nameAndScore: {
         flex: 1,
     },
     playerRow: {
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         height: 40,
     },
-    verticalCell: {
+    score: {
         minHeight: 50,
         height: Dimensions.get("screen").height / 11,
     },

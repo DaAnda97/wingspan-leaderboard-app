@@ -17,11 +17,13 @@ const NameRow = ({scores}: Props) => {
 
     return (
         <View style={styles.nameView}>
-            <View style={styles.categoryContainer}>
-                <Subheading> </Subheading>
+            <View style={styles.nameAndScore}>
+                <View style={styles.playerName}>
+                    <Subheading> </Subheading>
+                </View>
                 {
                     scores.length > 0 &&
-                        <View style={{...styles.verticalCell}}>
+                        <View style={styles.categoryContainer}>
                             <Subheading>GESAMT:</Subheading>
                         </View>
                 }
@@ -31,9 +33,11 @@ const NameRow = ({scores}: Props) => {
                     const currentPlayer = allPlayer.find(player => player.id === scoring.playerId)
                         ?? helpers.throwError("Error in ScoringInput: playerId not in allPlayers")
                     return (
-                        <View key={scoring.playerId} style={styles.playerRow}>
-                            <Subheading style={styles.playerText}>{currentPlayer.name}</Subheading>
-                            <View style={{...styles.verticalCell}}>
+                        <View key={scoring.playerId} style={styles.nameAndScore}>
+                            <View style={styles.playerName}>
+                                <Subheading style={styles.playerText}>{currentPlayer.name}</Subheading>
+                            </View>
+                            <View style={{...styles.score}}>
                                 <Subheading>{scoring.totalScore}</Subheading>
                             </View>
 
@@ -50,25 +54,30 @@ const styles = StyleSheet.create({
     nameView: {
         flexDirection: "row"
     },
-    categoryContainer: {
-        width: 95
+    nameAndScore: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-between",
     },
     playerRow: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        minHeight: 50,
-        height: Dimensions.get("screen").height / 11,
+    },
+    playerName:{
+        paddingTop: 5,
     },
     playerText: {
-        color: Colors.primary,
+        color: Colors.secondary,
     },
-    verticalCell: {
-        minHeight: 50,
-        height: Dimensions.get("screen").height / 11,
+    categoryContainer: {
+        width: 95
+    },
+    score: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        marginVertical: 20
     }
 })
 

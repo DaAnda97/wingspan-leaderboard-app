@@ -1,92 +1,149 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
-import {Button, Text, Checkbox, Paragraph, IconButton, ActivityIndicator} from 'react-native-paper'
+import {Button, Text} from 'react-native-paper'
 import Player from "../../models/player/player";
 import Status from "../../models/player/CheckBoxStatus";
 import CheckablePlayer from "./checkablePlayer";
 import Colors from "../../constants/Colors";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../stores/main/RootReducer";
-import * as playerActions from "../../stores/player/playerActions";
-import Styles from "../../constants/Styles"
+import * as scoringActions from "../../stores/scoring/scoringActions";
+import helpers from "../../constants/Functions";
 
 
 type Props = {
-    setOneCheckablePlayer: (playerId : string) => void
-    checkablePlayers: Map<string, Status>
+    scoringSheetId: string
 };
 
-const CheckablePlayers = ({setOneCheckablePlayer, checkablePlayers}: Props) => {
+const CheckablePlayers = ({scoringSheetId}: Props) => {
     const dispatch = useDispatch()
     const [isAdding, setIsAdding] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter(player => player.isActive)
+    const scoresOfSheet = useSelector((state: RootState) => state.scores.allScores).filter(scoring => scoring.scoringSheetId === scoringSheetId)
 
 
-    const loadPlayers = useCallback(() => {
-        try {
-            dispatch(playerActions.loadPlayersFromDb())
-        } catch (err) {
-            throw new Error(err)
+    // initial
+    const initialCheckablePlayers = useCallback(() => {
+        let initCheckablePlayers: Map<string, Status> = new Map()
+        allPlayer.forEach(player => {
+            initCheckablePlayers.set(
+                player.id,
+                scoresOfSheet.find(scoring => scoring.playerId === player.id) == undefined ? "unchecked" : "checked"
+            )
+        })
+        return initCheckablePlayers
+    }, [allPlayer, scoresOfSheet])
+
+
+    // states
+    const [checkablePlayers, setCheckablePlayers] = useState<Map<string, Status>>(initialCheckablePlayers)
+    const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false)
+
+
+    // methods
+    const createNewScoringPlayer = useCallback((playerId: string) => {
+        dispatch(
+            scoringActions.createScoring(scoringSheetId, playerId)
+        );
+    }, [dispatch, scoringSheetId]);
+
+    const deleteScoringPlayer = useCallback((playerId: string) => {
+        const thisScoring = scoresOfSheet.find(scoring => scoring.scoringSheetId === scoringSheetId && scoring.playerId === playerId)
+            ?? helpers.throwError(`Error in SelectPlayers: no matching scoring with sheetId: ${scoringSheetId} and playerId: ${playerId} not in scoresOfSheet: ${JSON.stringify(scoresOfSheet)}`)
+        dispatch(
+            scoringActions.deleteScoring(thisScoring.id)
+        );
+    }, [dispatch, scoresOfSheet]);
+
+
+    const setOneCheckablePlayer = useCallback((playerId: string) => {
+        const updatedCheckablePlayers = new Map<string, Status>(checkablePlayers)
+        if (checkablePlayers.get(playerId) === "checked" && scoresOfSheet.length <= 5) {
+            updatedCheckablePlayers.set(playerId, "unchecked")
+            deleteScoringPlayer(playerId)
+        } else if (checkablePlayers.get(playerId) === "unchecked" && scoresOfSheet.length < 5) {
+            updatedCheckablePlayers.set(playerId, "checked")
+            createNewScoringPlayer(playerId)
         }
-        setIsLoading(false)
-    }, [dispatch])
+        setCheckablePlayers(updatedCheckablePlayers)
+    }, [checkablePlayers, scoresOfSheet, createNewScoringPlayer, deleteScoringPlayer])
+
+
+    const indeterminateUnselectableFields = useCallback(() => {
+        if (scoresOfSheet.length == 4 && isIndeterminate) {
+            const updatedCheckablePlayers: Map<string, Status> = new Map(checkablePlayers)
+            updatedCheckablePlayers.forEach((status: Status, playerId: string) => {
+                if (status === "indeterminate") {
+                    updatedCheckablePlayers.set(playerId, "unchecked")
+                } else {
+                    updatedCheckablePlayers.set(playerId, status)
+                }
+            })
+            setCheckablePlayers(updatedCheckablePlayers)
+            setIsIndeterminate(false)
+        } else if (scoresOfSheet.length == 5 && !isIndeterminate) {
+            const updatedCheckablePlayers: Map<string, Status> = new Map(checkablePlayers)
+            updatedCheckablePlayers.forEach((status: Status, playerId: string) => {
+                if (status === "unchecked") {
+                    updatedCheckablePlayers.set(playerId, "indeterminate")
+                } else {
+                    updatedCheckablePlayers.set(playerId, status)
+                }
+            })
+            setCheckablePlayers(updatedCheckablePlayers)
+            setIsIndeterminate(true)
+        }
+    }, [scoresOfSheet, checkablePlayers, setCheckablePlayers])
+
 
     useEffect(() => {
-        loadPlayers()
-    }, [dispatch, loadPlayers])
+        indeterminateUnselectableFields()
+    }, [indeterminateUnselectableFields, scoresOfSheet, checkablePlayers, setCheckablePlayers])
 
-    if (isLoading) {
-        return (
-            <View style={Styles.centered}>
-                <ActivityIndicator animating={true}/>
-                <Text>Lade Spieler</Text>
+
+    return (
+        <View>
+            <View style={styles.buttonContainer}>
+                <Button
+                    style={styles.buttonStyle}
+                    icon={"account-plus"}
+                    color={Colors.secondary}
+                    onPress={() => {
+                        setIsAdding(true)
+                    }}>
+                    Neuen Spieler anlegen
+                </Button>
             </View>
-        )
-    } else {
-        return (
-            <View>
-                {
-                    allPlayer.length > 0 ?
-                        allPlayer.map((player: Player) => {
-                            return (
-                                <CheckablePlayer
-                                    key={player.id}
-                                    player={player}
-                                    setOneCheckablePlayer={setOneCheckablePlayer}
-                                    status={checkablePlayers.get(player.id) ?? "unchecked"}
-                                    setIsAdding={setIsAdding}
-                                />
-                            )
-                        })
-                        :
-                        <Text style={styles.defaultTextStyle}>Noch keine Spieler vorhanden. Lege zuerst Spieler
-                            an.</Text>
-                }
-                {
-                    isAdding &&
-                    <CheckablePlayer
-                        setOneCheckablePlayer={setOneCheckablePlayer}
-                        status={"unchecked"}
-                        setIsAdding={setIsAdding}
-                    />
-                }
-                <View style={styles.buttonContainer}>
-                    <Button
-                        style={styles.buttonStyle}
-                        icon={"account-plus"}
-                        color={Colors.secondary}
-                        onPress={() => {
-                            setIsAdding(true)
-                        }}>
-                        Neuen Spieler anlegen
-                    </Button>
-                </View>
+            {
+                isAdding &&
+                <CheckablePlayer
+                    setOneCheckablePlayer={setOneCheckablePlayer}
+                    status={"unchecked"}
+                    setIsAdding={setIsAdding}
+                />
+            }
+            {
+                allPlayer.length > 0 ?
+                    allPlayer.map((player: Player) => {
+                        return (
+                            <CheckablePlayer
+                                key={player.id}
+                                player={player}
+                                setOneCheckablePlayer={setOneCheckablePlayer}
+                                status={checkablePlayers.get(player.id) ?? "unchecked"}
+                                setIsAdding={setIsAdding}
+                            />
+                        )
+                    })
+                    :
+                    <Text style={styles.defaultTextStyle}>Noch keine Spieler vorhanden. Lege zuerst Spieler
+                        an.</Text>
+            }
 
-            </View>
+        </View>
 
-        )
-    }
+    )
+
 }
 
 

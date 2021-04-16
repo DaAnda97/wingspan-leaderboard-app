@@ -1,32 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from "react-redux";
 import ScoringColumn from "../components/scoring/ScoringColumn";
-import {SafeAreaView} from "react-native-safe-area-context";
 import {Divider, IconButton, Text, Title} from "react-native-paper";
 import {INPUT_REFS, SCORING_FIELD_NAMES} from "../models/scoring/SCORING_CONSTANTS";
 import Colors from "../constants/Colors";
-import SelectPlayers from "../components/scoring/SelectPlayers";
 import ScoringFieldName from "../models/scoring/scoringFieldName";
 import {RootState} from "../stores/main/RootReducer";
 import Scoring from "../models/scoring/scoring";
 import NameRow from "../components/scoring/NameRow";
-
-import {saveScores} from "../repositories/scoringRepository"
 import * as scoringActions from "../stores/scoring/scoringActions"
 
-const ScoringInput = ({navigation}) => {
+const ScoringInput = ({navigation, route}) => {
     const dispatch = useDispatch()
     const names = SCORING_FIELD_NAMES
     const inputRefs = INPUT_REFS
 
-    const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(true)
-    const [scoringSheetId] = useState(Math.random().toString(36).substring(2))
-
     const scores = useSelector((state : RootState) => state.scores.allScores)
-        .filter(scoring => scoring.scoringSheetId === scoringSheetId)
+        .filter(scoring => scoring.scoringSheetId === route.params.scoringSheetId)
 
 
     const goToNext = (colIndex, playerIndex) => {
@@ -39,27 +31,44 @@ const ScoringInput = ({navigation}) => {
         }
     }
 
-    return (
-        <SafeAreaView style={styles.main}>
-            <View style={styles.header}>
+
+    const addPlayersHandler = useCallback(() => {
+        navigation.goBack()
+    }, []);
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
                 <IconButton
                     icon={"account-multiple-plus"}
                     color={Colors.primary}
                     size={30}
-                    onPress={() => {
-                        setIsAddPlayersShown(true)
-                    }}
+                    onPress={addPlayersHandler}
                 />
-                <Title>Spielwertung</Title>
+            )
+        });
+    }, [addPlayersHandler]);
+
+    const saveHandler = useCallback(() => {
+        dispatch(scoringActions.saveScores(scores))
+        //todo reset boardId
+        navigation.goBack()
+    }, []);
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
                 <IconButton
                     icon={"content-save"}
                     color={Colors.primary}
                     size={30}
-                    onPress={() => {
-                        dispatch(scoringActions.saveScores(scores))
-                    }}
+                    onPress={saveHandler}
                 />
-            </View>
+            )
+        });
+    }, [saveHandler]);
+
+
+    return (
+        <View style={styles.main}>
 
             <NameRow scores={scores}/>
 
@@ -72,7 +81,7 @@ const ScoringInput = ({navigation}) => {
                         {
                             names.map((name: ScoringFieldName, index: number) => {
                                 return (
-                                    <View key={index + ""} style={styles.verticalCell}>
+                                    <View key={index + ""} style={styles.score}>
                                         <Text style={styles.textStyle}>{name.name}</Text>
                                     </View>
                                 )
@@ -89,7 +98,7 @@ const ScoringInput = ({navigation}) => {
                                     playerIndex={index}
                                     playerId={scoring.playerId}
                                     scoringId={scoring.id}
-                                    scoringSheetId={scoringSheetId}
+                                    scoringSheetId={route.params.scoringSheetId}
                                     inputRefs={inputRefs[index]}
                                     goToNext={goToNext}
                                 />
@@ -100,15 +109,7 @@ const ScoringInput = ({navigation}) => {
                 </View>
             </ScrollView>
 
-            {isAddPlayersShown &&
-                <SelectPlayers
-                    isAddPlayersShown={isAddPlayersShown}
-                    setIsAddPlayersShown={setIsAddPlayersShown}
-                    scoringSheetId={scoringSheetId}
-                />
-            }
-
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     categoryContainer: {
         width: 95
     },
-    verticalCell: {
+    score: {
         minHeight: 50,
         height: Dimensions.get("screen").height / 11,
         flex: 1,
@@ -147,15 +148,9 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        tabBarLabel: 'Spielwertung',
-        tabBarIcon: ({color, focused}) => (
-            <MaterialCommunityIcons
-                name={focused ? "medal" : "medal-outline"}
-                color={color}
-                size={22}
-            />
-        ),
+        headerTitle: 'Spielwertung',
     };
 };
+
 
 export default ScoringInput;

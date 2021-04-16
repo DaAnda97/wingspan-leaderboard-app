@@ -5,7 +5,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import Colors from "../constants/Colors";
 import Analysis, {screenOptions as analysisScreenOptions} from '../screens/AnalysisOverview';
 import LeaderboardScreen, {screenOptions as leaderboardScreenOptions} from '../screens/Leaderboard';
-import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/ScoringInput';
+import ScoringNavigator, {screenOptions as scoringNavigatorScreenOptions} from '../navigation/ScoringNavigator';
 
 
 const TabNavigation = createMaterialBottomTabNavigator();
@@ -18,9 +18,9 @@ function TabScreenNavigator() {
                 barStyle={{ backgroundColor: 'white' }}
             >
                 <TabNavigation.Screen
-                    name="ScoringInput"
-                    component={ScoringInputScreen}
-                    options={scoringInputScreenOptions}
+                    name="ScoringNavigator"
+                    component={ScoringNavigator}
+                    options={scoringNavigatorScreenOptions}
                 />
                 <TabNavigation.Screen
                     name="Leaderboard"
