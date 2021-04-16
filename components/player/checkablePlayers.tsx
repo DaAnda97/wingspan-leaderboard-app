@@ -103,8 +103,6 @@ const CheckablePlayers = ({scoringSheetId}: Props) => {
 
     return (
         <View style={styles.main}>
-
-
             {
                 allPlayer.length > 0 ?
                     allPlayer.map((player: Player) => {

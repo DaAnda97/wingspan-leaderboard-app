@@ -75,6 +75,7 @@ const PlayerSelection = ({navigation}) => {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
+        marginTop: 10
     },
 })
 
