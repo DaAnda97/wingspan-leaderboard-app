@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Provider as StoreProvider} from 'react-redux';
+import {Provider as StoreProvider, useDispatch} from 'react-redux';
 import ReduxThunk from 'redux-thunk'
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Colors from "./constants/Colors";
@@ -9,10 +9,14 @@ import {rootReducer} from "./stores/main/RootReducer";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {createScoresTable} from "./repositories/scoringRepository";
-import {createScoringSheetTable} from "./repositories/scoringSheetRepositroy"
+import {createScoringSheetsTable} from "./repositories/scoringSheetRepositroy"
+import {createPlayersTable} from "./repositories/playerRepository"
+
+import * as playerActions from "./stores/player/playerActions"
 
 const createTables = () => {
-    createScoringSheetTable()
+    createPlayersTable()
+    createScoringSheetsTable()
     createScoresTable()
 }
 
@@ -40,9 +44,10 @@ const theme = {
 };
 
 export default function App() {
-    useEffect(() =>
-        createTables(),
-        [] //The empty array ensures it is called only once, on the first render.
+
+    useEffect(() => {
+        createTables();
+    }, [] //The empty array ensures it is called only once, on the first render.
     );
 
     return (

@@ -1,11 +1,11 @@
 import Player from "../../models/player/player";
 import PLAYERS from "../../data/players";
-import {CREATE_PLAYER, DELETE_PLAYER, UPDATE_PLAYER} from "./playerActions";
+import {CREATE_PLAYER, DELETE_PLAYER, LOAD_PLAYERS_FROM_DB, UPDATE_PLAYER} from "./playerActions";
 import helpers from "../../constants/Functions";
 
 const initialState = {
-    //allPlayer: Array<Player>()
-    allPlayers: PLAYERS
+    allPlayers: Array<Player>()
+    //allPlayers: PLAYERS
 }
 
 
@@ -13,15 +13,9 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
         case CREATE_PLAYER:
-            const newPlayer: Player = new Player(
-                Math.random().toString(36).substring(2),
-                action.name,
-                true
-            )
-
             return {
                 ...state,
-                allPlayers: [...state.allPlayers, newPlayer]
+                allPlayers: [...state.allPlayers, action.player]
             };
 
 
@@ -61,6 +55,14 @@ export default (state = initialState, action) => {
                 ...state,
                 allPlayers: uPlayers
             }
+
+
+        case LOAD_PLAYERS_FROM_DB:
+            return {
+                ...state,
+                allPlayers: action.loadedPlayers
+            }
+
     }
 
     //default

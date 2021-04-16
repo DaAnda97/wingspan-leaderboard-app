@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from "react-redux";
 import ScoringPlayer from "../components/scoring/ScoringPlayer";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Divider, IconButton, Subheading, Text, Title} from "react-native-paper";
+import {Divider, IconButton, Text, Title} from "react-native-paper";
 import {INPUT_REFS, SCORING_FIELD_NAMES} from "../models/scoring/SCORING_CONSTANTS";
 import Colors from "../constants/Colors";
 import SelectPlayers from "../components/scoring/SelectPlayers";
@@ -16,6 +16,7 @@ import NameRow from "../components/scoring/NameRow";
 
 import {saveScores} from "../repositories/scoringRepository"
 import * as scoringActions from "../stores/scoring/scoringActions"
+import * as playerActions from "../stores/player/playerActions";
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch()
@@ -40,6 +41,11 @@ const ScoringInput = ({navigation}) => {
             }
         }
     }
+
+    useEffect(() => {
+        dispatch(playerActions.loadPlayersFromDb())
+    }, []
+    )
 
     return (
         <SafeAreaView style={styles.main}>

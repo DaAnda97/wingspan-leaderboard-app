@@ -18,7 +18,7 @@ export default class PlayerEntity extends BaseModel {
         return {
             id: { type: types.INTEGER, primary_key: true },
             name: { type: types.TEXT, not_null: true },
-            isActive: { type: types.BOOLEAN, not_null: true },
+            isActive: { type: types.INTEGER, not_null: true },
         }
     }
 }

@@ -6,7 +6,7 @@ import TouchableComponent from "../ui/TouchableComponent";
 import Colors from "../../constants/Colors";
 import {useDispatch} from "react-redux";
 import * as playerActions from "../../stores/player/playerActions";
-
+import {savePlayer} from "../../repositories/playerRepository"
 
 type Props = {
     player?: Player
@@ -24,10 +24,8 @@ const CheckablePlayer = ({player = new Player("", "", true), setOneCheckablePlay
     const [isEditMode, setIsEditMode] = useState<boolean>(player.name === "")
 
     const createPlayer = useCallback((name: string) => {
-        dispatch(
-            playerActions.createPlayer(name)
-        );
-    }, [dispatch]);
+        dispatch(playerActions.createPlayer(name))
+    }, [dispatch, savePlayer]);
 
     const updatePlayer = useCallback((newName: string) => {
         dispatch(
