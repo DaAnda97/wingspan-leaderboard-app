@@ -1,18 +1,16 @@
-import React, {FC, useState} from 'react';
-import {Portal, Dialog, Button, Paragraph} from 'react-native-paper';
-
+import React, { FC, useState } from 'react';
+import { Portal, Dialog, Button, Paragraph } from 'react-native-paper';
 
 type Props = {
-    errorMsg: string
-    setErrorMsg: (newErrorMsg : string) => void
+    errorMsg: string;
+    setErrorMsg: (newErrorMsg: string) => void;
 };
 
 const ErrorView = ({ errorMsg, setErrorMsg }: Props) => {
-
     const onDismiss = () => {
         //send Error somewhere
-        setErrorMsg("")
-    }
+        setErrorMsg('');
+    };
 
     return (
         <Portal>
@@ -26,8 +24,7 @@ const ErrorView = ({ errorMsg, setErrorMsg }: Props) => {
                 </Dialog.Actions>
             </Dialog>
         </Portal>
-    )
-}
-
+    );
+};
 
 export default ErrorView;

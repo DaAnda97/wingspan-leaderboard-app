@@ -1,12 +1,17 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import Colors from "../constants/Colors";
-import Analysis, {screenOptions as analysisScreenOptions} from '../screens/AnalysisOverview';
-import LeaderboardScreen, {screenOptions as leaderboardScreenOptions} from '../screens/Leaderboard';
-import ScoringNavigator, {screenOptions as scoringNavigatorScreenOptions} from '../navigation/ScoringNavigator';
-
+import Colors from '../constants/Colors';
+import Analysis, {
+    screenOptions as analysisScreenOptions
+} from '../screens/AnalysisOverview';
+import LeaderboardScreen, {
+    screenOptions as leaderboardScreenOptions
+} from '../screens/Leaderboard';
+import ScoringNavigator, {
+    screenOptions as scoringNavigatorScreenOptions
+} from '../navigation/ScoringNavigator';
 
 const TabNavigation = createMaterialBottomTabNavigator();
 
@@ -36,6 +41,5 @@ function TabScreenNavigator() {
         </NavigationContainer>
     );
 }
-
 
 export default TabScreenNavigator;

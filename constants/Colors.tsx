@@ -5,4 +5,4 @@ export default {
 
     primaryBackground: 'rgba(80,140,200,0.2)',
     secondaryBackground: 'rgba(230, 200, 130, 0.2)'
-}
+};

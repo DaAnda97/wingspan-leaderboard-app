@@ -1,3 +1,3 @@
-type Status = "unchecked" | "indeterminate" | "checked";
+type Status = 'unchecked' | 'indeterminate' | 'checked';
 
-export default Status
+export default Status;

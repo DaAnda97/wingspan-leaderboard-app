@@ -3,8 +3,7 @@ class Player {
         public id: string,
         public name: string,
         public isActive: boolean
-    ) {
-    }
+    ) {}
 }
 
-export default Player
+export default Player;

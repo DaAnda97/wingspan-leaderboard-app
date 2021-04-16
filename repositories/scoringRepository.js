@@ -1,22 +1,22 @@
-import * as SQLite from 'expo-sqlite'
-import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer'
+import * as SQLite from 'expo-sqlite';
+import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 
-import ScoringEntity from "../models/scoring/scoringEntity";
-import CustomError from "../models/main/customError";
-import * as errorActions from "../stores/main/errorAction";
-import {saveNewScoringSheet} from "./scoringSheetRepositroy";
+import ScoringEntity from '../models/scoring/scoringEntity';
+import CustomError from '../models/main/customError';
+import * as errorActions from '../stores/main/errorAction';
+import { saveNewScoringSheet } from './scoringSheetRepositroy';
 
 export const createScoresTable = () => {
-    ScoringEntity.createTable()
-    console.log("Table scores created successfully")
+    ScoringEntity.createTable();
+    console.log('Table scores created successfully');
     //ScoringEntity.dropTable()
-}
+};
 
-export async function saveScoringArray(scores){
-    const scoringSheetEntity = saveNewScoringSheet()
+export async function saveScoringArray(scores) {
+    const scoringSheetEntity = saveNewScoringSheet();
 
-    const allScoresToSave = []
-    scores.forEach(score => {
+    const allScoresToSave = [];
+    scores.forEach((score) => {
         const scoringToSave = {
             scoringSheetId: scoringSheetEntity.id,
             playerId: score.playerId,
@@ -27,20 +27,24 @@ export async function saveScoringArray(scores){
             nectarPoints: score.nectarPoints,
             birdPoints: score.birdPoints,
             cardPoints: score.cardPoints,
-            totalScore: score.totalScore,
-        }
+            totalScore: score.totalScore
+        };
 
-        allScoresToSave.push(scoringToSave)
-    })
+        allScoresToSave.push(scoringToSave);
+    });
 
-    const databaseLayer = new DatabaseLayer(async () => SQLite.openDatabase('wingspan.db'), 'scores')
-    await databaseLayer.bulkInsertOrReplace(allScoresToSave)
+    const databaseLayer = new DatabaseLayer(
+        async () => SQLite.openDatabase('wingspan.db'),
+        'scores'
+    );
+    await databaseLayer.bulkInsertOrReplace(allScoresToSave);
 
-    return loadAllScores()
+    return loadAllScores();
 }
-
 
 export const loadAllScores = () => {
-    const databaseLayer = new DatabaseLayer(async () => SQLite.openDatabase('wingspan.db'))
-    return databaseLayer.executeSql('SELECT * from scores;')
-}
+    const databaseLayer = new DatabaseLayer(async () =>
+        SQLite.openDatabase('wingspan.db')
+    );
+    return databaseLayer.executeSql('SELECT * from scores;');
+};

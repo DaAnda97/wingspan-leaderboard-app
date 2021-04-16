@@ -1,11 +1,7 @@
-import ScoringField from "./scoringField";
+import ScoringField from './scoringField';
 
 class ScoringPlayerInput {
-    constructor(
-        public playerId: string,
-        public fields:  Array<ScoringField>
-    ) {
-    }
+    constructor(public playerId: string, public fields: Array<ScoringField>) {}
 }
 
-export default ScoringPlayerInput
+export default ScoringPlayerInput;

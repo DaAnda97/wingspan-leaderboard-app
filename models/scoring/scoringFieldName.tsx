@@ -1,9 +1,5 @@
 class ScoringFieldName {
-    constructor(
-        public key: string,
-        public name: string
-    ) {
-    }
+    constructor(public key: string, public name: string) {}
 }
 
-export default ScoringFieldName
+export default ScoringFieldName;

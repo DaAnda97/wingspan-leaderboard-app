@@ -1,10 +1,10 @@
 const helpers = {
     isNumber: function (input: string) {
-        return !isNaN(parseInt(input))
+        return !isNaN(parseInt(input));
     },
-    throwError: function(errorMessage: string) {
+    throwError: function (errorMessage: string) {
         throw new Error(errorMessage);
     }
-}
+};
 
-export default helpers
+export default helpers;

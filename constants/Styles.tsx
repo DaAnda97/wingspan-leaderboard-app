@@ -1,4 +1,4 @@
-import {StyleSheet, Platform} from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 const styles = StyleSheet.create({
     shadow: {
@@ -10,13 +10,13 @@ const styles = StyleSheet.create({
         overflow:
             Platform.OS === 'android' && Platform.Version >= 21
                 ? 'hidden'
-                : 'visible',
+                : 'visible'
     },
     centered: {
         flex: 1,
-        justifyContent:'center',
-        alignItems:'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     }
-})
+});
 
-export default styles
+export default styles;

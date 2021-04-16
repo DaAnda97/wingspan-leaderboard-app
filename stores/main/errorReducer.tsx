@@ -1,15 +1,12 @@
-import {DELETE_ERRORS, ERROR} from "./errorAction";
-import CustomError from "../../models/main/customError";
-
+import { DELETE_ERRORS, ERROR } from './errorAction';
+import CustomError from '../../models/main/customError';
 
 const initialState = {
     allErrors: Array<CustomError>()
-}
-
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
-
         case ERROR:
             return {
                 ...state,
@@ -21,7 +18,6 @@ export default (state = initialState, action) => {
                 ...state,
                 allErrors: Array<CustomError>()
             };
-
     }
 
     //default

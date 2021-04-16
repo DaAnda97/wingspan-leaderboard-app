@@ -1,17 +1,17 @@
-import * as SQLite from 'expo-sqlite'
-import { BaseModel, types } from 'expo-sqlite-orm'
+import * as SQLite from 'expo-sqlite';
+import { BaseModel, types } from 'expo-sqlite-orm';
 
 export default class ScoringEntity extends BaseModel {
     constructor(obj) {
-        super(obj)
+        super(obj);
     }
 
     static get database() {
-        return async () => SQLite.openDatabase('wingspan.db')
+        return async () => SQLite.openDatabase('wingspan.db');
     }
 
     static get tableName() {
-        return 'scores'
+        return 'scores';
     }
 
     static get columnMapping() {
@@ -26,7 +26,7 @@ export default class ScoringEntity extends BaseModel {
             nectarPoints: { type: types.Integer, not_null: true },
             birdPoints: { type: types.Integer, not_null: true },
             cardPoints: { type: types.Integer, not_null: true },
-            totalScore: { type: types.Integer, not_null: true },
-        }
+            totalScore: { type: types.Integer, not_null: true }
+        };
     }
 }

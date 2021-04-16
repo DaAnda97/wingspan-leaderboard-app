@@ -11,8 +11,7 @@ class Scoring {
         public birdPoints: number,
         public cardPoints: number,
         public totalScore: number
-    ) {
-    }
+    ) {}
 }
 
-export default Scoring
+export default Scoring;

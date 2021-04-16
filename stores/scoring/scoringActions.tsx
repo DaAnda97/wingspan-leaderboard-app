@@ -1,19 +1,17 @@
-import Scoring from "../../models/scoring/scoring";
-import {saveScoringArray} from "../../repositories/scoringRepository"
+import Scoring from '../../models/scoring/scoring';
+import { saveScoringArray } from '../../repositories/scoringRepository';
 
 export const CREATE_SCORING = 'CREATE_SCORING';
 export const UPDATE_SCORING = 'UPDATE_SCORING';
 export const DELETE_SCORING = 'DELETE_SCORING';
-export const LOAD_SCORES_FROM_DB = "LOAD_SCORES_FROM_DB"
+export const LOAD_SCORES_FROM_DB = 'LOAD_SCORES_FROM_DB';
 
 export const saveScores = (scores: Array<Scoring>) => {
+    return async (dispatch) => {
+        const allScores = await saveScoringArray(scores);
 
-    return async dispatch => {
-
-        const allScores = await saveScoringArray(scores)
-
-        const loadedScores = Array<Scoring>()
-        allScores.rows.forEach( scoring => {
+        const loadedScores = Array<Scoring>();
+        allScores.rows.forEach((scoring) => {
             const savedScoring = new Scoring(
                 scoring.id,
                 scoring.scoringSheetId,
@@ -26,30 +24,37 @@ export const saveScores = (scores: Array<Scoring>) => {
                 scoring.birdPoints,
                 scoring.cardPoints,
                 scoring.totalScore
-            )
+            );
 
-            loadedScores.push(savedScoring)
-        })
+            loadedScores.push(savedScoring);
+        });
 
-
-        dispatch({type: LOAD_SCORES_FROM_DB, loadedScores: loadedScores})
-
-    }
-}
+        dispatch({ type: LOAD_SCORES_FROM_DB, loadedScores: loadedScores });
+    };
+};
 
 export const createScoring = (scoringSheetId: string, playerId: string) => {
     return {
         type: CREATE_SCORING,
         scoringData: {
             scoringSheetId,
-            playerId,
+            playerId
         }
     };
 };
 
-export const updateScoring = (id: string, scoringSheetId: string, playerId: string, roundPoints: number, bonusPoints: number,
-                              eggPoints: number, foodPoints: number, nectarPoints: number, birdsPoints: number, cardPoints: number) => {
-
+export const updateScoring = (
+    id: string,
+    scoringSheetId: string,
+    playerId: string,
+    roundPoints: number,
+    bonusPoints: number,
+    eggPoints: number,
+    foodPoints: number,
+    nectarPoints: number,
+    birdsPoints: number,
+    cardPoints: number
+) => {
     return {
         type: UPDATE_SCORING,
         id: id,
@@ -70,6 +75,6 @@ export const updateScoring = (id: string, scoringSheetId: string, playerId: stri
 export const deleteScoring = (scoringId: string) => {
     return {
         type: DELETE_SCORING,
-        id: (scoringId)
+        id: scoringId
     };
 };
