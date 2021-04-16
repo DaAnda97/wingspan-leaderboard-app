@@ -5,14 +5,15 @@ import helpers from "../../constants/Functions";
 import Colors from "../../constants/Colors";
 import Scoring from "../../models/scoring/scoring";
 import Player from "../../models/player/player";
+import {useSelector} from "react-redux";
+import {RootState} from "../../stores/main/RootReducer";
 
 type Props = {
     scores : Array<Scoring>
-    allPlayer : Array<Player>
 };
 
-const NameRow = ({scores, allPlayer}: Props) => {
-
+const NameRow = ({scores}: Props) => {
+    const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter(player => player.isActive)
 
     return (
         <View style={styles.nameView}>

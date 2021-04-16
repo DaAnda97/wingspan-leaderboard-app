@@ -3,7 +3,7 @@ import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from "react-redux";
-import ScoringPlayer from "../components/scoring/ScoringPlayer";
+import ScoringColumn from "../components/scoring/ScoringColumn";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Divider, IconButton, Text, Title} from "react-native-paper";
 import {INPUT_REFS, SCORING_FIELD_NAMES} from "../models/scoring/SCORING_CONSTANTS";
@@ -16,7 +16,6 @@ import NameRow from "../components/scoring/NameRow";
 
 import {saveScores} from "../repositories/scoringRepository"
 import * as scoringActions from "../stores/scoring/scoringActions"
-import * as playerActions from "../stores/player/playerActions";
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch()
@@ -26,8 +25,6 @@ const ScoringInput = ({navigation}) => {
     const [isAddPlayersShown, setIsAddPlayersShown] = useState<boolean>(true)
     const [scoringSheetId] = useState(Math.random().toString(36).substring(2))
 
-    const allPlayer = useSelector((state: RootState) => state.players.allPlayers)
-        .filter(player => player.isActive)
     const scores = useSelector((state : RootState) => state.scores.allScores)
         .filter(scoring => scoring.scoringSheetId === scoringSheetId)
 
@@ -41,11 +38,6 @@ const ScoringInput = ({navigation}) => {
             }
         }
     }
-
-    useEffect(() => {
-        dispatch(playerActions.loadPlayersFromDb())
-    }, []
-    )
 
     return (
         <SafeAreaView style={styles.main}>
@@ -64,13 +56,12 @@ const ScoringInput = ({navigation}) => {
                     color={Colors.primary}
                     size={30}
                     onPress={() => {
-                        saveScores(scores)
-                        dispatch(scoringActions.loadScoresFromDb())
+                        dispatch(scoringActions.saveScores(scores))
                     }}
                 />
             </View>
 
-            <NameRow scores={scores} allPlayer={allPlayer}/>
+            <NameRow scores={scores}/>
 
             <Divider/>
 
@@ -93,7 +84,7 @@ const ScoringInput = ({navigation}) => {
                     {
                         scores.map((scoring : Scoring, index : number) => {
                             return (
-                                <ScoringPlayer
+                                <ScoringColumn
                                     key={scoring.id}
                                     playerIndex={index}
                                     playerId={scoring.playerId}

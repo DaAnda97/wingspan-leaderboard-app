@@ -1,21 +1,16 @@
 import Scoring from "../../models/scoring/scoring";
-import * as errorActions from "../main/errorAction";
-import CustomError from "../../models/main/customError";
-import {loadAllScores} from "../../repositories/scoringRepository"
+import {saveScoringArray} from "../../repositories/scoringRepository"
 
 export const CREATE_SCORING = 'CREATE_SCORING';
 export const UPDATE_SCORING = 'UPDATE_SCORING';
 export const DELETE_SCORING = 'DELETE_SCORING';
 export const LOAD_SCORES_FROM_DB = "LOAD_SCORES_FROM_DB"
 
-export const loadScoresFromDb = () => {
+export const saveScores = (scores: Array<Scoring>) => {
 
     return async dispatch => {
 
-        const allScores = await loadAllScores()
-            .catch((error) =>
-                errorActions.newError(new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error))))
-            )
+        const allScores = await saveScoringArray(scores)
 
         const loadedScores = Array<Scoring>()
         allScores.rows.forEach( scoring => {

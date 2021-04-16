@@ -12,11 +12,8 @@ export const createScoresTable = () => {
     //ScoringEntity.dropTable()
 }
 
-export async function saveScores(scores){
+export async function saveScoringArray(scores){
     const scoringSheetEntity = saveNewScoringSheet()
-        .catch((error) => {
-            errorActions.newError(new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error))))
-        })
 
     const allScoresToSave = []
     scores.forEach(score => {
@@ -36,11 +33,10 @@ export async function saveScores(scores){
         allScoresToSave.push(scoringToSave)
     })
 
-    const databaseLayer = new DatabaseLayer(async () => SQLite.openDatabase('wingspan.db'), 'scores');
+    const databaseLayer = new DatabaseLayer(async () => SQLite.openDatabase('wingspan.db'), 'scores')
     await databaseLayer.bulkInsertOrReplace(allScoresToSave)
-        .catch((error) => {
-            errorActions.newError(new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error))))
-        })
+
+    return loadAllScores()
 }
 
 

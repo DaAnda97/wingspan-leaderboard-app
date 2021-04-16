@@ -1,27 +1,53 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
-import {Button, Text, Checkbox, Paragraph, IconButton} from 'react-native-paper'
+import {Button, Text, Checkbox, Paragraph, IconButton, ActivityIndicator} from 'react-native-paper'
 import Player from "../../models/player/player";
 import Status from "../../models/player/CheckBoxStatus";
 import CheckablePlayer from "./checkablePlayer";
 import Colors from "../../constants/Colors";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../stores/main/RootReducer";
+import * as playerActions from "../../stores/player/playerActions";
+import Styles from "../../constants/Styles"
 
 
 type Props = {
-    allPlayer : Array<Player>
     setOneCheckablePlayer: (playerId : string) => void
     checkablePlayers: Map<string, Status>
 };
 
-
-const CheckablePlayers = ({allPlayer, setOneCheckablePlayer, checkablePlayers}: Props) => {
-
+const CheckablePlayers = ({setOneCheckablePlayer, checkablePlayers}: Props) => {
+    const dispatch = useDispatch()
     const [isAdding, setIsAdding] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter(player => player.isActive)
 
-    return (
-        <View>
-            {
-                allPlayer.length > 0 ?
+
+    const loadPlayers = useCallback(() => {
+        try {
+            dispatch(playerActions.loadPlayersFromDb())
+        } catch (err) {
+            throw new Error(err)
+        }
+        setIsLoading(false)
+    }, [dispatch])
+
+    useEffect(() => {
+        loadPlayers()
+    }, [dispatch, loadPlayers])
+
+    if (isLoading) {
+        return (
+            <View style={Styles.centered}>
+                <ActivityIndicator animating={true}/>
+                <Text>Lade Spieler</Text>
+            </View>
+        )
+    } else {
+        return (
+            <View>
+                {
+                    allPlayer.length > 0 ?
                         allPlayer.map((player: Player) => {
                             return (
                                 <CheckablePlayer
@@ -33,32 +59,34 @@ const CheckablePlayers = ({allPlayer, setOneCheckablePlayer, checkablePlayers}: 
                                 />
                             )
                         })
-                     :
-                    <Text style={styles.defaultTextStyle}>Noch keine Spieler vorhanden. Lege zuerst Spieler an.</Text>
-            }
-            {
-                isAdding &&
-                <CheckablePlayer
-                    setOneCheckablePlayer={setOneCheckablePlayer}
-                    status={"unchecked"}
-                    setIsAdding={setIsAdding}
-                />
-            }
-            <View style={styles.buttonContainer}>
-                <Button
-                    style={styles.buttonStyle}
-                    icon={"account-plus"}
-                    color={Colors.secondary}
-                    onPress={() => {
-                        setIsAdding(true)
-                    }}>
-                    Neuen Spieler anlegen
-                </Button>
+                        :
+                        <Text style={styles.defaultTextStyle}>Noch keine Spieler vorhanden. Lege zuerst Spieler
+                            an.</Text>
+                }
+                {
+                    isAdding &&
+                    <CheckablePlayer
+                        setOneCheckablePlayer={setOneCheckablePlayer}
+                        status={"unchecked"}
+                        setIsAdding={setIsAdding}
+                    />
+                }
+                <View style={styles.buttonContainer}>
+                    <Button
+                        style={styles.buttonStyle}
+                        icon={"account-plus"}
+                        color={Colors.secondary}
+                        onPress={() => {
+                            setIsAdding(true)
+                        }}>
+                        Neuen Spieler anlegen
+                    </Button>
+                </View>
+
             </View>
 
-        </View>
-
-    )
+        )
+    }
 }
 
 

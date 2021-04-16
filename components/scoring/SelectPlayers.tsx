@@ -116,7 +116,7 @@ const SelectPlayers = ({isAddPlayersShown, setIsAddPlayersShown, scoringSheetId}
 
                     <View style={styles.content}>
                         <ScrollView>
-                            <CheckablePlayers allPlayer={allPlayer} setOneCheckablePlayer={setOneCheckablePlayer} checkablePlayers={checkablePlayers} />
+                            <CheckablePlayers setOneCheckablePlayer={setOneCheckablePlayer} checkablePlayers={checkablePlayers} />
                         </ScrollView>
                     </View>
 

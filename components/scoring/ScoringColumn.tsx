@@ -18,7 +18,7 @@ type Props = {
     goToNext: (colIndex: number, playerIndex: number) => void
 };
 
-const ScoringPlayer = ({playerIndex, playerId, scoringId, scoringSheetId, inputRefs, goToNext}: Props) => {
+const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputRefs, goToNext}: Props) => {
     const dispatch = useDispatch();
 
     //states
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ScoringPlayer
+export default ScoringColumn

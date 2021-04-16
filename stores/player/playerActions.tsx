@@ -12,22 +12,27 @@ export const LOAD_PLAYERS_FROM_DB = "LOAD_PLAYERS_FROM_DB"
 export const createPlayer = (name: string) => {
     return async dispatch => {
 
-        const savingResult = await playerRepositoryActions.createPlayer(name)
+        const playerEntity = await playerRepositoryActions.createPlayer(name)
             .catch((error) =>
                 dispatch({ERROR, error: new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error)))})
             )
 
-        dispatch({type: CREATE_PLAYER, player: new Player(savingResult.id, name, true)})
+        dispatch({type: CREATE_PLAYER, player: new Player(playerEntity.id, playerEntity.name, playerEntity.isActive)})
 
     }
 };
 
-export const updatePlayer = (playerId: string, newName: string) => {
-    return {
-        type: UPDATE_PLAYER,
-        id: playerId,
-        newName: newName
-    };
+export const updatePlayer = (player: Player) => {
+    return async dispatch => {
+
+        const playerEntity = await playerRepositoryActions.updatePlayer(player)
+            .catch((error) =>
+                dispatch({ERROR, error: new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error)))})
+            )
+
+        dispatch({type: UPDATE_PLAYER, player: new Player(playerEntity.id, playerEntity.name, playerEntity.isActive == 1)})
+
+    }
 };
 
 export const deletePlayer = playerId => {
@@ -54,8 +59,6 @@ export const loadPlayersFromDb = () => {
             )
             savedPlayers.push(savedPlayer)
         })
-
-        console.log(savedPlayers)
 
         dispatch({type: LOAD_PLAYERS_FROM_DB, loadedPlayers: savedPlayers})
 

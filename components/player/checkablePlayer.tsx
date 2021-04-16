@@ -27,16 +27,18 @@ const CheckablePlayer = ({player = new Player("", "", true), setOneCheckablePlay
         dispatch(playerActions.createPlayer(name))
     }, [dispatch, savePlayer]);
 
-    const updatePlayer = useCallback((newName: string) => {
+
+    const updatePlayer = useCallback((id: string, newName: string, isActive) => {
         dispatch(
-            playerActions.updatePlayer(player.id, newName)
+            playerActions.updatePlayer(new Player(id, newName, isActive))
         );
     }, [dispatch, player]);
 
 
     const deletePlayer = useCallback(() => {
+        setIsDeleteDialogShown(false)
         dispatch(
-            playerActions.deletePlayer(player.id)
+            playerActions.updatePlayer(new Player(player.id, player.name, false))
         );
     }, [dispatch, player]);
 
@@ -44,7 +46,7 @@ const CheckablePlayer = ({player = new Player("", "", true), setOneCheckablePlay
     if (isEditMode) {
         return (
             <View style={styles.mainContainer}>
-                <IconButton size={23} icon={"delete-outline"} color={"red"} onPress={() => {
+                <IconButton size={23} icon={"eye-off"} color={"red"} onPress={() => {
                     player.id === "" ? setIsAdding(false) : setIsDeleteDialogShown(true)
                 }}/>
 
@@ -63,7 +65,7 @@ const CheckablePlayer = ({player = new Player("", "", true), setOneCheckablePlay
                             onSubmitEditing={() => {
                                 setIsEditMode(false)
                                 setIsAdding(false)
-                                player.id === "" ? createPlayer(name) : updatePlayer(name)
+                                player.id === "" ? createPlayer(name) : updatePlayer(player.id, name, player.isActive)
                             }}
                         />
                     </View>
@@ -71,7 +73,7 @@ const CheckablePlayer = ({player = new Player("", "", true), setOneCheckablePlay
                         <IconButton size={23} icon={"check"} color={Colors.secondary} onPress={() => {
                             setIsEditMode(false)
                             setIsAdding(false)
-                            player.id === "" ? createPlayer(name) : updatePlayer(name)
+                            player.id === "" ? createPlayer(name) : updatePlayer(player.id, name, player.isActive)
                         }}/>
                     </View>
 
@@ -82,11 +84,11 @@ const CheckablePlayer = ({player = new Player("", "", true), setOneCheckablePlay
                     <Dialog visible={isDeleteDialogShown} onDismiss={() => setIsDeleteDialogShown(false)}>
                         <Dialog.Title>Warnung</Dialog.Title>
                         <Dialog.Content>
-                            <Paragraph>Eintrag "{name}" wirklich löschen?</Paragraph>
+                            <Paragraph>Spieler "{name}" wirklich ausplenden?</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={() => setIsDeleteDialogShown(false)}>Abbrechen</Button>
-                            <Button color={"red"} onPress={deletePlayer}>Löschen</Button>
+                            <Button color={"red"} onPress={deletePlayer}>Ausblenden</Button>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>

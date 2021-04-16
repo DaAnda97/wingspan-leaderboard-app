@@ -20,40 +20,14 @@ export default (state = initialState, action) => {
 
 
         case UPDATE_PLAYER:
-            const selectedIndex = state.allPlayers.findIndex(player => player.id === action.id)
-
-            const updatedPlayer: Player = new Player(
-                action.id,
-                action.newName,
-                true
-            );
+            const selectedIndex = state.allPlayers.findIndex(player => player.id === action.player.id)
 
             const updatedPlayers = [...state.allPlayers]
-            updatedPlayers[selectedIndex] = updatedPlayer
+            updatedPlayers[selectedIndex] = action.player
 
             return {
                 ...state,
                 allPlayers: updatedPlayers
-            }
-
-
-        case DELETE_PLAYER:
-            const deletingIndex = state.allPlayers.findIndex(player => player.id === action.id)
-            const selectedPlayer = state.allPlayers.find(player => player.id === action.id)
-                ?? helpers.throwError("Error in playerReducer: player id not found")
-
-            const deletingPlayer: Player = new Player(
-                selectedPlayer.id,
-                selectedPlayer.name,
-                false
-            );
-
-            const uPlayers = [...state.allPlayers]
-            uPlayers[deletingIndex] = deletingPlayer
-
-            return {
-                ...state,
-                allPlayers: uPlayers
             }
 
 
