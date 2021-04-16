@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {Button, Checkbox, Dialog, IconButton, Paragraph, Portal, TextInput} from 'react-native-paper'
-import Player from "../../player/model/player";
-import TouchableComponent from "../../../components/TouchableComponent";
-import Colors from "../../../constants/Colors";
+import Player from "../../models/player/player";
+import TouchableComponent from "../ui/TouchableComponent";
+import Colors from "../../constants/Colors";
 import {useDispatch} from "react-redux";
-import * as playerActions from "../store/playerActions";
+import * as playerActions from "../../stores/player/playerActions";
 
 
 type Props = {

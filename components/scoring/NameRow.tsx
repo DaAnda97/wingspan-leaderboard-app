@@ -1,10 +1,10 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {Subheading} from 'react-native-paper'
-import helpers from "../../../constants/Functions";
-import Colors from "../../../constants/Colors";
-import Scoring from "../model/scoring";
-import Player from "../../player/model/player";
+import helpers from "../../constants/Functions";
+import Colors from "../../constants/Colors";
+import Scoring from "../../models/scoring/scoring";
+import Player from "../../models/player/player";
 
 type Props = {
     scores : Array<Scoring>

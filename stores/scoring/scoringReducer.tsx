@@ -1,4 +1,4 @@
-import Scoring from "../model/scoring";
+import Scoring from "../../models/scoring/scoring";
 import {CREATE_SCORING, DELETE_SCORING, UPDATE_SCORING, LOAD_SCORES_FROM_DB} from "./scoringActions";
 
 const initialState = {

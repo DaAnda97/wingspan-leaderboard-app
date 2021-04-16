@@ -2,11 +2,11 @@ import React, {Ref, useState, createRef, RefObject, useCallback} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import { TextInput as RNTextInput } from 'react-native';
 import {Divider, HelperText, Subheading, Text, TextInput, Title} from 'react-native-paper'
-import ScoringField from "../model/scoringField";
-import {INITIAL_SCORING_FIELDS} from "../model/SCORING_CONSTANTS";
-import helpers from "../../../constants/Functions";
-import Colors from "../../../constants/Colors";
-import * as scoringActions from "../store/scoringActions";
+import ScoringField from "../../models/scoring/scoringField";
+import {INITIAL_SCORING_FIELDS} from "../../models/scoring/SCORING_CONSTANTS";
+import helpers from "../../constants/Functions";
+import Colors from "../../constants/Colors";
+import * as scoringActions from "../../stores/scoring/scoringActions";
 import {useDispatch} from "react-redux";
 
 type Props = {

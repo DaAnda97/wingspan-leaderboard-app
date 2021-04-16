@@ -1,7 +1,7 @@
-import Scoring from "../model/scoring";
-import * as errorActions from "../../main/store/errorAction";
-import CustomError from "../../main/model/customError";
-import {loadAllScores} from "../repository/scoringRepository"
+import Scoring from "../../models/scoring/scoring";
+import * as errorActions from "../main/errorAction";
+import CustomError from "../../models/main/customError";
+import {loadAllScores} from "../../repositories/scoringRepository"
 
 export const CREATE_SCORING = 'CREATE_SCORING';
 export const UPDATE_SCORING = 'UPDATE_SCORING';

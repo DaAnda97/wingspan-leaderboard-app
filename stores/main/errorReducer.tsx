@@ -1,5 +1,5 @@
 import {DELETE_ERRORS, ERROR} from "./errorAction";
-import CustomError from "../model/customError";
+import CustomError from "../../models/main/customError";
 
 
 const initialState = {

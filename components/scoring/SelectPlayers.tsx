@@ -1,16 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Dialog, Portal} from "react-native-paper";
-import Colors from "../../../constants/Colors";
-import Player from "../../player/model/player";
+import Colors from "../../constants/Colors";
+import Player from "../../models/player/player";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../main/store/RootReducer";
-import helpers from "../../../constants/Functions";
-import Styles from "../../../constants/Styles";
-import * as scoringActions from "../store/scoringActions"
-import CheckablePlayers from "../../player/components/checkablePlayers";
-import CheckablePlayer from "../../player/components/checkablePlayer";
-import Status from "../../player/model/CheckBoxStatus";
+import {RootState} from "../../stores/main/RootReducer";
+import helpers from "../../constants/Functions";
+import Styles from "../../constants/Styles";
+import * as scoringActions from "../../stores/scoring/scoringActions"
+import CheckablePlayers from "../player/checkablePlayers";
+import CheckablePlayer from "../player/checkablePlayer";
+import Status from "../../models/player/CheckBoxStatus";
 
 type Props = {
     isAddPlayersShown: boolean

@@ -1,7 +1,7 @@
-import Player from "../model/player";
-import PLAYERS from "../../../data/players";
+import Player from "../../models/player/player";
+import PLAYERS from "../../data/players";
 import {CREATE_PLAYER, DELETE_PLAYER, UPDATE_PLAYER} from "./playerActions";
-import helpers from "../../../constants/Functions";
+import helpers from "../../constants/Functions";
 
 const initialState = {
     //allPlayer: Array<Player>()

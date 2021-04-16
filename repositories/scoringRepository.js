@@ -1,27 +1,19 @@
 import * as SQLite from 'expo-sqlite'
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer'
 
-import ScoringSheetEntity from "../../leaderboard/model/scoringSheetEntity";
-import ScoringEntity from "../model/scoringEntity";
-import CustomError from "../../main/model/customError";
-import * as errorActions from "../../main/store/errorAction";
-import {useSavedScores} from "../store/scoringActions";
-import * as scoringSheetActions from "../../leaderboard/store/scoringSheetActions";
-import Scoring from "../model/scoring";
+import ScoringEntity from "../models/scoring/scoringEntity";
+import CustomError from "../models/main/customError";
+import * as errorActions from "../stores/main/errorAction";
+import {saveNewScoringSheet} from "./scoringSheetRepositroy";
 
-
-export const createScoringSheetTable = () => {
-    ScoringSheetEntity.createTable()
-}
 export const createScoresTable = () => {
     ScoringEntity.createTable()
+    console.log("Table scores created successfully")
+    //ScoringEntity.dropTable()
 }
 
 export async function saveScores(scores){
-    const databaseLayer = new DatabaseLayer(async () => SQLite.openDatabase('wingspan.db'), 'scores');
-    const scoringSheet = new ScoringSheetEntity({})
-
-    const scoringSheetEntity = await scoringSheet.save()
+    const scoringSheetEntity = saveNewScoringSheet()
         .catch((error) => {
             errorActions.newError(new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error))))
         })
@@ -44,6 +36,7 @@ export async function saveScores(scores){
         allScoresToSave.push(scoringToSave)
     })
 
+    const databaseLayer = new DatabaseLayer(async () => SQLite.openDatabase('wingspan.db'), 'scores');
     await databaseLayer.bulkInsertOrReplace(allScoresToSave)
         .catch((error) => {
             errorActions.newError(new CustomError(error.message + "", JSON.stringify(error, Object.getOwnPropertyNames(error))))

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import {Button, Text, Checkbox, Paragraph, IconButton} from 'react-native-paper'
-import Player from "../../player/model/player";
-import Status from "../model/CheckBoxStatus";
+import Player from "../../models/player/player";
+import Status from "../../models/player/CheckBoxStatus";
 import CheckablePlayer from "./checkablePlayer";
-import Colors from "../../../constants/Colors";
+import Colors from "../../constants/Colors";
 
 
 type Props = {

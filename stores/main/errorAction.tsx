@@ -1,4 +1,4 @@
-import CustomError from "../model/customError";
+import CustomError from "../../models/main/customError";
 
 export const ERROR = 'ERROR'
 export const DELETE_ERRORS = 'DELETE_ERRORS'

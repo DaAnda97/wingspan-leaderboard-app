@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite'
 import {SQLiteCallback} from "expo-sqlite";
-import Scoring from "../domains/scoring/model/scoring";
+import Scoring from "../models/scoring/scoring";
 
 const db = SQLite.openDatabase("wingspan.db")
 

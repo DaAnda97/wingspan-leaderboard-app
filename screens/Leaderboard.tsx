@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper'
-import ErrorView from "../../../components/ErrorView";
+import ErrorView from "../components/ui/ErrorView";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Leaderboard = ({navigation}) => {

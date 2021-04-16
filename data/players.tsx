@@ -1,4 +1,4 @@
-import Player from "../domains/player/model/player";
+import Player from "../models/player/player";
 
 const PLAYERS = [
     new Player(

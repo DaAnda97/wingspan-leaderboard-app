@@ -11,7 +11,7 @@ export default class ScoringSheetEntity extends BaseModel {
     }
 
     static get tableName() {
-        return 'scoringSheet'
+        return 'scoringSheets'
     }
 
     static get columnMapping() {

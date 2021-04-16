@@ -3,19 +3,19 @@ import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from "react-redux";
-import ScoringPlayer from "../components/ScoringPlayer";
+import ScoringPlayer from "../components/scoring/ScoringPlayer";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Divider, IconButton, Subheading, Text, Title} from "react-native-paper";
-import {INPUT_REFS, SCORING_FIELD_NAMES} from "../model/SCORING_CONSTANTS";
-import Colors from "../../../constants/Colors";
-import SelectPlayers from "../components/SelectPlayers";
-import ScoringFieldName from "../model/scoringFieldName";
-import {RootState} from "../../main/store/RootReducer";
-import Scoring from "../model/scoring";
-import NameRow from "../components/NameRow";
+import {INPUT_REFS, SCORING_FIELD_NAMES} from "../models/scoring/SCORING_CONSTANTS";
+import Colors from "../constants/Colors";
+import SelectPlayers from "../components/scoring/SelectPlayers";
+import ScoringFieldName from "../models/scoring/scoringFieldName";
+import {RootState} from "../stores/main/RootReducer";
+import Scoring from "../models/scoring/scoring";
+import NameRow from "../components/scoring/NameRow";
 
-import {saveScores} from "../repository/scoringRepository"
-import * as scoringActions from "../store/scoringActions"
+import {saveScores} from "../repositories/scoringRepository"
+import * as scoringActions from "../stores/scoring/scoringActions"
 
 const ScoringInput = ({navigation}) => {
     const dispatch = useDispatch()
