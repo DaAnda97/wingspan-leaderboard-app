@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
-import { Provider as StoreProvider, useDispatch } from 'react-redux';
+import { Provider as StoreProvider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import Colors from './constants/Colors';
-import TabScreenNavigator from './navigation/TapScreenNavigator';
 import { applyMiddleware, createStore } from 'redux';
-import { rootReducer } from './stores/main/RootReducer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
+import Colors from './constants/Colors';
+import TabScreenNavigator from './navigation/TapScreenNavigator';
+import { rootReducer } from './stores/main/RootReducer';
 import { createScoresTable } from './repositories/scoringRepository';
 import { createScoringSheetsTable } from './repositories/scoringSheetRepositroy';
 import { createPlayersTable } from './repositories/playerRepository';
-
-import * as playerActions from './stores/player/playerActions';
 
 const createTables = () => {
     createPlayersTable();
@@ -44,7 +43,7 @@ export default function App() {
         () => {
             createTables();
         },
-        [] //The empty array ensures it is called only once, on the first render.
+        [] // The empty array ensures it is called only once, on the first render.
     );
 
     return (

@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {
     Button,
     Checkbox,
@@ -12,9 +13,8 @@ import {
 import Player from '../../models/player/player';
 import TouchableComponent from '../ui/TouchableComponent';
 import Colors from '../../constants/Colors';
-import { useDispatch } from 'react-redux';
 import * as playerActions from '../../stores/player/playerActions';
-import { savePlayer } from '../../repositories/playerRepository';
+import Status from "../../models/player/CheckBoxStatus";
 
 type Props = {
     player?: Player;
@@ -23,24 +23,18 @@ type Props = {
     setIsAdding: (isAdding: boolean) => void;
 };
 
-type Status = 'unchecked' | 'indeterminate' | 'checked';
 
-const CheckablePlayer = ({
-    player = new Player('', '', true),
-    setOneCheckablePlayer,
-    status,
-    setIsAdding
-}: Props) => {
+const CheckablePlayer = ({player = new Player('', '', true), setOneCheckablePlayer, status, setIsAdding}: Props) => {
     const dispatch = useDispatch();
     const [name, setName] = useState(player.name);
     const [isDeleteDialogShown, setIsDeleteDialogShown] = useState(false);
     const [isEditMode, setIsEditMode] = useState<boolean>(player.name === '');
 
     const createPlayer = useCallback(
-        (name: string) => {
-            dispatch(playerActions.createPlayer(name));
+        (playerName: string) => {
+            dispatch(playerActions.createPlayer(playerName));
         },
-        [dispatch, savePlayer]
+        [dispatch]
     );
 
     const updatePlayer = useCallback(
@@ -49,7 +43,7 @@ const CheckablePlayer = ({
                 playerActions.updatePlayer(new Player(id, newName, isActive))
             );
         },
-        [dispatch, player]
+        [dispatch]
     );
 
     const deletePlayer = useCallback(() => {
@@ -90,7 +84,6 @@ const CheckablePlayer = ({
                     </View>
                     <View style={styles.horizontalCentered}>
                         <TextInput
-                            autoFocus={true}
                             value={name}
                             onChangeText={(input) => setName(input)}
                             onSubmitEditing={() => {
@@ -99,10 +92,10 @@ const CheckablePlayer = ({
                                 player.id === ''
                                     ? createPlayer(name)
                                     : updatePlayer(
-                                          player.id,
-                                          name,
-                                          player.isActive
-                                      );
+                                    player.id,
+                                    name,
+                                    player.isActive
+                                    );
                             }}
                         />
                     </View>
@@ -114,13 +107,7 @@ const CheckablePlayer = ({
                             onPress={() => {
                                 setIsEditMode(false);
                                 setIsAdding(false);
-                                player.id === ''
-                                    ? createPlayer(name)
-                                    : updatePlayer(
-                                          player.id,
-                                          name,
-                                          player.isActive
-                                      );
+                                player.id === '' ? createPlayer(name) : updatePlayer(player.id, name, player.isActive);
                             }}
                         />
                     </View>
@@ -151,35 +138,36 @@ const CheckablePlayer = ({
                 </Portal>
             </View>
         );
-    } else {
-        return (
-            <View style={styles.mainContainer}>
-                <IconButton
-                    size={23}
-                    icon={'pencil-outline'}
-                    color={Colors.secondary}
+    }
+
+    return (
+        <View style={styles.mainContainer}>
+            <IconButton
+                size={23}
+                icon={'pencil-outline'}
+                color={Colors.secondary}
+                onPress={() => {
+                    setIsEditMode(true);
+                }}
+            />
+            <TouchableComponent
+                style={styles.touchableContainer}
+                onPress={() => setOneCheckablePlayer(player.id)}
+            >
+                <View style={styles.verticalCentered}>
+                    <Paragraph>{player.name}</Paragraph>
+                </View>
+                <Checkbox.Android
+                    status={status}
                     onPress={() => {
-                        setIsEditMode(true);
+                        setOneCheckablePlayer(player.id);
                     }}
                 />
-                <TouchableComponent
-                    style={styles.touchableContainer}
-                    onPress={() => setOneCheckablePlayer(player.id)}
-                >
-                    <View style={styles.verticalCentered}>
-                        <Paragraph>{player.name}</Paragraph>
-                    </View>
-                    <Checkbox.Android
-                        status={status}
-                        onPress={() => {
-                            setOneCheckablePlayer(player.id);
-                        }}
-                    />
-                </TouchableComponent>
-            </View>
-        );
-    }
-};
+            </TouchableComponent>
+        </View>
+    );
+
+}
 
 const styles = StyleSheet.create({
     editContainer: {

@@ -24,6 +24,7 @@ module.exports = {
         // ESLint
         'react',
         'react-native',
+        'react-hooks'
     ],
     settings: {
         // ESLint
@@ -50,6 +51,9 @@ module.exports = {
         HeaderHeight: false,
     },
     rules: {
+        'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+        'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+        'import/extensions': 'off',
         'global-require': 0,
         'linebreak-style': [2, 'unix'],
         'prefer-const': 0,
@@ -75,6 +79,8 @@ module.exports = {
                 exceptAfterSingleLine: true,
             },
         ],
+        'react/jsx-boolean-value': 0,
+        'react/no-unescaped-entities': 0,
         'prefer-destructuring': [
             2,
             {
@@ -86,7 +92,10 @@ module.exports = {
         'import/prefer-default-export': 0,
         'react/prefer-stateless-function': 0,
         'react/destructuring-assignment': 0,
+        'react/jsx-curly-brace-presence': 0,
         'react/prop-types': 0,
+        'react/require-default-props': 0,
+        'react-native/sort-styles': 0,
         'react/react-in-jsx-scope': 0,
         'react/jsx-props-no-spreading': 0,
         'react/jsx-filename-extension': [

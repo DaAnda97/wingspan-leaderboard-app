@@ -12,7 +12,6 @@ import {
 import ScoringField from '../../models/scoring/scoringField';
 import { INITIAL_SCORING_FIELDS } from '../../models/scoring/SCORING_CONSTANTS';
 import helpers from '../../constants/Functions';
-import Colors from '../../constants/Colors';
 import * as scoringActions from '../../stores/scoring/scoringActions';
 import { useDispatch } from 'react-redux';
 
@@ -25,14 +24,7 @@ type Props = {
     goToNext: (colIndex: number, playerIndex: number) => void;
 };
 
-const ScoringColumn = ({
-    playerIndex,
-    playerId,
-    scoringId,
-    scoringSheetId,
-    inputRefs,
-    goToNext
-}: Props) => {
+const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputRefs, goToNext}: Props) => {
     const dispatch = useDispatch();
 
     //states
@@ -93,7 +85,7 @@ const ScoringColumn = ({
             {scoringFields.map(
                 (scoringField: ScoringField, colIndex: number) => {
                     return (
-                        <View key={colIndex + ''} style={styles.score}>
+                        <View key={scoringField.key + "_" + playerId} style={styles.score}>
                             <TextInput
                                 style={styles.textInput}
                                 value={scoringField.value}
