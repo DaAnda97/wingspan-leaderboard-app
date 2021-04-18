@@ -12,38 +12,35 @@ type Props = {
 };
 
 const NameRow = ({ scores }: Props) => {
-    const allPlayer = useSelector(
-        (state: RootState) => state.players.allPlayers
-    ).filter((player) => player.isActive);
+    const allPlayer = useSelector((state: RootState) => state.players.allPlayers);
+
+    console.log(allPlayer)
+    console.log(scores)
 
     return (
         <View style={styles.nameView}>
-            <View style={styles.nameAndScore}>
+            <View style={styles.categoryContainer}>
                 <View style={styles.playerName}>
                     <Subheading> </Subheading>
                 </View>
                 {scores.length > 0 && (
-                    <View style={styles.categoryContainer}>
+                    <View>
                         <Subheading>GESAMT:</Subheading>
                     </View>
                 )}
             </View>
             {scores.map((scoring: Scoring) => {
                 const currentPlayer =
-                    allPlayer.find(
-                        (player) => player.id === scoring.playerId
-                    ) ??
-                    helpers.throwError(
-                        'Error in ScoringInput: playerId not in allPlayers'
-                    );
+                    allPlayer.find((player) => player.id === scoring.playerId)
+                        ?? helpers.throwError('Error in ScoringInput: playerId not in allPlayers');
                 return (
-                    <View key={scoring.playerId} style={styles.nameAndScore}>
+                    <View key={"NR_" + currentPlayer.id} style={styles.nameAndScore}>
                         <View style={styles.playerName}>
                             <Subheading style={styles.playerText}>
                                 {currentPlayer.name}
                             </Subheading>
                         </View>
-                        <View style={{ ...styles.score }}>
+                        <View style={styles.score}>
                             <Subheading>{scoring.totalScore}</Subheading>
                         </View>
                     </View>

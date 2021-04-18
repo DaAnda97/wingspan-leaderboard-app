@@ -39,7 +39,9 @@ const GameSheetOverview = ({navigation}) => {
     return (
         <View style={styles.main}>
             <Button onPress={() => navigation.navigate('PlayerSelection')}>Neue Spielwertung</Button>
+            <Button onPress={() => navigation.navigate('PlayerEdit')}>Spieler bearbeiten</Button>
         </View>
+
     );
 
 };
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export const screenOptions = ({navigation}) => {
+export const screenOptions = () => {
     return {
         headerTitle: 'Spielwertungen'
     };

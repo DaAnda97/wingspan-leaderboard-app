@@ -28,15 +28,12 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
     const dispatch = useDispatch();
 
     //states
-    const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(
-        INITIAL_SCORING_FIELDS
-    );
+    const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS);
 
     // methods
-    const setOneField = (fieldKey: string, newValue: string) => {
-        const updatedFieldIndex = scoringFields.findIndex(
-            (field) => field.key === fieldKey
-        );
+    const setOneField = (fieldKey: string, newValue: string, doStateUpdate: boolean) => {
+        const updatedFieldIndex = scoringFields.findIndex((field) => field.key === fieldKey);
+        const oldField = scoringFields.find((field) => field.key === fieldKey);
         const isNumber = helpers.isNumber(newValue);
 
         const updatedField = new ScoringField(
@@ -50,11 +47,14 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
         updatedFields[updatedFieldIndex] = updatedField;
 
         setScoringFields(updatedFields);
-        updateScoringPlayer(updatedFields);
+
+        if(doStateUpdate){
+            updateScoringPlayer(updatedFields);
+        }
+
     };
 
-    const updateScoringPlayer = useCallback(
-        (updatedFields: Array<ScoringField>) => {
+    const updateScoringPlayer = useCallback((updatedFields: Array<ScoringField>) => {
             dispatch(
                 scoringActions.updateScoring(
                     scoringId,
@@ -92,16 +92,16 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
                                 error={!scoringField.isValid}
                                 keyboardType={'decimal-pad'}
                                 onChangeText={(input) =>
-                                    setOneField(scoringField.key, input)
+                                    setOneField(scoringField.key, input, true)
                                 }
                                 onFocus={() => {
                                     if (scoringField.value === '0') {
-                                        setOneField(scoringField.key, '');
+                                        setOneField(scoringField.key, '', false);
                                     }
                                 }}
-                                onEndEditing={() => {
+                                onBlur={() => {
                                     if (scoringField.value === '') {
-                                        setOneField(scoringField.key, '0');
+                                        setOneField(scoringField.key, '0', true);
                                     }
                                 }}
                                 //focus next

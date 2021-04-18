@@ -1,157 +1,26 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
 import {
-    Button,
     Checkbox,
-    Dialog,
-    IconButton,
     Paragraph,
-    Portal,
-    TextInput
 } from 'react-native-paper';
 import Player from '../../models/player/player';
 import TouchableComponent from '../ui/TouchableComponent';
-import Colors from '../../constants/Colors';
-import * as playerActions from '../../stores/player/playerActions';
 import Status from "../../models/player/CheckBoxStatus";
 
 type Props = {
-    player?: Player;
+    player: Player;
     setOneCheckablePlayer: (playerId: string) => void;
-    status: Status;
-    setIsAdding: (isAdding: boolean) => void;
+    status: Status
 };
 
 
-const CheckablePlayer = ({player = new Player('', '', true), setOneCheckablePlayer, status, setIsAdding}: Props) => {
-    const dispatch = useDispatch();
-    const [name, setName] = useState(player.name);
-    const [isDeleteDialogShown, setIsDeleteDialogShown] = useState(false);
-    const [isEditMode, setIsEditMode] = useState<boolean>(player.name === '');
-
-    const createPlayer = useCallback(
-        (playerName: string) => {
-            dispatch(playerActions.createPlayer(playerName));
-        },
-        [dispatch]
-    );
-
-    const updatePlayer = useCallback(
-        (id: string, newName: string, isActive) => {
-            dispatch(
-                playerActions.updatePlayer(new Player(id, newName, isActive))
-            );
-        },
-        [dispatch]
-    );
-
-    const deletePlayer = useCallback(() => {
-        setIsDeleteDialogShown(false);
-        dispatch(
-            playerActions.updatePlayer(
-                new Player(player.id, player.name, false)
-            )
-        );
-    }, [dispatch, player]);
-
-    if (isEditMode) {
-        return (
-            <View style={styles.mainContainer}>
-                <IconButton
-                    size={23}
-                    icon={'eye-off'}
-                    color={'red'}
-                    onPress={() => {
-                        player.id === ''
-                            ? setIsAdding(false)
-                            : setIsDeleteDialogShown(true);
-                    }}
-                />
-
-                <View style={styles.editContainer}>
-                    <View style={styles.editButtonsStyle}>
-                        <IconButton
-                            size={23}
-                            icon={'close'}
-                            color={Colors.secondary}
-                            onPress={() => {
-                                player.id === ''
-                                    ? setIsAdding(false)
-                                    : setIsEditMode(false);
-                            }}
-                        />
-                    </View>
-                    <View style={styles.horizontalCentered}>
-                        <TextInput
-                            value={name}
-                            onChangeText={(input) => setName(input)}
-                            onSubmitEditing={() => {
-                                setIsEditMode(false);
-                                setIsAdding(false);
-                                player.id === ''
-                                    ? createPlayer(name)
-                                    : updatePlayer(
-                                    player.id,
-                                    name,
-                                    player.isActive
-                                    );
-                            }}
-                        />
-                    </View>
-                    <View style={styles.editButtonsStyle}>
-                        <IconButton
-                            size={23}
-                            icon={'check'}
-                            color={Colors.secondary}
-                            onPress={() => {
-                                setIsEditMode(false);
-                                setIsAdding(false);
-                                player.id === '' ? createPlayer(name) : updatePlayer(player.id, name, player.isActive);
-                            }}
-                        />
-                    </View>
-                </View>
-
-                <Portal>
-                    <Dialog
-                        visible={isDeleteDialogShown}
-                        onDismiss={() => setIsDeleteDialogShown(false)}
-                    >
-                        <Dialog.Title>Warnung</Dialog.Title>
-                        <Dialog.Content>
-                            <Paragraph>
-                                Spieler "{name}" wirklich ausplenden?
-                            </Paragraph>
-                        </Dialog.Content>
-                        <Dialog.Actions>
-                            <Button
-                                onPress={() => setIsDeleteDialogShown(false)}
-                            >
-                                Abbrechen
-                            </Button>
-                            <Button color={'red'} onPress={deletePlayer}>
-                                Ausblenden
-                            </Button>
-                        </Dialog.Actions>
-                    </Dialog>
-                </Portal>
-            </View>
-        );
-    }
+const CheckablePlayer = ({player, setOneCheckablePlayer, status}: Props) => {
 
     return (
         <View style={styles.mainContainer}>
-            <IconButton
-                size={23}
-                icon={'pencil-outline'}
-                color={Colors.secondary}
-                onPress={() => {
-                    setIsEditMode(true);
-                }}
-            />
             <TouchableComponent
-                style={styles.touchableContainer}
+                style={styles.contentContainer}
                 onPress={() => setOneCheckablePlayer(player.id)}
             >
                 <View style={styles.verticalCentered}>
@@ -190,7 +59,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    touchableContainer: {
+    contentContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

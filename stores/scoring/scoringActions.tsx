@@ -4,7 +4,7 @@ import { saveScoringArray } from '../../repositories/scoringRepository';
 export const CREATE_SCORING = 'CREATE_SCORING';
 export const UPDATE_SCORING = 'UPDATE_SCORING';
 export const DELETE_SCORING = 'DELETE_SCORING';
-export const LOAD_SCORES_FROM_DB = 'LOAD_SCORES_FROM_DB';
+export const PERSIST_SCORES = 'PERSIST_SCORES';
 
 export const saveScores = (scores: Array<Scoring>) => {
     return async (dispatch) => {
@@ -29,13 +29,14 @@ export const saveScores = (scores: Array<Scoring>) => {
             loadedScores.push(savedScoring);
         });
 
-        dispatch({ type: LOAD_SCORES_FROM_DB, loadedScores: loadedScores });
+        dispatch({ type: PERSIST_SCORES, loadedScores: loadedScores });
     };
 };
 
 export const createScoring = (scoringSheetId: string, playerId: string) => {
     return {
         type: CREATE_SCORING,
+        id: "tmp_unsaved_" + scoringSheetId + "_" + playerId,
         scoringData: {
             scoringSheetId,
             playerId

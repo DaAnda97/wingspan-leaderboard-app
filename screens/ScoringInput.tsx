@@ -20,11 +20,8 @@ const ScoringInput = ({ navigation, route }) => {
     const names = SCORING_FIELD_NAMES;
     const inputRefs = INPUT_REFS;
 
-    const scores = useSelector(
-        (state: RootState) => state.scores.allScores
-    ).filter(
-        (scoring) => scoring.scoringSheetId === route.params.scoringSheetId
-    );
+    const scores = useSelector((state: RootState) => state.scores.unsavedScores)
+        .filter((scoring) => scoring.scoringSheetId === route.params.scoringSheetId);
 
     const goToNext = (colIndex, playerIndex) => {
         if (playerIndex < scores.length - 1) {

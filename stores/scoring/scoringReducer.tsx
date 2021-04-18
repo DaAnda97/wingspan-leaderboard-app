@@ -3,11 +3,12 @@ import {
     CREATE_SCORING,
     DELETE_SCORING,
     UPDATE_SCORING,
-    LOAD_SCORES_FROM_DB
+    PERSIST_SCORES, saveScores
 } from './scoringActions';
 
 const initialState = {
-    allScores: Array<Scoring>()
+    unsavedScores: Array<Scoring>(),
+    savedScores: Array<Scoring>(),
 };
 
 export default (state = initialState, action) => {
@@ -29,11 +30,12 @@ export default (state = initialState, action) => {
 
             return {
                 ...state,
-                allScores: [...state.allScores, newScoring]
+                unsavedScores: [...state.unsavedScores, newScoring],
+                savedScores: state.savedScores
             };
 
         case UPDATE_SCORING:
-            const updatedScoringIndex = state.allScores.findIndex(
+            const updatedScoringIndex = state.unsavedScores.findIndex(
                 (score) => score.id === action.id
             );
             const totalScore =
@@ -59,26 +61,27 @@ export default (state = initialState, action) => {
                 totalScore
             );
 
-            const updatedScores = [...state.allScores];
+            const updatedScores = [...state.unsavedScores];
             updatedScores[updatedScoringIndex] = updatedScoring;
 
             return {
                 ...state,
-                allScores: updatedScores
+                unsavedScores: updatedScores,
+                savedScores: state.savedScores
             };
 
         case DELETE_SCORING:
             return {
                 ...state,
-                allScores: state.allScores.filter(
-                    (score) => score.id !== action.id
-                )
+                unsavedScores: state.unsavedScores.filter((score) => score.id !== action.id),
+                savedScores: state.savedScores
             };
 
-        case LOAD_SCORES_FROM_DB:
+        case PERSIST_SCORES:
             return {
                 ...state,
-                allScores: action.loadedScores
+                unsavedScores: [],
+                savedScores: action.loadedScores
             };
     }
 
