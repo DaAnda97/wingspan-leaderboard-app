@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
@@ -38,7 +38,9 @@ const theme = {
     }
 };
 
+
 export default function App() {
+
     useEffect(
         () => {
             createTables();

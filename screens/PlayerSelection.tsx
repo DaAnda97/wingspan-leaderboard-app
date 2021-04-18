@@ -5,10 +5,13 @@ import CheckablePlayers from '../components/player/checkablePlayers';
 import * as playerActions from '../stores/player/playerActions';
 import Styles from '../constants/Styles';
 import {ActivityIndicator, IconButton, Text} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from "../stores/main/RootReducer";
 
 const PlayerSelection = ({navigation}) => {
     const dispatch = useDispatch();
+    const allPlayer = useSelector((state: RootState) => state.players.allPlayers)
+    const [isLoading, setIsLoading] = useState(true);
     const [scoringSheetId] = useState(Math.random().toString(36).substring(2));
 
     const submitHandler = useCallback(() => {

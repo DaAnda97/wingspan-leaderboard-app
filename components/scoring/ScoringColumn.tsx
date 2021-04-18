@@ -85,7 +85,7 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
             {scoringFields.map(
                 (scoringField: ScoringField, colIndex: number) => {
                     return (
-                        <View key={scoringField.key + "_" + playerId} style={styles.score}>
+                        <View key={playerId + "_" + colIndex} style={styles.score}>
                             <TextInput
                                 style={styles.textInput}
                                 value={scoringField.value}

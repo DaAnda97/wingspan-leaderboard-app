@@ -1,12 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import PlayerSelectionScreen, {
-    screenOptions as playerSelectionScreenOptions
-} from '../screens/PlayerSelection';
-import ScoringInputScreen, {
-    screenOptions as scoringInputScreenOptions
-} from '../screens/ScoringInput';
+import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/PlayerSelection';
+import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/ScoringInput';
+import GameSheetOverviewScreen, {screenOptions as gameSheetOverviewScreenOptions} from '../screens/GameSheetOverview';
 
 import Colors from '../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -26,6 +23,11 @@ const ScoringStackNavigator = createStackNavigator();
 function ScoringNavigator() {
     return (
         <ScoringStackNavigator.Navigator screenOptions={defaultNavOptions}>
+            <ScoringStackNavigator.Screen
+                name="GameSheetOverview"
+                component={GameSheetOverviewScreen}
+                options={gameSheetOverviewScreenOptions}
+            />
             <ScoringStackNavigator.Screen
                 name="PlayerSelection"
                 component={PlayerSelectionScreen}

@@ -1,67 +1,45 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {ActivityIndicator, Button, Text} from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Player from '../../models/player/player';
 import Status from '../../models/player/CheckBoxStatus';
 import CheckablePlayer from './checkablePlayer';
 import Colors from '../../constants/Colors';
-import { RootState } from '../../stores/main/RootReducer';
+import {RootState} from '../../stores/main/RootReducer';
 import * as scoringActions from '../../stores/scoring/scoringActions';
 import helpers from '../../constants/Functions';
-import * as playerActions from "../../stores/player/playerActions";
-import Styles from "../../constants/Styles";
 
 type Props = {
     scoringSheetId: string;
 };
 
-const CheckablePlayers = ({ scoringSheetId }: Props) => {
+const CheckablePlayers = ({scoringSheetId}: Props) => {
     const dispatch = useDispatch();
 
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter((player) => player.isActive);
     const scoresOfSheet = useSelector((state: RootState) => state.scores.allScores).filter((scoring) => scoring.scoringSheetId === scoringSheetId);
 
-    // states
-    const [checkablePlayers, setCheckablePlayers] = useState<Map<string, Status>>(new Map());
-    const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false);
-    const [isAdding, setIsAdding] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-
-    console.log("checkablePlayers: " + JSON.stringify(checkablePlayers))
 
     // initialize
-    const initializeCheckablePlayers = useCallback(() => {
+    const initializeCheckablePlayers = useCallback( () => {
         let initCheckablePlayers: Map<string, Status> = new Map();
         allPlayer.forEach((player) => {
             const thisStatus = scoresOfSheet.find((scoring) => scoring.playerId === player.id) === undefined
                 ? 'unchecked'
                 : 'checked'
             initCheckablePlayers.set(player.id, thisStatus)
-        });
+        })
         return initCheckablePlayers
-    }, [allPlayer, scoresOfSheet])
+    }, [allPlayer])
 
-    const loadPlayers = useCallback(() => {
-        try {
-            dispatch(playerActions.loadPlayersFromDb());
-        } catch (err) {
-            throw new Error(err);
-        }
-        setIsLoading(false);
-    }, [dispatch]);
 
-    useEffect(() => {
-        loadPlayers();
-    }, [dispatch, loadPlayers]);
 
-    useEffect(() => {
-        const initCPs = initializeCheckablePlayers()
-        console.log(initCPs)
-        setCheckablePlayers(initCPs)
-    }, [dispatch, allPlayer]);
-
+    // states
+    const [checkablePlayers, setCheckablePlayers] = useState<Map<string, Status>>(initializeCheckablePlayers);
+    const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false);
+    const [isAdding, setIsAdding] = useState(false);
 
 
     // methods
@@ -140,15 +118,6 @@ const CheckablePlayers = ({ scoringSheetId }: Props) => {
         [checkablePlayers, setCheckablePlayers, scoresOfSheet, createNewScoringPlayer, deleteScoringPlayer, indeterminateUnselectableFields]
     );
 
-
-    if (isLoading) {
-        return (
-            <View style={Styles.centered}>
-                <ActivityIndicator animating={true} />
-                <Text>Lade Spieler</Text>
-            </View>
-        );
-    }
 
     return (
         <View style={styles.main}>

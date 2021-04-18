@@ -93,7 +93,7 @@ const ScoringInput = ({ navigation, route }) => {
                     {scores.map((scoring: Scoring, index: number) => {
                         return (
                             <ScoringColumn
-                                key={scoring.id}
+                                key={index + ""}
                                 playerIndex={index}
                                 playerId={scoring.playerId}
                                 scoringId={scoring.id}
