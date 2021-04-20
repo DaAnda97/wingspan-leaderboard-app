@@ -21,7 +21,7 @@ const ScoringInput = ({ navigation, route }) => {
     const inputRefs = INPUT_REFS;
 
     const scoringSheetId = useSelector((state: RootState) => state.scores.unsavedScoringId)
-    const scores = useSelector((state: RootState) => state.scores.unsavedScores)
+    const scores = useSelector((state: RootState) => state.scores.unsavedScores).filter(score => score.scoringSheetId === scoringSheetId)
 
     const goToNext = (colIndex, playerIndex) => {
         if (playerIndex < scores.length - 1) {
@@ -90,7 +90,7 @@ const ScoringInput = ({ navigation, route }) => {
                     {scores.map((scoring: Scoring, index: number) => {
                         return (
                             <ScoringColumn
-                                key={index + ""}
+                                key={scoring.id}
                                 playerIndex={index}
                                 playerId={scoring.playerId}
                                 scoringId={scoring.id}

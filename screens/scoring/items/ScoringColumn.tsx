@@ -1,13 +1,9 @@
-import React, { Ref, useState, createRef, RefObject, useCallback } from 'react';
+import React, { useState, RefObject, useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { TextInput as RNTextInput } from 'react-native';
 import {
-    Divider,
     HelperText,
-    Subheading,
-    Text,
     TextInput,
-    Title
 } from 'react-native-paper';
 import ScoringField from '../../../models/scoring/scoringField';
 import { INITIAL_SCORING_FIELDS } from '../../../models/scoring/SCORING_CONSTANTS';
