@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {useSelector} from "react-redux";
 import {RootState} from "../../stores/main/RootReducer";
@@ -14,41 +14,44 @@ const PlayerEdit = ({navigation}) => {
     const [isAdding, setIsAdding] = useState(false);
 
     return (
-        <View style={styles.main}>
-            {allPlayer.length > 0 ? (
-                allPlayer.map((player: Player) => {
-                    return (
-                        <EditPlayer
-                            key={player.id}
-                            player={player}
-                            setIsAdding={setIsAdding}
-                        />
-                    );
-                })
-            ) : (
-                <Text style={styles.defaultTextStyle}>
-                    Noch keine Spieler vorhanden. Lege zuerst Spieler an.
-                </Text>
-            )}
-            {isAdding ? (
-                <EditPlayer
-                    setIsAdding={setIsAdding}
-                />
-            ) : (
-                <View style={styles.buttonContainer}>
-                    <Button style={styles.buttonStyle}
-                            icon={'account-plus'}
-                            color={Colors.secondary}
-                            onPress={() => {
-                                setIsAdding(true);
-                            }}
-                    >
-                        Neuen Spieler anlegen
-                    </Button>
-                </View>
+        <ScrollView>
+            <View style={styles.main}>
+                {allPlayer.length > 0 ? (
+                    allPlayer.map((player: Player) => {
+                        return (
+                            <EditPlayer
+                                key={player.id}
+                                player={player}
+                                setIsAdding={setIsAdding}
+                            />
+                        );
+                    })
+                ) : (
+                    <Text style={styles.defaultTextStyle}>
+                        Noch keine Spieler vorhanden. Lege zuerst Spieler an.
+                    </Text>
+                )}
+                {isAdding ? (
+                    <EditPlayer
+                        setIsAdding={setIsAdding}
+                    />
+                ) : (
+                    <View style={styles.buttonContainer}>
+                        <Button style={styles.buttonStyle}
+                                icon={'account-plus'}
+                                color={Colors.secondary}
+                                onPress={() => {
+                                    setIsAdding(true);
+                                }}
+                        >
+                            Neuen Spieler anlegen
+                        </Button>
+                    </View>
 
-            )}
-        </View>
+                )}
+            </View>
+        </ScrollView>
+
     );
 
 };

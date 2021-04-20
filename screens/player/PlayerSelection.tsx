@@ -140,7 +140,6 @@ const PlayerSelection = ({navigation}) => {
 
 
     return (
-        <View style={styles.main}>
             <ScrollView>
                 <View style={styles.main}>
                     {allPlayer.length > 0 ? (
@@ -175,7 +174,6 @@ const PlayerSelection = ({navigation}) => {
                     </View>
                 </View>
             </ScrollView>
-        </View>
     );
 
 };
