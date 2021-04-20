@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/player/PlayerSelection';
 import PlayerEditScreen, {screenOptions as playerEditScreenOptions} from '../screens/player/PlayerEdit';
 import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/scoring/ScoringInput';
-import GameSheetOverviewScreen, {screenOptions as gameSheetOverviewScreenOptions} from '../screens/GameSheetOverview';
+import GameSheetOverviewScreen, {screenOptions as gameSheetOverviewScreenOptions} from '../screens/gameSheet/GameSheetOverview';
 
 import Colors from '../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

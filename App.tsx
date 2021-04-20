@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
@@ -10,7 +10,7 @@ import Colors from './constants/Colors';
 import TabScreenNavigator from './navigation/TapScreenNavigator';
 import { rootReducer } from './stores/main/RootReducer';
 import { createScoresTable } from './repositories/scoringRepository';
-import { createScoringSheetsTable } from './repositories/scoringSheetRepositroy';
+import { createScoringSheetsTable } from './repositories/gameSheetRepositroy';
 import { createPlayersTable } from './repositories/playerRepository';
 
 const createTables = () => {

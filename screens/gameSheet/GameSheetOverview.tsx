@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import * as playerActions from '../stores/player/playerActions';
-import Styles from '../constants/Styles';
+import * as playerActions from '../../stores/player/playerActions';
+import Styles from '../../constants/Styles';
 import {ActivityIndicator, Button, Text} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 

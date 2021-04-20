@@ -8,7 +8,7 @@ import {
 import ScoringField from '../../../models/scoring/scoringField';
 import { INITIAL_SCORING_FIELDS } from '../../../models/scoring/SCORING_CONSTANTS';
 import helpers from '../../../constants/Functions';
-import * as scoringActions from '../../../stores/scoring/scoringActions';
+import * as scoringActions from '../../../stores/scoring/gameSheetActions';
 import { useDispatch } from 'react-redux';
 
 type Props = {
@@ -29,7 +29,6 @@ const ScoringColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputR
     // methods
     const setOneField = (fieldKey: string, newValue: string, doStateUpdate: boolean) => {
         const updatedFieldIndex = scoringFields.findIndex((field) => field.key === fieldKey);
-        const oldField = scoringFields.find((field) => field.key === fieldKey);
         const isNumber = helpers.isNumber(newValue);
 
         const updatedField = new ScoringField(

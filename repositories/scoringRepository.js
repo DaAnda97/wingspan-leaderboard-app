@@ -2,9 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 
 import ScoringEntity from '../models/scoring/scoringEntity';
-import CustomError from '../models/main/customError';
-import * as errorActions from '../stores/main/errorAction';
-import { saveNewScoringSheet } from './scoringSheetRepositroy';
+import { saveNewScoringSheet } from './gameSheetRepositroy';
 
 export const createScoresTable = () => {
     ScoringEntity.createTable();

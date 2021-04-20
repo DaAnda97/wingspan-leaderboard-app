@@ -1,4 +1,4 @@
-import ScoringSheetEntity from '../models/scoringSheet/scoringSheetEntity';
+import ScoringSheetEntity from '../models/gameSheet/scoringSheetEntity';
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 import * as SQLite from 'expo-sqlite';
 
@@ -13,9 +13,9 @@ export async function saveNewScoringSheet() {
     return scoringSheet.save();
 }
 
-export const loadAllScores = () => {
+export const loadAllGames = () => {
     const databaseLayer = new DatabaseLayer(async () =>
         SQLite.openDatabase('wingspan.db')
     );
-    return databaseLayer.executeSql('SELECT * from scoringSheets;');
+    return databaseLayer.executeSql('SELECT * from gameSheets;');
 };

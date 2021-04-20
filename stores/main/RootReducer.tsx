@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import playerReducer from '../player/playerReducer';
-import scoringReducer from '../scoring/scoringReducer';
+import scoringReducer from '../scoring/gameSheetReducer';
 import errorReducer from './errorReducer';
 
 export const rootReducer = combineReducers({

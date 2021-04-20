@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 import ScoringColumn from './items/ScoringColumn';
-import { Divider, IconButton, Text, Title } from 'react-native-paper';
+import { Divider, IconButton, Text } from 'react-native-paper';
 import {
     INPUT_REFS,
     SCORING_FIELD_NAMES
@@ -13,9 +13,9 @@ import ScoringFieldName from '../../models/scoring/scoringFieldName';
 import { RootState } from '../../stores/main/RootReducer';
 import Scoring from '../../models/scoring/scoring';
 import NameRow from './items/NameRow';
-import * as scoringActions from '../../stores/scoring/scoringActions';
+import * as scoringActions from '../../stores/scoring/gameSheetActions';
 
-const ScoringInput = ({ navigation, route }) => {
+const ScoringInput = ({ navigation }) => {
     const dispatch = useDispatch();
     const names = SCORING_FIELD_NAMES;
     const inputRefs = INPUT_REFS;

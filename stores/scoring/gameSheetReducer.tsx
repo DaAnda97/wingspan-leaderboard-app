@@ -4,7 +4,7 @@ import {
     DELETE_SCORING,
     UPDATE_SCORING,
     PERSIST_SCORES,
-} from './scoringActions';
+} from './gameSheetActions';
 
 const initialState = {
     unsavedScoringId: Math.random().toString(36).substring(2),
