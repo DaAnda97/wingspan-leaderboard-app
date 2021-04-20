@@ -1,8 +1,6 @@
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 import * as SQLite from 'expo-sqlite';
 import PlayerEntity from '../models/player/playerEntity';
-import * as errorActions from '../stores/main/errorAction';
-import CustomError from '../models/main/customError';
 
 export const createPlayersTable = () => {
     PlayerEntity.createTable();

@@ -51,7 +51,6 @@ const ScoringInput = ({ navigation, route }) => {
 
     const saveHandler = useCallback(() => {
         dispatch(scoringActions.saveScores(scores));
-        //todo reset boardId
         navigation.goBack();
     }, []);
     useEffect(() => {

@@ -1,9 +1,9 @@
-import React, {useCallback, useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {
     Button,
-    Dialog,
+    Dialog, HelperText,
     IconButton,
     Paragraph,
     Portal,
@@ -11,36 +11,67 @@ import {
 } from 'react-native-paper';
 import Player from '../../../models/player/player';
 import Colors from '../../../constants/Colors';
+import Styles from '../../../constants/Styles';
 import * as playerActions from '../../../stores/player/playerActions';
 
 type Props = {
     player?: Player;
+    players: Array<Player>
     setIsAdding: (isAdding: boolean) => void;
 };
 
 
-const EditPlayer = ({player = new Player('', '', true), setIsAdding}: Props) => {
+const EditPlayer = ({player = new Player('', '', true), players, setIsAdding}: Props) => {
     const dispatch = useDispatch();
     const [name, setName] = useState(player.name);
-    const [isDeleteDialogShown, setIsDeleteDialogShown] = useState(false);
+    const [isDeleteDialogShown, setIsErrorDialogShown] = useState(false);
+    const [errorInfo, setErrorInfo] = useState<string>('');
     const [isEditMode, setIsEditMode] = useState<boolean>(player.name === '');
 
+
+    // methods
+    const checkNameIsValid = useCallback(() => {
+        const playerNames: Array<string> = players.filter(cPlayer => cPlayer !== player).map(player => player.name)
+
+        if (playerNames.includes(name)) {
+            setErrorInfo("Dieser Name ist bereits vergeben")
+        } else if (name.length <= 1) {
+            setErrorInfo("Ein Name besteht aus mindestens zwei Buchstaben")
+        } else if (name.length > 9) {
+            setErrorInfo("Ein Name kann max. 9 Buchstaben haben")
+        } else {
+            setErrorInfo("")
+        }
+    }, [name])
+
+    useEffect(() => {
+        checkNameIsValid()
+    }, [name])
+
+    // dispatch
     const createPlayer = useCallback((playerName: string) => {
-            dispatch(playerActions.createPlayer(playerName));
-        },
-        [dispatch]
+            if (errorInfo === "") {
+                setIsEditMode(false);
+                setIsAdding(false);
+                dispatch(playerActions.createPlayer(playerName));
+            } else {
+                setIsErrorDialogShown(true)
+            }
+        }, [dispatch]
     );
 
     const updatePlayer = useCallback((id: string, newName: string, isActive) => {
-            dispatch(
-                playerActions.updatePlayer(new Player(id, newName, isActive))
-            );
-        },
-        [dispatch]
+            if (errorInfo === "") {
+                setIsEditMode(false);
+                setIsAdding(false);
+                dispatch(playerActions.updatePlayer(new Player(id, newName, isActive)));
+            } else {
+                setIsErrorDialogShown(true)
+            }
+        }, [dispatch]
     );
 
-    const deletePlayer = useCallback(() => {
-        setIsDeleteDialogShown(false);
+    const hidePlayer = useCallback(() => {
         dispatch(
             playerActions.updatePlayer(
                 new Player(player.id, player.name, false)
@@ -50,81 +81,85 @@ const EditPlayer = ({player = new Player('', '', true), setIsAdding}: Props) => 
 
     if (isEditMode) {
         return (
-            <View style={styles.mainContainer}>
-                <IconButton
-                    size={23}
-                    icon={'eye-off'}
-                    color={'red'}
-                    onPress={() => {
-                        player.id === ''
-                            ? setIsAdding(false)
-                            : setIsDeleteDialogShown(true);
-                    }}
-                />
 
-                <View style={styles.contentContainer}>
-                    <View style={styles.editButtonsStyle}>
-                        <IconButton
-                            size={23}
-                            icon={'close'}
-                            color={Colors.secondary}
-                            onPress={() => {
-                                player.id === ''
-                                    ? setIsAdding(false)
-                                    : setIsEditMode(false);
-                            }}
-                        />
+            <View style={styles.mainContainer}>
+                {player.name !== ''
+                    ?
+                    <IconButton
+                        size={23}
+                        icon={'eye-off'}
+                        color={'red'}
+                        onPress={() => {
+                            player.id === ''
+                                ? setIsAdding(false)
+                                : hidePlayer()
+                        }}
+                    />
+                    : <View style={{paddingRight: 10}}></View>
+                }
+                <View style={styles.editContainer}>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.editButtonsStyle}>
+                            <IconButton
+                                size={23}
+                                icon={'close'}
+                                color={Colors.secondary}
+                                onPress={() => {
+                                    player.id === ''
+                                        ? setIsAdding(false)
+                                        : setIsEditMode(false);
+                                }}
+                            />
+                        </View>
+                        <View style={styles.horizontalCentered}>
+                            <TextInput
+                                value={name}
+                                onChangeText={(input) => setName(input)}
+                                onSubmitEditing={() => {
+                                    player.id === ''
+                                        ? createPlayer(name)
+                                        : updatePlayer(player.id, name, player.isActive);
+                                }}
+                            />
+                        </View>
+                        <View style={styles.editButtonsStyle}>
+                            <IconButton
+                                size={23}
+                                icon={'check'}
+                                color={Colors.secondary}
+                                onPress={() => {
+                                    player.id === '' ? createPlayer(name) : updatePlayer(player.id, name, player.isActive);
+                                }}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.horizontalCentered}>
-                        <TextInput
-                            value={name}
-                            onChangeText={(input) => setName(input)}
-                            onSubmitEditing={() => {
-                                setIsEditMode(false);
-                                setIsAdding(false);
-                                player.id === ''
-                                    ? createPlayer(name)
-                                    : updatePlayer(
-                                    player.id,
-                                    name,
-                                    player.isActive
-                                    );
-                            }}
-                        />
+                    {errorInfo !== "" &&
+                    <View style={Styles.centered}>
+                        <HelperText type={"error"}>
+                            {errorInfo}
+                        </HelperText>
                     </View>
-                    <View style={styles.editButtonsStyle}>
-                        <IconButton
-                            size={23}
-                            icon={'check'}
-                            color={Colors.secondary}
-                            onPress={() => {
-                                setIsEditMode(false);
-                                setIsAdding(false);
-                                player.id === '' ? createPlayer(name) : updatePlayer(player.id, name, player.isActive);
-                            }}
-                        />
-                    </View>
+
+                    }
                 </View>
+
 
                 <Portal>
                     <Dialog
                         visible={isDeleteDialogShown}
-                        onDismiss={() => setIsDeleteDialogShown(false)}
+                        onDismiss={() => setIsErrorDialogShown(false)}
                     >
-                        <Dialog.Title>Warnung</Dialog.Title>
+                        <Dialog.Title>Fehlerhafte Eingabe</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph>
-                                Spieler "{name}" wirklich ausplenden?
+                                Bitte zuert die fehlerhafte Eingabe korrigieren
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button
-                                onPress={() => setIsDeleteDialogShown(false)}
+                                onPress={() => setIsErrorDialogShown(false)}
                             >
-                                Abbrechen
-                            </Button>
-                            <Button color={'red'} onPress={deletePlayer}>
-                                Ausblenden
+                                Ok
                             </Button>
                         </Dialog.Actions>
                     </Dialog>
@@ -143,7 +178,7 @@ const EditPlayer = ({player = new Player('', '', true), setIsAdding}: Props) => 
                     setIsEditMode(true);
                 }}
             />
-            <View style={styles.contentContainer}>
+            <View style={styles.nameContainer}>
                 <View style={styles.verticalCentered}>
                     <Paragraph>{player.name}</Paragraph>
                 </View>
@@ -162,7 +197,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 5
     },
-    contentContainer: {
+    editContainer: {
+        borderWidth: 0.5,
+        borderRadius: 10,
+        marginVertical: 5,
+        marginRight: 10,
+        borderColor: '#bbb',
+        flex: 1,
+        paddingVertical: 5,
+    },
+    nameContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -173,6 +217,13 @@ const styles = StyleSheet.create({
         marginRight: 10,
         borderWidth: 0.5,
         borderColor: '#bbb',
+    },
+    contentContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 5,
     },
     verticalCentered: {
         flexDirection: 'row',
