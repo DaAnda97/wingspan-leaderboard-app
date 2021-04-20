@@ -17,15 +17,12 @@ const GameSheetOverview = ({navigation}) => {
         } catch (err) {
             throw new Error(err);
         }
+        setIsLoading(false);
     }, [dispatch]);
 
     useEffect(() => {
         loadPlayers();
     }, [loadPlayers]);
-
-    useEffect(() => {
-        setIsLoading(false);
-    }, [allPlayer])
 
 
     if (isLoading) {
