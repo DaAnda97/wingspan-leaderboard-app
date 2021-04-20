@@ -16,20 +16,33 @@ const CheckablePlayer = ({player, setOneCheckablePlayer, status}: Props) => {
 
     return (
         <View style={styles.mainContainer}>
-            <TouchableComponent
-                style={styles.contentContainer}
-                onPress={() => setOneCheckablePlayer(player.id)}
-            >
-                <View style={styles.verticalCentered}>
-                    <Paragraph>{player.name}</Paragraph>
+            {status !== "indeterminate" ?
+                <TouchableComponent
+                    style={styles.touchableContainer}
+                    onPress={() => setOneCheckablePlayer(player.id)}
+                >
+                    <View style={styles.verticalCentered}>
+                        <Paragraph>{player.name}</Paragraph>
+                    </View>
+                    <Checkbox.Android
+                        status={status}
+                        onPress={() => {
+                            setOneCheckablePlayer(player.id);
+                        }}
+                    />
+                </TouchableComponent> :
+                <View style={styles.untouchableContainer}>
+                    <View style={styles.verticalCentered}>
+                        <Paragraph>{player.name}</Paragraph>
+                    </View>
+                    <Checkbox.Android
+                        status={status}
+                        onPress={() => {
+                            setOneCheckablePlayer(player.id);
+                        }}
+                    />
                 </View>
-                <Checkbox.Android
-                    status={status}
-                    onPress={() => {
-                        setOneCheckablePlayer(player.id);
-                    }}
-                />
-            </TouchableComponent>
+            }
         </View>
     );
 
@@ -41,7 +54,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 5,
     },
-    contentContainer: {
+    touchableContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -56,6 +69,20 @@ const styles = StyleSheet.create({
             Platform.OS === 'android' && Platform.Version >= 21
                 ? 'hidden'
                 : 'visible'
+    },
+    untouchableContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 15,
+        elevation: 5,
+        borderRadius: 10,
+        marginVertical: 5,
+        marginHorizontal: 5,
+        borderWidth: 0.5,
+        borderColor: '#bbb',
+        backgroundColor: '#dedede'
     },
     verticalCentered: {
         flexDirection: 'row',

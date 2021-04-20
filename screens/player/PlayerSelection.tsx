@@ -9,20 +9,18 @@ import {RootState} from "../../stores/main/RootReducer";
 import Status from "../../models/player/CheckBoxStatus";
 import * as scoringActions from "../../stores/scoring/scoringActions";
 import helpers from "../../constants/Functions";
-import Styles from "../../constants/Styles";
-import * as playerActions from "../../stores/player/playerActions";
 
 const PlayerSelection = ({navigation}) => {
     const dispatch = useDispatch();
 
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter((player) => player.isActive);
     const unsavedScores = useSelector((state: RootState) => state.scores.unsavedScores)
+    const scoringSheetId = useSelector((state: RootState) => state.scores.unsavedScoringId)
 
 
     // states
     const [checkablePlayers, setCheckablePlayers] = useState<Map<string, Status>>(new Map());
     const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false);
-    const [scoringSheetId] = useState(Math.random().toString(36).substring(2));
 
 
     // dispatch

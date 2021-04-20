@@ -3,12 +3,13 @@ import {
     CREATE_SCORING,
     DELETE_SCORING,
     UPDATE_SCORING,
-    PERSIST_SCORES, saveScores
+    PERSIST_SCORES,
 } from './scoringActions';
 
 const initialState = {
-    unsavedScores: Array<Scoring>(),
-    savedScores: Array<Scoring>(),
+    unsavedScoringId: Math.random().toString(36).substring(2),
+    unsavedScores: new Array<Scoring>(),
+    savedScores: new Array<Scoring>(),
 };
 
 export default (state = initialState, action) => {
@@ -30,6 +31,7 @@ export default (state = initialState, action) => {
 
             return {
                 ...state,
+                unsavedScoringId: state.unsavedScoringId,
                 unsavedScores: [...state.unsavedScores, newScoring],
                 savedScores: state.savedScores
             };
@@ -66,6 +68,7 @@ export default (state = initialState, action) => {
 
             return {
                 ...state,
+                unsavedScoringId: state.unsavedScoringId,
                 unsavedScores: updatedScores,
                 savedScores: state.savedScores
             };
@@ -73,6 +76,7 @@ export default (state = initialState, action) => {
         case DELETE_SCORING:
             return {
                 ...state,
+                unsavedScoringId: state.unsavedScoringId,
                 unsavedScores: state.unsavedScores.filter((score) => score.id !== action.id),
                 savedScores: state.savedScores
             };
@@ -80,6 +84,7 @@ export default (state = initialState, action) => {
         case PERSIST_SCORES:
             return {
                 ...state,
+                unsavedScoringId: Math.random().toString(36).substring(2),
                 unsavedScores: [],
                 savedScores: action.loadedScores
             };
