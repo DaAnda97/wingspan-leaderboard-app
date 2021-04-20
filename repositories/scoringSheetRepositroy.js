@@ -1,4 +1,4 @@
-import ScoringSheetEntity from '../components/scoringSheet/scoringSheetEntity';
+import ScoringSheetEntity from '../models/scoringSheet/scoringSheetEntity';
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 import * as SQLite from 'expo-sqlite';
 

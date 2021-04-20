@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 import {Button, IconButton, Text} from 'react-native-paper';
-import Player from "../models/player/player";
-import CheckablePlayer from "../components/player/checkablePlayer";
+import Player from "../../models/player/player";
+import CheckablePlayer from "./items/checkablePlayer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../stores/main/RootReducer";
-import Status from "../models/player/CheckBoxStatus";
-import * as scoringActions from "../stores/scoring/scoringActions";
-import helpers from "../constants/Functions";
+import {RootState} from "../../stores/main/RootReducer";
+import Status from "../../models/player/CheckBoxStatus";
+import * as scoringActions from "../../stores/scoring/scoringActions";
+import helpers from "../../constants/Functions";
 
 const PlayerSelection = ({navigation}) => {
     const dispatch = useDispatch();

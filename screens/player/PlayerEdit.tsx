@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {useSelector} from "react-redux";
-import {RootState} from "../stores/main/RootReducer";
-import EditPlayer from "../components/player/editPlayer";
-import Player from "../models/player/player";
-import Colors from '../constants/Colors';
+import {RootState} from "../../stores/main/RootReducer";
+import EditPlayer from "./items/editPlayer";
+import Player from "../../models/player/player";
+import Colors from '../../constants/Colors';
 
 const PlayerEdit = ({navigation}) => {
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter((player) => player.isActive);

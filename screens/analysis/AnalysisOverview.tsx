@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
-import ErrorView from '../components/ui/ErrorView';
+import ErrorView from '../../components/ErrorView';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Leaderboard = ({ navigation }) => {
+const AnalysisOverview = ({ navigation }) => {
     const [errorMsg, setErrorMsg] = useState('');
 
     return (
         <View style={styles.main}>
-            <Text>Bestenliste</Text>
+            <Text>Analysis Overview</Text>
             <ErrorView errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
         </View>
     );
@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        tabBarLabel: 'Bestenliste',
+        tabBarLabel: 'Analyse',
         tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
-                name={focused ? 'podium' : 'podium-gold'}
+                name={focused ? 'chart-line' : 'chart-line-variant'}
                 color={color}
                 size={22}
             />
@@ -36,4 +36,4 @@ export const screenOptions = () => {
     };
 };
 
-export default Leaderboard;
+export default AnalysisOverview;

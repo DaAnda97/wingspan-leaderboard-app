@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/PlayerSelection';
-import PlayerEditScreen, {screenOptions as playerEditScreenOptions} from '../screens/PlayerEdit';
-import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/ScoringInput';
+import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/player/PlayerSelection';
+import PlayerEditScreen, {screenOptions as playerEditScreenOptions} from '../screens/player/PlayerEdit';
+import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/scoring/ScoringInput';
 import GameSheetOverviewScreen, {screenOptions as gameSheetOverviewScreenOptions} from '../screens/GameSheetOverview';
 
 import Colors from '../constants/Colors';

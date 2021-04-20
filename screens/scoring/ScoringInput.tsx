@@ -2,18 +2,18 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import ScoringColumn from '../components/scoring/ScoringColumn';
+import ScoringColumn from './items/ScoringColumn';
 import { Divider, IconButton, Text, Title } from 'react-native-paper';
 import {
     INPUT_REFS,
     SCORING_FIELD_NAMES
-} from '../models/scoring/SCORING_CONSTANTS';
-import Colors from '../constants/Colors';
-import ScoringFieldName from '../models/scoring/scoringFieldName';
-import { RootState } from '../stores/main/RootReducer';
-import Scoring from '../models/scoring/scoring';
-import NameRow from '../components/scoring/NameRow';
-import * as scoringActions from '../stores/scoring/scoringActions';
+} from '../../models/scoring/SCORING_CONSTANTS';
+import Colors from '../../constants/Colors';
+import ScoringFieldName from '../../models/scoring/scoringFieldName';
+import { RootState } from '../../stores/main/RootReducer';
+import Scoring from '../../models/scoring/scoring';
+import NameRow from './items/NameRow';
+import * as scoringActions from '../../stores/scoring/scoringActions';
 
 const ScoringInput = ({ navigation, route }) => {
     const dispatch = useDispatch();

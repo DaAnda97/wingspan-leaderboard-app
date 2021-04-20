@@ -9,9 +9,9 @@ import {
     Portal,
     TextInput
 } from 'react-native-paper';
-import Player from '../../models/player/player';
-import Colors from '../../constants/Colors';
-import * as playerActions from '../../stores/player/playerActions';
+import Player from '../../../models/player/player';
+import Colors from '../../../constants/Colors';
+import * as playerActions from '../../../stores/player/playerActions';
 
 type Props = {
     player?: Player;

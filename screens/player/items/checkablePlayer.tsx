@@ -4,9 +4,9 @@ import {
     Checkbox,
     Paragraph,
 } from 'react-native-paper';
-import Player from '../../models/player/player';
-import TouchableComponent from '../ui/TouchableComponent';
-import Status from "../../models/player/CheckBoxStatus";
+import Player from '../../../models/player/player';
+import TouchableComponent from '../../../components/TouchableComponent';
+import Status from "../../../models/player/CheckBoxStatus";
 
 type Props = {
     player: Player;

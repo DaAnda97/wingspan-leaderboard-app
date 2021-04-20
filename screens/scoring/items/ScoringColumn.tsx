@@ -9,10 +9,10 @@ import {
     TextInput,
     Title
 } from 'react-native-paper';
-import ScoringField from '../../models/scoring/scoringField';
-import { INITIAL_SCORING_FIELDS } from '../../models/scoring/SCORING_CONSTANTS';
-import helpers from '../../constants/Functions';
-import * as scoringActions from '../../stores/scoring/scoringActions';
+import ScoringField from '../../../models/scoring/scoringField';
+import { INITIAL_SCORING_FIELDS } from '../../../models/scoring/SCORING_CONSTANTS';
+import helpers from '../../../constants/Functions';
+import * as scoringActions from '../../../stores/scoring/scoringActions';
 import { useDispatch } from 'react-redux';
 
 type Props = {

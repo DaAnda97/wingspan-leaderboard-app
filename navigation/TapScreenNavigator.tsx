@@ -5,10 +5,10 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import Colors from '../constants/Colors';
 import Analysis, {
     screenOptions as analysisScreenOptions
-} from '../screens/AnalysisOverview';
+} from '../screens/analysis/AnalysisOverview';
 import LeaderboardScreen, {
     screenOptions as leaderboardScreenOptions
-} from '../screens/Leaderboard';
+} from '../screens/leaderboard/Leaderboard';
 import ScoringNavigator, {
     screenOptions as scoringNavigatorScreenOptions
 } from '../navigation/ScoringNavigator';

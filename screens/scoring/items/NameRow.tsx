@@ -1,11 +1,11 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Subheading } from 'react-native-paper';
-import helpers from '../../constants/Functions';
-import Colors from '../../constants/Colors';
-import Scoring from '../../models/scoring/scoring';
+import helpers from '../../../constants/Functions';
+import Colors from '../../../constants/Colors';
+import Scoring from '../../../models/scoring/scoring';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../stores/main/RootReducer';
+import { RootState } from '../../../stores/main/RootReducer';
 
 type Props = {
     scores: Array<Scoring>;
@@ -13,9 +13,6 @@ type Props = {
 
 const NameRow = ({ scores }: Props) => {
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers);
-
-    console.log(allPlayer)
-    console.log(scores)
 
     return (
         <View style={styles.nameView}>
