@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
     },
     mainContainer: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 5
     },
     contentContainer: {
         flex: 1,

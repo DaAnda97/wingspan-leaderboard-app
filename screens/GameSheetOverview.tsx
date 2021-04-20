@@ -3,12 +3,10 @@ import {StyleSheet, View} from 'react-native';
 import * as playerActions from '../stores/player/playerActions';
 import Styles from '../constants/Styles';
 import {ActivityIndicator, Button, Text} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from "../stores/main/RootReducer";
+import {useDispatch} from 'react-redux';
 
 const GameSheetOverview = ({navigation}) => {
     const dispatch = useDispatch();
-    const allPlayer = useSelector((state: RootState) => state.players.allPlayers)
     const [isLoading, setIsLoading] = useState(true);
 
     const loadPlayers = useCallback(() => {

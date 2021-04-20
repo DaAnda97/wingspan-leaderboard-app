@@ -1,9 +1,6 @@
 import React from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
-import {
-    Checkbox,
-    Paragraph,
-} from 'react-native-paper';
+import {Checkbox, Paragraph,} from 'react-native-paper';
 import Player from '../../../models/player/player';
 import TouchableComponent from '../../../components/TouchableComponent';
 import Status from "../../../models/player/CheckBoxStatus";
@@ -39,34 +36,19 @@ const CheckablePlayer = ({player, setOneCheckablePlayer, status}: Props) => {
 }
 
 const styles = StyleSheet.create({
-    editContainer: {
-        flex: 1,
-        paddingVertical: 15,
-        elevation: 0,
-        borderRadius: 10,
-        marginHorizontal: 5,
-        marginVertical: 3,
-        borderWidth: 0.5,
-        borderColor: '#bbb',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    editButtonsStyle: {
-        padding: 5
-    },
     mainContainer: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 5,
     },
     contentContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 15,
-        elevation: 0,
+        elevation: 5,
         borderRadius: 10,
-        marginVertical: 3,
+        marginVertical: 5,
         marginHorizontal: 5,
         borderWidth: 0.5,
         borderColor: '#bbb',
@@ -79,10 +61,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    horizontalCentered: {
-        flex: 1,
-        width: '100%'
-    }
 });
 
 export default CheckablePlayer;

@@ -10,10 +10,10 @@ import Status from "../../models/player/CheckBoxStatus";
 import * as scoringActions from "../../stores/scoring/scoringActions";
 import helpers from "../../constants/Functions";
 import Styles from "../../constants/Styles";
+import * as playerActions from "../../stores/player/playerActions";
 
 const PlayerSelection = ({navigation}) => {
     const dispatch = useDispatch();
-    const [isLoading, setIsLoading] = useState(true);
 
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter((player) => player.isActive);
     const unsavedScores = useSelector((state: RootState) => state.scores.unsavedScores)
@@ -46,7 +46,6 @@ const PlayerSelection = ({navigation}) => {
         [dispatch, unsavedScores, scoringSheetId]
     );
 
-
     // methods
     const initializeCheckablePlayers = useCallback(() => {
         let initCheckablePlayers: Map<string, Status> = new Map();
@@ -56,7 +55,6 @@ const PlayerSelection = ({navigation}) => {
                 : 'checked'
             initCheckablePlayers.set(player.id, thisStatus)
         })
-        setIsLoading(false);
         setCheckablePlayers(initCheckablePlayers)
     }, [allPlayer, unsavedScores])
 
@@ -110,6 +108,8 @@ const PlayerSelection = ({navigation}) => {
 
 
 
+
+
     // effects
     useEffect(() => {
         return navigation.addListener('focus', initializeCheckablePlayers)
@@ -118,7 +118,6 @@ const PlayerSelection = ({navigation}) => {
     useEffect(() => {
         indeterminateUnselectableFields()
     }, [checkablePlayers])
-
 
 
 
@@ -142,14 +141,6 @@ const PlayerSelection = ({navigation}) => {
 
 
 
-    if (isLoading) {
-        return (
-            <View style={Styles.centered}>
-                <ActivityIndicator animating={true}/>
-                <Text>Lade Spieler</Text>
-            </View>
-        );
-    }
     return (
         <View style={styles.main}>
             <ScrollView>
@@ -194,7 +185,7 @@ const PlayerSelection = ({navigation}) => {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        marginTop: 10
+        marginTop: 5
     },
     buttonContainer: {
         flex: 1,
