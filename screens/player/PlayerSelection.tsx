@@ -7,7 +7,7 @@ import CheckablePlayer from "./items/checkablePlayer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../stores/main/RootReducer";
 import Status from "../../models/player/CheckBoxStatus";
-import * as scoringActions from "../../stores/scoring/gameSheetActions";
+import * as scoringActions from "../../stores/scoring/scoringActions";
 import helpers from "../../constants/Functions";
 
 const PlayerSelection = ({navigation}) => {
@@ -15,7 +15,7 @@ const PlayerSelection = ({navigation}) => {
 
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter((player) => player.isActive);
     const unsavedScores = useSelector((state: RootState) => state.scores.unsavedScores)
-    const scoringSheetId = useSelector((state: RootState) => state.scores.unsavedScoringId)
+    const gamingSheetId = useSelector((state: RootState) => state.scores.unsavedGameSheetId)
 
 
     // states
@@ -26,22 +26,22 @@ const PlayerSelection = ({navigation}) => {
     // dispatch
     const createNewScoringOfPlayer = useCallback(
         (playerId: string) => {
-            dispatch(scoringActions.createScoring(scoringSheetId, playerId));
+            dispatch(scoringActions.createScoring(gamingSheetId, playerId));
         },
-        [dispatch, scoringSheetId]
+        [dispatch, gamingSheetId]
     );
 
     const deleteScoringOfPlayer = useCallback(
         (playerId: string) => {
-            const thisScoring = unsavedScores.find((scoring) => scoring.scoringSheetId === scoringSheetId && scoring.playerId === playerId) ??
+            const thisScoring = unsavedScores.find((scoring) => scoring.gameSheetId === gamingSheetId && scoring.playerId === playerId) ??
                 helpers.throwError(
-                    `Error in SelectPlayers: no matching scoring with sheetId: ${scoringSheetId} and playerId: ${playerId} not in scoresOfSheet: ${JSON.stringify(
+                    `Error in SelectPlayers: no matching scoring with sheetId: ${gamingSheetId} and playerId: ${playerId} not in scoresOfSheet: ${JSON.stringify(
                         unsavedScores
                     )}`
                 );
             dispatch(scoringActions.deleteScoring(thisScoring.id));
         },
-        [dispatch, unsavedScores, scoringSheetId]
+        [dispatch, unsavedScores, gamingSheetId]
     );
 
     // methods
@@ -111,7 +111,7 @@ const PlayerSelection = ({navigation}) => {
     // effects
     useEffect(() => {
         return navigation.addListener('focus', initializeCheckablePlayers)
-    }, [dispatch, initializeCheckablePlayers])
+    }, [dispatch, initializeCheckablePlayers, allPlayer, unsavedScores])
 
     useEffect(() => {
         indeterminateUnselectableFields()
@@ -122,7 +122,7 @@ const PlayerSelection = ({navigation}) => {
 
     // Button in Navigation
     const submitHandler = useCallback(() => {
-        navigation.navigate('ScoringInput', {scoringSheetId: scoringSheetId});
+        navigation.navigate('ScoringInput', {scoringSheetId: gamingSheetId});
     }, []);
     useEffect(() => {
         navigation.setOptions({

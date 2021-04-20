@@ -13,15 +13,15 @@ import ScoringFieldName from '../../models/scoring/scoringFieldName';
 import { RootState } from '../../stores/main/RootReducer';
 import Scoring from '../../models/scoring/scoring';
 import NameRow from './items/NameRow';
-import * as scoringActions from '../../stores/scoring/gameSheetActions';
+import * as scoringActions from '../../stores/scoring/scoringActions';
 
 const ScoringInput = ({ navigation }) => {
     const dispatch = useDispatch();
     const names = SCORING_FIELD_NAMES;
     const inputRefs = INPUT_REFS;
 
-    const scoringSheetId = useSelector((state: RootState) => state.scores.unsavedScoringId)
-    const scores = useSelector((state: RootState) => state.scores.unsavedScores).filter(score => score.scoringSheetId === scoringSheetId)
+    const gamingSheetId = useSelector((state: RootState) => state.scores.unsavedGameSheetId)
+    const scores = useSelector((state: RootState) => state.scores.unsavedScores).filter(score => score.gameSheetId === gamingSheetId)
 
     const goToNext = (colIndex, playerIndex) => {
         if (playerIndex < scores.length - 1) {
@@ -51,7 +51,7 @@ const ScoringInput = ({ navigation }) => {
 
     const saveHandler = useCallback(() => {
         dispatch(scoringActions.saveScores(scores));
-        navigation.goBack();
+        navigation.pop(2);
     }, []);
     useEffect(() => {
         navigation.setOptions({
@@ -93,7 +93,7 @@ const ScoringInput = ({ navigation }) => {
                                 playerIndex={index}
                                 playerId={scoring.playerId}
                                 scoringId={scoring.id}
-                                scoringSheetId={scoringSheetId}
+                                scoringSheetId={gamingSheetId}
                                 inputRefs={inputRefs[index]}
                                 goToNext={goToNext}
                             />

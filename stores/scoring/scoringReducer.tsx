@@ -3,11 +3,12 @@ import {
     CREATE_SCORING,
     DELETE_SCORING,
     UPDATE_SCORING,
-    PERSIST_SCORES,
-} from './gameSheetActions';
+    PERSIST_SCORES, LOAD_SCORES_FROM_DB,
+} from './scoringActions';
+import {LOAD_PLAYERS_FROM_DB} from "../player/playerActions";
 
 const initialState = {
-    unsavedScoringId: Math.random().toString(36).substring(2),
+    unsavedGameSheetId: Math.random().toString(36).substring(2),
     unsavedScores: new Array<Scoring>(),
     savedScores: new Array<Scoring>(),
 };
@@ -17,7 +18,7 @@ export default (state = initialState, action) => {
         case CREATE_SCORING:
             const newScoring: Scoring = new Scoring(
                 action.id,
-                action.scoringData.scoringSheetId,
+                action.scoringData.gameSheetId,
                 action.scoringData.playerId,
                 0,
                 0,
@@ -31,7 +32,7 @@ export default (state = initialState, action) => {
 
             return {
                 ...state,
-                unsavedScoringId: state.unsavedScoringId,
+                unsavedGameSheetId: state.unsavedGameSheetId,
                 unsavedScores: [...state.unsavedScores, newScoring],
                 savedScores: state.savedScores
             };
@@ -51,7 +52,7 @@ export default (state = initialState, action) => {
 
             const updatedScoring: Scoring = new Scoring(
                 action.id,
-                action.scoringData.scoringSheetId,
+                action.scoringData.gameSheetId,
                 action.scoringData.playerId,
                 action.scoringData.roundPoints,
                 action.scoringData.bonusPoints,
@@ -68,7 +69,7 @@ export default (state = initialState, action) => {
 
             return {
                 ...state,
-                unsavedScoringId: state.unsavedScoringId,
+                unsavedGameSheetId: state.unsavedGameSheetId,
                 unsavedScores: updatedScores,
                 savedScores: state.savedScores
             };
@@ -76,15 +77,22 @@ export default (state = initialState, action) => {
         case DELETE_SCORING:
             return {
                 ...state,
-                unsavedScoringId: state.unsavedScoringId,
+                unsavedGameSheetId: state.unsavedGameSheetId,
                 unsavedScores: state.unsavedScores.filter((score) => score.id !== action.id),
                 savedScores: state.savedScores
+            };
+
+        case LOAD_SCORES_FROM_DB:
+            return {
+                unsavedGameSheetId: state.unsavedGameSheetId,
+                unsavedScores: state.unsavedScores,
+                savedScores: action.loadedScores
             };
 
         case PERSIST_SCORES:
             return {
                 ...state,
-                unsavedScoringId: Math.random().toString(36).substring(2),
+                unsavedGameSheetId: Math.random().toString(36).substring(2),
                 unsavedScores: [],
                 savedScores: action.loadedScores
             };

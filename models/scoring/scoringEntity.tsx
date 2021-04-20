@@ -17,7 +17,7 @@ export default class ScoringEntity extends BaseModel {
     static get columnMapping() {
         return {
             id: { type: types.INTEGER, primary_key: true },
-            scoringSheetId: { type: types.TEXT, not_null: true },
+            gameSheetId: { type: types.TEXT, not_null: true },
             playerId: { type: types.TEXT, not_null: true },
             roundPoints: { type: types.Integer, not_null: true },
             bonusPoints: { type: types.Integer, not_null: true },

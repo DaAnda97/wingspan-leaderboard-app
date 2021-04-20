@@ -1,19 +1,19 @@
-import ScoringSheetEntity from '../models/gameSheet/scoringSheetEntity';
+import GameSheetEntity from '../models/gameSheet/gameSheetEntity';
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 import * as SQLite from 'expo-sqlite';
 
-export const createScoringSheetsTable = () => {
-    ScoringSheetEntity.createTable();
+export const createGameSheetsTable = () => {
+    GameSheetEntity.createTable();
     console.log('Table scoringSheets created successfully');
-    //ScoringSheetEntity.dropTable()
+    //GameSheetEntity.dropTable()
 };
 
-export async function saveNewScoringSheet() {
-    const scoringSheet = new ScoringSheetEntity({});
-    return scoringSheet.save();
+export async function saveNewGameSheet() {
+    const gameSheet = new GameSheetEntity({});
+    return gameSheet.save();
 }
 
-export const loadAllGames = () => {
+export const loadAllGameSheets = () => {
     const databaseLayer = new DatabaseLayer(async () =>
         SQLite.openDatabase('wingspan.db')
     );

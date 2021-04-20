@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 import { BaseModel, types } from 'expo-sqlite-orm';
 
-export default class ScoringSheetEntity extends BaseModel {
+export default class GameSheetEntity extends BaseModel {
     constructor(obj) {
         super(obj);
     }

@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import * as playerActions from '../../stores/player/playerActions';
+import * as scoringActions from '../../stores/scoring/scoringActions';
 import Styles from '../../constants/Styles';
 import {ActivityIndicator, Button, Text} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -9,9 +10,10 @@ const GameSheetOverview = ({navigation}) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
 
-    const loadPlayers = useCallback(() => {
+    const loadFromDb = useCallback(() => {
         try {
             dispatch(playerActions.loadPlayersFromDb());
+            dispatch(scoringActions.loadScoresFromDb());
         } catch (err) {
             throw new Error(err);
         }
@@ -19,8 +21,8 @@ const GameSheetOverview = ({navigation}) => {
     }, [dispatch]);
 
     useEffect(() => {
-        loadPlayers();
-    }, [loadPlayers]);
+        loadFromDb();
+    }, [loadFromDb]);
 
 
     if (isLoading) {

@@ -10,12 +10,12 @@ import Colors from './constants/Colors';
 import TabScreenNavigator from './navigation/TapScreenNavigator';
 import { rootReducer } from './stores/main/RootReducer';
 import { createScoresTable } from './repositories/scoringRepository';
-import { createScoringSheetsTable } from './repositories/gameSheetRepositroy';
+import { createGameSheetsTable } from './repositories/gameSheetRepositroy';
 import { createPlayersTable } from './repositories/playerRepository';
 
 const createTables = () => {
     createPlayersTable();
-    createScoringSheetsTable();
+    createGameSheetsTable();
     createScoresTable();
 };
 

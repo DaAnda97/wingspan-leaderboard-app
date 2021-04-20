@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 
 import ScoringEntity from '../models/scoring/scoringEntity';
-import { saveNewScoringSheet } from './gameSheetRepositroy';
+import { saveNewGameSheet } from './gameSheetRepositroy';
 
 export const createScoresTable = () => {
     ScoringEntity.createTable();
@@ -11,12 +11,12 @@ export const createScoresTable = () => {
 };
 
 export async function saveScoringArray(scores) {
-    const scoringSheetEntity = saveNewScoringSheet();
+    const gameSheetEntity = await saveNewGameSheet();
 
     const allScoresToSave = [];
     scores.forEach((score) => {
         const scoringToSave = {
-            scoringSheetId: scoringSheetEntity.id,
+            gameSheetId: gameSheetEntity.id,
             playerId: score.playerId,
             roundPoints: score.roundPoints,
             bonusPoints: score.bonusPoints,
