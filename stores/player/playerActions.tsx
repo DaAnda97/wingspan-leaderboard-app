@@ -25,7 +25,7 @@ export const createPlayer = (name: string) => {
         dispatch({
             type: CREATE_PLAYER,
             player: new Player(
-                playerEntity.id,
+                "" + playerEntity.id,
                 playerEntity.name,
                 playerEntity.isActive
             )
@@ -50,7 +50,7 @@ export const updatePlayer = (player: Player) => {
         dispatch({
             type: UPDATE_PLAYER,
             player: new Player(
-                playerEntity.id,
+                "" + playerEntity.id,
                 playerEntity.name,
                 playerEntity.isActive == 1
             )
@@ -80,11 +80,11 @@ export const loadPlayersFromDb = () => {
             );
 
         const savedPlayers = Array<Player>();
-        loadedPlayers.rows.forEach((player) => {
+        loadedPlayers.rows.forEach((playerEntity) => {
             const savedPlayer = new Player(
-                player.id,
-                player.name,
-                player.isActive == 1
+                "" + playerEntity.id,
+                playerEntity.name,
+                playerEntity.isActive == 1
             );
             savedPlayers.push(savedPlayer);
         });

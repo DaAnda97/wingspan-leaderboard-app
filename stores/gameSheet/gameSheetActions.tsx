@@ -22,7 +22,7 @@ export const loadGameSheetsFromDb = () => {
         let savedGameSheets = Array<GameSheet>();
         loadedGameSheets.rows.forEach((gameSheetEntity) => {
             const savedGameSheet = new GameSheet(
-                gameSheetEntity.id,
+                gameSheetEntity.id + "",
                 new Date(gameSheetEntity.timestamp)
             );
             savedGameSheets.push(savedGameSheet);

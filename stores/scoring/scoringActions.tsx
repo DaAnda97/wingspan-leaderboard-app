@@ -1,5 +1,5 @@
 import Scoring from '../../models/scoring/scoring';
-import { saveScoringArray } from '../../repositories/scoringRepository';
+import {saveScoringArray} from '../../repositories/scoringRepository';
 import {ERROR} from "../main/errorAction";
 import CustomError from "../../models/main/customError";
 import * as scoringRepositoryActions from '../../repositories/scoringRepository';
@@ -27,23 +27,24 @@ export const loadScoresFromDb = () => {
 
         const savedScores = Array<Scoring>();
         loadedScores.rows.forEach((scoringEntity) => {
+
             const savedScore = new Scoring(
-                scoringEntity.id,
-                scoringEntity.gameSheetId,
-                scoringEntity.playerId,
-                scoringEntity.roundPoints,
-                scoringEntity.bonusPoints,
-                scoringEntity.eggPoints,
-                scoringEntity.foodPoints,
-                scoringEntity.nectarPoints,
-                scoringEntity.birdPoints,
-                scoringEntity.cardPoints,
-                scoringEntity.totalScore
+                "" + scoringEntity.id,
+                "" + parseInt(scoringEntity.gameSheetId),
+                "" + parseInt(scoringEntity.playerId),
+                parseInt(scoringEntity.roundPoints),
+                parseInt(scoringEntity.bonusPoints),
+                parseInt(scoringEntity.eggPoints),
+                parseInt(scoringEntity.foodPoints),
+                parseInt(scoringEntity.nectarPoints),
+                parseInt(scoringEntity.birdPoints),
+                parseInt(scoringEntity.cardPoints),
+                parseInt(scoringEntity.totalScore)
             );
             savedScores.push(savedScore);
         });
 
-        dispatch({ type: LOAD_SCORES_FROM_DB, loadedScores: savedScores });
+        dispatch({type: LOAD_SCORES_FROM_DB, loadedScores: savedScores});
     };
 };
 
@@ -71,7 +72,7 @@ export const saveScores = (scores: Array<Scoring>) => {
             loadedScores.push(savedScoring);
         });
 
-        dispatch({ type: PERSIST_SCORES, loadedScores: loadedScores });
+        dispatch({type: PERSIST_SCORES, loadedScores: loadedScores});
     };
 };
 

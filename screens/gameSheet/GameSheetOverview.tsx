@@ -4,22 +4,19 @@ import * as playerActions from '../../stores/player/playerActions';
 import * as scoringActions from '../../stores/scoring/scoringActions';
 import * as gameSheetActions from '../../stores/gameSheet/gameSheetActions';
 import Styles from '../../constants/Styles';
-import {ActivityIndicator, Button, Text} from 'react-native-paper';
+import {ActivityIndicator, Button, Divider, Text} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from "../../constants/Colors";
 import {RootState} from "../../stores/main/RootReducer";
-import Scoring from "../../models/scoring/scoring";
 import GameSheet from "../../models/gameSheet/gameSheet";
+import GameSheetItem from "./items/GameSheetItem";
 
 const GameSheetOverview = ({navigation}) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const savedScores = useSelector((state : RootState) => state.scores.savedScores)
     const savedGameSheets = useSelector((state : RootState) => state.gameSheets.gameSheets)
-
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const timeOptions = { hour: 'numeric', minute: 'numeric' };
-
+    const allPlayer = useSelector((state : RootState) => state.players.allPlayers)
 
     const loadFromDb = useCallback(() => {
         try {
@@ -56,19 +53,21 @@ const GameSheetOverview = ({navigation}) => {
                         navigation.navigate('PlayerSelection');
                     }}
                 >
-                    Neue Spielwertung eintragen
+                    Neue Wertung eintragen
                 </Button>
             </View>
+            <Divider/>
             <ScrollView>
-                <View style={styles.main}>
+                <View>
                     {savedGameSheets.length > 0 ? (
                         savedGameSheets.map((gameSheet: GameSheet) => {
                             return (
-                                <View key={gameSheet.id} style={styles.gameSheetContainer}>
-                                    <Text>{gameSheet.timestamp.toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} um </Text>
-                                    <Text>{gameSheet.timestamp.toLocaleTimeString('de-DE', { hour: 'numeric', minute: 'numeric' })} Uhr</Text>
-                                </View>
-
+                                <GameSheetItem
+                                    key={gameSheet.id}
+                                    gameSheetItem={gameSheet}
+                                    scores={savedScores.filter(score => score.gameSheetId === gameSheet.id)}
+                                    allPlayer={allPlayer}
+                                />
                             );
                         })
                     ) : (
@@ -89,7 +88,7 @@ const GameSheetOverview = ({navigation}) => {
 
 const styles = StyleSheet.create({
     main: {
-        marginTop: 10,
+        marginTop: 15,
     },
     buttonContainer: {
         margin: 10,
@@ -107,9 +106,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 5
     },
-    gameSheetContainer: {
-        flexDirection: "row"
-    }
 });
 
 export const screenOptions = () => {
