@@ -5,7 +5,6 @@ import {
     UPDATE_SCORING,
     PERSIST_SCORES, LOAD_SCORES_FROM_DB,
 } from './scoringActions';
-import {LOAD_PLAYERS_FROM_DB} from "../player/playerActions";
 
 const initialState = {
     unsavedGameSheetId: Math.random().toString(36).substring(2),
@@ -84,6 +83,7 @@ export default (state = initialState, action) => {
 
         case LOAD_SCORES_FROM_DB:
             return {
+                ...state,
                 unsavedGameSheetId: state.unsavedGameSheetId,
                 unsavedScores: state.unsavedScores,
                 savedScores: action.loadedScores

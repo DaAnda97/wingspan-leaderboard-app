@@ -33,22 +33,6 @@ const ScoringInput = ({ navigation }) => {
         }
     };
 
-    const addPlayersHandler = useCallback(() => {
-        navigation.goBack();
-    }, []);
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <IconButton
-                    icon={'account-multiple-plus'}
-                    color={Colors.primary}
-                    size={30}
-                    onPress={addPlayersHandler}
-                />
-            )
-        });
-    }, [addPlayersHandler]);
-
     const saveHandler = useCallback(() => {
         dispatch(scoringActions.saveScores(scores));
         navigation.popToTop();

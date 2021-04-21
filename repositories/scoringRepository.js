@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 
 import ScoringEntity from '../models/scoring/scoringEntity';
-import { saveNewGameSheet } from './gameSheetRepositroy';
+import { saveNewGameSheet } from './gameSheetRepository';
 
 export const createScoresTable = () => {
     ScoringEntity.createTable();

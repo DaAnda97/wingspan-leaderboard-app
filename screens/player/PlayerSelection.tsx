@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         color: Colors.secondary,
-        width: '90%'
+        width: '100%'
     },
     defaultTextStyle: {
         textAlign: 'center',
