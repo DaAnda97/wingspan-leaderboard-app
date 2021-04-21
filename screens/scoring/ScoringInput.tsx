@@ -21,10 +21,10 @@ const ScoringInput = ({ navigation }) => {
     const inputRefs = INPUT_REFS;
 
     const gamingSheetId = useSelector((state: RootState) => state.scores.unsavedGameSheetId)
-    const scores = useSelector((state: RootState) => state.scores.unsavedScores).filter(score => score.gameSheetId === gamingSheetId)
+    const unsavedScores = useSelector((state: RootState) => state.scores.unsavedScores)
 
     const goToNext = (colIndex, playerIndex) => {
-        if (playerIndex < scores.length - 1) {
+        if (playerIndex < unsavedScores.length - 1) {
             inputRefs[playerIndex + 1][colIndex].current?.focus();
         } else {
             if (colIndex < inputRefs[0].length - 1) {
@@ -34,7 +34,7 @@ const ScoringInput = ({ navigation }) => {
     };
 
     const saveHandler = useCallback(() => {
-        dispatch(scoringActions.saveScores(scores));
+        dispatch(scoringActions.saveScores(unsavedScores));
         navigation.popToTop();
     }, []);
     useEffect(() => {
@@ -52,7 +52,7 @@ const ScoringInput = ({ navigation }) => {
 
     return (
         <View style={styles.main}>
-            <NameRow scores={scores} />
+            <NameRow scores={unsavedScores} />
 
             <Divider />
 
@@ -70,7 +70,7 @@ const ScoringInput = ({ navigation }) => {
                         })}
                     </View>
 
-                    {scores.map((scoring: Scoring, index: number) => {
+                    {unsavedScores.map((scoring: Scoring, index: number) => {
                         return (
                             <ScoringColumn
                                 key={scoring.id}

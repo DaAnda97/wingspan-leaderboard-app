@@ -10,20 +10,21 @@ import helpers from "../../../constants/Functions";
 
 type Props = {
     gameSheetItem: GameSheet
-    scores: Array<Scoring>
+    allScores: Array<Scoring>
     allPlayer: Array<Player>
 };
 
-const GameSheetItem = ({ gameSheetItem, scores, allPlayer }: Props) => {
+const GameSheetItem = ({ gameSheetItem, allScores, allPlayer }: Props) => {
     const [date] = useState(gameSheetItem.timestamp.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }))
     const [time] = useState(gameSheetItem.timestamp.toLocaleTimeString('de-DE', { hour: 'numeric', minute: 'numeric' }))
+
+    const scores = allScores.filter(score => score.gameSheetId === gameSheetItem.id)
 
     return (
         <TouchableComponent onPress={() => {}} style={Styles.shadow}>
             <View style={styles.textContainer}>
                 <Subheading style={styles.customer}>{date} um {time} Uhr</Subheading>
                     {scores.map((score: Scoring) => {
-                        console.log("hi")
                         const player = allPlayer.find(player => player.id === score.playerId)
                             ?? helpers.throwError("No player found for this score")
                         return (

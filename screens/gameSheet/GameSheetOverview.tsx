@@ -38,7 +38,7 @@ const GameSheetOverview = ({navigation}) => {
         return (
             <View style={Styles.centered}>
                 <ActivityIndicator animating={true}/>
-                <Text>Lade Spieler</Text>
+                <Text>Aktualisiere</Text>
             </View>
         );
     }
@@ -65,7 +65,7 @@ const GameSheetOverview = ({navigation}) => {
                                 <GameSheetItem
                                     key={gameSheet.id}
                                     gameSheetItem={gameSheet}
-                                    scores={savedScores.filter(score => score.gameSheetId === gameSheet.id)}
+                                    allScores={savedScores}
                                     allPlayer={allPlayer}
                                 />
                             );
