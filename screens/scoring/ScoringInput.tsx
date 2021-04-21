@@ -51,7 +51,7 @@ const ScoringInput = ({ navigation }) => {
 
     const saveHandler = useCallback(() => {
         dispatch(scoringActions.saveScores(scores));
-        navigation.pop(2);
+        navigation.popToTop();
     }, []);
     useEffect(() => {
         navigation.setOptions({

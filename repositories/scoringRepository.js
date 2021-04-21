@@ -28,7 +28,6 @@ export async function saveScoringArray(scores) {
             totalScore: score.totalScore
         };
 
-
         allScoresToSave.push(scoringToSave);
     });
 
