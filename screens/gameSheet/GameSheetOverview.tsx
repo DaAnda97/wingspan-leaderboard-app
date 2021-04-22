@@ -20,6 +20,7 @@ const GameSheetOverview = ({navigation}) => {
 
     const loadFromDb = useCallback(() => {
         try {
+            setIsLoading(true)
             dispatch(playerActions.loadPlayersFromDb());
             dispatch(scoringActions.loadScoresFromDb());
             dispatch(gameSheetActions.loadGameSheetsFromDb())
@@ -27,11 +28,11 @@ const GameSheetOverview = ({navigation}) => {
             throw new Error(err);
         }
         setIsLoading(false);
-    }, [dispatch]);
+    }, [dispatch, savedScores, savedGameSheets, gameSheetActions, isLoading]);
 
     useEffect(() => {
         return navigation.addListener('focus', loadFromDb)
-    }, [dispatch, loadFromDb])
+    }, [dispatch, loadFromDb, savedScores, savedGameSheets, allPlayer, isLoading])
 
 
     if (isLoading) {

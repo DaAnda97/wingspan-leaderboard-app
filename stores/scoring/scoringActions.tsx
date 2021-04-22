@@ -56,17 +56,17 @@ export const saveScores = (scores: Array<Scoring>) => {
         const loadedScores = Array<Scoring>();
         allScores.rows.forEach((scoring) => {
             const savedScoring = new Scoring(
-                scoring.id,
-                scoring.gameSheetId,
-                scoring.playerId,
-                scoring.roundPoints,
-                scoring.bonusPoints,
-                scoring.eggPoints,
-                scoring.foodPoints,
-                scoring.nectarPoints,
-                scoring.birdPoints,
-                scoring.cardPoints,
-                scoring.totalScore
+                "" + scoring.id,
+                "" + parseInt(scoring.gameSheetId),
+                "" + parseInt(scoring.playerId),
+                parseInt(scoring.roundPoints),
+                parseInt(scoring.bonusPoints),
+                parseInt(scoring.eggPoints),
+                parseInt(scoring.foodPoints),
+                parseInt(scoring.nectarPoints),
+                parseInt(scoring.birdPoints),
+                parseInt(scoring.cardPoints),
+                parseInt(scoring.totalScore)
             );
 
             loadedScores.push(savedScoring);
@@ -87,18 +87,8 @@ export const createScoring = (gameSheetId: string, playerId: string) => {
     };
 };
 
-export const updateScoring = (
-    id: string,
-    gameSheetId: string,
-    playerId: string,
-    roundPoints: number,
-    bonusPoints: number,
-    eggPoints: number,
-    foodPoints: number,
-    nectarPoints: number,
-    birdsPoints: number,
-    cardPoints: number
-) => {
+export const updateScoring = (id: string, gameSheetId: string, playerId: string, roundPoints: number, bonusPoints: number, eggPoints: number,
+                              foodPoints: number, nectarPoints: number, birdsPoints: number, cardPoints: number) => {
     return {
         type: UPDATE_SCORING,
         id: id,

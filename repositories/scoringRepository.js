@@ -12,7 +12,6 @@ export const createScoresTable = () => {
 
 export async function saveScoringArray(scores) {
     const gameSheetEntity = await saveNewGameSheet();
-    console.log(scores)
     const allScoresToSave = [];
     scores.forEach((score) => {
         const scoringToSave = {
@@ -30,8 +29,6 @@ export async function saveScoringArray(scores) {
 
         allScoresToSave.push(scoringToSave);
     });
-
-    console.log(allScoresToSave)
 
     const databaseLayer = new DatabaseLayer(
         async () => SQLite.openDatabase('wingspan.db'),

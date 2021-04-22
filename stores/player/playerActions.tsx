@@ -24,11 +24,11 @@ export const createPlayer = (name: string) => {
 
         dispatch({
             type: CREATE_PLAYER,
-            player: new Player(
-                "" + playerEntity.id,
-                playerEntity.name,
-                playerEntity.isActive
-            )
+            playerId: "" + playerEntity.id,
+            playerData: {
+                name: playerEntity.name,
+                isActive: playerEntity.isActive
+            }
         });
     };
 };
@@ -49,11 +49,11 @@ export const updatePlayer = (player: Player) => {
 
         dispatch({
             type: UPDATE_PLAYER,
-            player: new Player(
-                "" + playerEntity.id,
-                playerEntity.name,
-                playerEntity.isActive == 1
-            )
+            playerId: "" + playerEntity.id,
+            playerData: {
+                name: playerEntity.name,
+                isActive: playerEntity.isActive
+            }
         });
     };
 };
