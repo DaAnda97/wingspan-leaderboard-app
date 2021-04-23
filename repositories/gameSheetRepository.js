@@ -23,3 +23,7 @@ export const loadAllGameSheets = () => {
     );
     return databaseLayer.executeSql('SELECT * from gameSheets;');
 };
+
+export async function deleteGameSheet(gameSheetId) {
+    return GameSheetEntity.destroy(gameSheetId);
+}

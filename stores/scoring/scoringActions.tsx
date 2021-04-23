@@ -1,11 +1,11 @@
 import Scoring from '../../models/scoring/scoring';
-import {saveScoringArray} from '../../repositories/scoringRepository';
 import {ERROR} from "../main/errorAction";
 import CustomError from "../../models/main/customError";
 import * as scoringRepositoryActions from '../../repositories/scoringRepository';
 
 export const CREATE_SCORING = 'CREATE_SCORING';
 export const UPDATE_SCORING = 'UPDATE_SCORING';
+export const REMOVE_SCORING = 'REMOVE_SCORING';
 export const DELETE_SCORING = 'DELETE_SCORING';
 export const PERSIST_SCORES = 'PERSIST_SCORES';
 export const LOAD_SCORES_FROM_DB = "LOAD_SCORES_FROM_DB";
@@ -48,10 +48,18 @@ export const loadScoresFromDb = () => {
     };
 };
 
+export const deleteScoring = (scoringId: string) => {
+    return async (dispatch) => {
+        await scoringRepositoryActions.deleteScoring(scoringId)
+
+        dispatch({type: DELETE_SCORING, scoringId: scoringId});
+    };
+};
+
 
 export const saveScores = (scores: Array<Scoring>) => {
     return async (dispatch) => {
-        const allScores = await saveScoringArray(scores);
+        const allScores = await scoringRepositoryActions.saveScoringArray(scores);
 
         const loadedScores = Array<Scoring>();
         allScores.rows.forEach((scoring) => {
@@ -106,9 +114,9 @@ export const updateScoring = (id: string, gameSheetId: string, playerId: string,
     };
 };
 
-export const deleteScoring = (scoringId: string) => {
+export const removeScoring = (scoringId: string) => {
     return {
-        type: DELETE_SCORING,
-        id: scoringId
+        type: REMOVE_SCORING,
+        scoringId: scoringId
     };
 };

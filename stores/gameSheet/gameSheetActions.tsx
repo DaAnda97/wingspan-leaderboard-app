@@ -4,6 +4,7 @@ import CustomError from "../../models/main/customError";
 import * as gameSheetRepositoryActions from '../../repositories/gameSheetRepository';
 
 export const LOAD_GAME_SHEETS_FROM_DB = "LOAD_GAME_SHEETS_FROM_DB";
+export const DELETE_GAME_SHEET = "DELETE_GAME_SHEET";
 
 
 export const loadGameSheetsFromDb = () => {
@@ -31,5 +32,12 @@ export const loadGameSheetsFromDb = () => {
         const loadedSavedGameSheets = savedGameSheets.sort((a: GameSheet, b: GameSheet) => {return b.timestamp.valueOf() - a.timestamp.valueOf() })
 
         dispatch({ type: LOAD_GAME_SHEETS_FROM_DB, loadedGameSheets: loadedSavedGameSheets });
+    };
+};
+
+export const deleteGameSheet = (gameSheetId: string) => {
+    return async (dispatch) => {
+        await gameSheetRepositoryActions.deleteGameSheet(gameSheetId)
+        dispatch({ type: DELETE_GAME_SHEET, gameSheetId: gameSheetId });
     };
 };

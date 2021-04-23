@@ -36,7 +36,7 @@ const SettingsOverview = ({navigation}) => {
             <View style={styles.cautionButtonContainer}>
                 <Button
                     style={styles.cautionButtonStyle}
-                    icon={'delete-alert'}
+                    icon={'delete'}
                     color={Colors.cation}
                     onPress={() => {
                         setIsResetDialogShown(true)

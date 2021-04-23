@@ -1,9 +1,9 @@
 import Scoring from '../../models/scoring/scoring';
 import {
     CREATE_SCORING,
-    DELETE_SCORING,
+    REMOVE_SCORING,
     UPDATE_SCORING,
-    PERSIST_SCORES, LOAD_SCORES_FROM_DB,
+    PERSIST_SCORES, LOAD_SCORES_FROM_DB, DELETE_SCORING,
 } from './scoringActions';
 
 const initialState = {
@@ -73,12 +73,20 @@ export default (state = initialState, action) => {
                 savedScores: state.savedScores
             };
 
+        case REMOVE_SCORING:
+            return {
+                ...state,
+                unsavedGameSheetId: state.unsavedGameSheetId,
+                unsavedScores: state.unsavedScores.filter((score) => score.id !== action.scoringId),
+                savedScores: state.savedScores
+            };
+
         case DELETE_SCORING:
             return {
                 ...state,
                 unsavedGameSheetId: state.unsavedGameSheetId,
-                unsavedScores: state.unsavedScores.filter((score) => score.id !== action.id),
-                savedScores: state.savedScores
+                unsavedScores: state.unsavedScores,
+                savedScores: state.savedScores.filter((score) => score.id !== action.scoringId),
             };
 
         case LOAD_SCORES_FROM_DB:

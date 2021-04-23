@@ -49,3 +49,7 @@ export const loadAllScores = () => {
     );
     return databaseLayer.executeSql('SELECT * from scores;');
 };
+
+export async function deleteScoring(scoringId) {
+    return ScoringEntity.destroy(scoringId);
+}

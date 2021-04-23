@@ -39,7 +39,7 @@ const PlayerSelection = ({navigation}) => {
                         unsavedScores
                     )}`
                 );
-            dispatch(scoringActions.deleteScoring(thisScoring.id));
+            dispatch(scoringActions.removeScoring(thisScoring.id));
         },
         [dispatch, unsavedScores, gamingSheetId]
     );

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 
-import { useSelector } from 'react-redux';
-import { Divider, Text } from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
+import {Button, Dialog, Divider, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
 import {
     SCORING_FIELD_NAMES
 } from '../../models/scoring/SCORING_CONSTANTS';
@@ -12,11 +12,43 @@ import { RootState } from '../../stores/main/RootReducer';
 import Scoring from '../../models/scoring/scoring';
 import NameRow from './items/NameRow';
 import ScoringColumn from "./items/ScoringColumn";
+import * as scoringActions from "../../stores/scoring/scoringActions";
+import * as gameSheetActions from "../../stores/gameSheet/gameSheetActions";
+
 
 const ScoringOverview = ({ navigation, route }) => {
+    const dispatch = useDispatch();
     const scoringFieldNames = SCORING_FIELD_NAMES;
-
     const scores = useSelector((state: RootState) => state.scores.savedScores).filter((score : Scoring) => score.gameSheetId === route.params.gameSheetId)
+    const [isDeleteDialogShown, setIsDeleteDialogShown] = useState(false)
+
+    // Button in Navigation
+    const deleteHandler = useCallback(() => {
+        try {
+            dispatch(gameSheetActions.deleteGameSheet(route.params.gameSheetId));
+            scores.forEach((scoring) => {
+                dispatch(scoringActions.deleteScoring(scoring.id));
+            })
+        } catch (err) {
+            throw new Error(err);
+        }
+
+        navigation.goBack()
+    }, []);
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <IconButton
+                    icon={'delete'}
+                    color={Colors.cation}
+                    size={23}
+                    onPress={() => setIsDeleteDialogShown(true)}
+                />
+            )
+        });
+    }, []);
+
+
 
     return (
         <View style={styles.main}>
@@ -48,6 +80,33 @@ const ScoringOverview = ({ navigation, route }) => {
                     })}
                 </View>
             </View>
+
+            <Portal>
+                <Dialog
+                    visible={isDeleteDialogShown}
+                    onDismiss={() => setIsDeleteDialogShown(false)}
+                >
+                    <Dialog.Title>Warnung</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph>
+                            Dieses Spiel wirklich löschen? Gelöschte Daten sind NICHT wiederherstellbar.
+                        </Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={() => setIsDeleteDialogShown(false)}>
+                            Abbrechen
+                        </Button>
+                        <Button
+                            color={Colors.cation}
+                            onPress={() => {
+                                setIsDeleteDialogShown(false)
+                                deleteHandler()
+                            }}>
+                            Bestätigen
+                        </Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </View>
     );
 };

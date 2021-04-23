@@ -1,4 +1,4 @@
-import {LOAD_GAME_SHEETS_FROM_DB} from "./gameSheetActions";
+import {DELETE_GAME_SHEET, LOAD_GAME_SHEETS_FROM_DB} from "./gameSheetActions";
 import GameSheet from "../../models/gameSheet/gameSheet";
 
 const initialState = {
@@ -13,6 +13,14 @@ export default (state = initialState, action) => {
                 ...state,
                 gameSheets: action.loadedGameSheets
             };
+
+        case DELETE_GAME_SHEET:
+            return {
+                ...state,
+                gameSheets: state.gameSheets.filter((gameSheet) => gameSheet.id !== action.gameSheetId)
+            }
+
+
     }
 
     //default

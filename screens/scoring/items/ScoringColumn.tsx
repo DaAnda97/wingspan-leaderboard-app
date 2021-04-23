@@ -1,15 +1,14 @@
-import React, {useState, RefObject, useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Dimensions, StyleSheet, View, } from 'react-native';
-import {Text} from 'react-native-paper';
+import {Button, Dialog, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
 import Scoring from "../../../models/scoring/scoring";
+import Colors from "../../../constants/Colors";
 
 type Props = {
     scoring: Scoring;
 };
 
 const ScoringColumn = ({scoring}: Props) => {
-
-
 
     return (
         <View style={styles.scoringColumn}>
