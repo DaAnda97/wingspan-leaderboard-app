@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/player/PlayerSelection';
 import PlayerEditScreen, {screenOptions as playerEditScreenOptions} from '../screens/player/PlayerEdit';
 import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/scoring/ScoringInput';
+import ScoringOverviewScreen, {screenOptions as scoringOverviewScreenOptions} from '../screens/scoring/ScoringOverview';
 import GameSheetOverviewScreen, {screenOptions as gameSheetOverviewScreenOptions} from '../screens/gameSheet/GameSheetOverview';
 import SettingsScreen, {screenOptions as settingsScreenOptions} from '../screens/settings/SettingsOverview';
 
@@ -29,6 +30,11 @@ function ScoringNavigator() {
                 name="GameSheetOverview"
                 component={GameSheetOverviewScreen}
                 options={gameSheetOverviewScreenOptions}
+            />
+            <ScoringStackNavigator.Screen
+                name="ScoringOverview"
+                component={ScoringOverviewScreen}
+                options={scoringOverviewScreenOptions}
             />
             <ScoringStackNavigator.Screen
                 name="PlayerSelection"

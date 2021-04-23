@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import ScoringColumn from './items/ScoringColumn';
+import ScoringInputColumn from './items/ScoringInputColumn';
 import { Divider, IconButton, Text } from 'react-native-paper';
 import {
     INPUT_REFS,
@@ -57,7 +57,7 @@ const ScoringInput = ({ navigation }) => {
 
             <Divider />
 
-            <ScrollView keyboardShouldPersistTaps="handled">
+            <ScrollView keyboardShouldPersistTaps="handled" >
                 <View style={styles.scrollView}>
                     <View style={styles.categoryContainer}>
                         {names.map((name: ScoringFieldName, index: number) => {
@@ -73,7 +73,7 @@ const ScoringInput = ({ navigation }) => {
 
                     {unsavedScores.map((scoring: Scoring, index: number) => {
                         return (
-                            <ScoringColumn
+                            <ScoringInputColumn
                                 key={scoring.id}
                                 playerIndex={index}
                                 playerId={scoring.playerId}
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     textStyle: {
-        margin: 5
+        margin: 5,
     }
 });
 

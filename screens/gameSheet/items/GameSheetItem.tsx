@@ -12,16 +12,17 @@ type Props = {
     gameSheetItem: GameSheet
     allScores: Array<Scoring>
     allPlayer: Array<Player>
+    onPress: () => void
 };
 
-const GameSheetItem = ({ gameSheetItem, allScores, allPlayer }: Props) => {
+const GameSheetItem = ({ gameSheetItem, allScores, allPlayer, onPress }: Props) => {
     const [date] = useState(gameSheetItem.timestamp.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }))
     const [time] = useState(gameSheetItem.timestamp.toLocaleTimeString('de-DE', { hour: 'numeric', minute: 'numeric' }))
 
     const scores = allScores.filter(score => score.gameSheetId === gameSheetItem.id)
 
     return (
-        <TouchableComponent onPress={() => {}} style={Styles.shadow}>
+        <TouchableComponent onPress={onPress} style={Styles.shadow}>
             <View style={styles.textContainer}>
                 <Subheading style={styles.date}>{date} um {time} Uhr</Subheading>
                     {scores.map((score: Scoring) => {

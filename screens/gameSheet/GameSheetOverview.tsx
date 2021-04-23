@@ -83,6 +83,7 @@ const GameSheetOverview = ({navigation}) => {
                                     gameSheetItem={gameSheet}
                                     allScores={savedScores}
                                     allPlayer={allPlayer}
+                                    onPress={() => {navigation.navigate('ScoringOverview', {gameSheetId: gameSheet.id})}}
                                 />
                             );
                         })
