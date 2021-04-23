@@ -11,10 +11,6 @@ import {RootState} from "../../stores/main/RootReducer";
 import GameSheet from "../../models/gameSheet/gameSheet";
 import GameSheetItem from "./items/GameSheetItem";
 
-import { dropScoresTable } from '../../repositories/scoringRepository';
-import { dropGameSheetsTable } from '../../repositories/gameSheetRepository';
-import { dropPlayersTable } from '../../repositories/playerRepository';
-
 const GameSheetOverview = ({navigation}) => {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -40,23 +36,18 @@ const GameSheetOverview = ({navigation}) => {
 
 
     // Button in Navigation
-    const dropHandler = useCallback(() => {
-        dropGameSheetsTable()
-        dropScoresTable()
-        dropPlayersTable()
-    }, []);
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 <IconButton
-                    icon={'flash'}
+                    icon={'tune'}
                     color={Colors.primary}
                     size={30}
-                    onPress={dropHandler}
+                    onPress={() => {navigation.navigate('Settings')}}
                 />
             )
         });
-    }, [dropHandler]);
+    }, []);
 
 
     if (isLoading) {

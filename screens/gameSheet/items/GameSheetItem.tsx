@@ -48,13 +48,6 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         textAlign: 'right'
     },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '40%',
-        paddingHorizontal: 20
-    },
     textContainer: {
         flex: 1,
         alignItems: 'center',

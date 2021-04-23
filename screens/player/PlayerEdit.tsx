@@ -73,8 +73,8 @@ const PlayerEdit = ({navigation}) => {
                         setIsAdding={setIsAdding}
                     />
                 ) : (
-                    <View style={styles.buttonContainer}>
-                        <Button style={styles.buttonStyle}
+                    <View style={styles.cautionButtonContainer}>
+                        <Button style={styles.cautionButtonStyle}
                                 icon={'account-plus'}
                                 color={Colors.secondary}
                                 onPress={() => {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     main: {
         marginTop: 10,
     },
-    buttonContainer: {
+    cautionButtonContainer: {
         margin: 10,
         borderWidth: 1,
         borderRadius: 5,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.secondaryBackground,
         alignItems: 'center'
     },
-    buttonStyle: {
+    cautionButtonStyle: {
         color: Colors.secondary,
         width: '100%'
     },

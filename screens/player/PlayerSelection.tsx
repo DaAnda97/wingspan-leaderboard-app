@@ -168,7 +168,7 @@ const PlayerSelection = ({navigation}) => {
                                 navigation.navigate('PlayerEdit');
                             }}
                         >
-                            Zur Spielerübersicht
+                            Zur Spielerverwaltung
                         </Button>
                     </View>
                 </View>

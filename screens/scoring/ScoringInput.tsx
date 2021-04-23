@@ -57,7 +57,7 @@ const ScoringInput = ({ navigation }) => {
 
             <Divider />
 
-            <ScrollView>
+            <ScrollView keyboardShouldPersistTaps="handled">
                 <View style={styles.scrollView}>
                     <View style={styles.categoryContainer}>
                         {names.map((name: ScoringFieldName, index: number) => {
