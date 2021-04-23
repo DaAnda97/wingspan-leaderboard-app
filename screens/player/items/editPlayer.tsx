@@ -152,7 +152,7 @@ const EditPlayer = ({player = new Player('', '', true), players, setIsAdding}: P
                         <Dialog.Title>Fehlerhafte Eingabe</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph>
-                                Bitte zuert die fehlerhafte Eingabe korrigieren
+                                Bitte zuerst die fehlerhafte Eingabe korrigieren
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>

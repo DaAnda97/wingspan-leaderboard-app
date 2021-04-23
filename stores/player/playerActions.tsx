@@ -27,7 +27,7 @@ export const createPlayer = (name: string) => {
             playerId: "" + playerEntity.id,
             playerData: {
                 name: playerEntity.name,
-                isActive: playerEntity.isActive
+                isActive: playerEntity.isActive === 1
             }
         });
     };
@@ -52,7 +52,7 @@ export const updatePlayer = (player: Player) => {
             playerId: "" + playerEntity.id,
             playerData: {
                 name: playerEntity.name,
-                isActive: playerEntity.isActive
+                isActive: playerEntity.isActive === 1
             }
         });
     };

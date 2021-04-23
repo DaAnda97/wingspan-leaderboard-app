@@ -12,7 +12,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case CREATE_PLAYER:
-            const savedPlayer = new Player(action.playerId, action.playerData.name, action.player.isActive)
+            const savedPlayer = new Player(action.playerId, action.playerData.name, action.playerData.isActive)
 
             return {
                 ...state,
@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
             };
 
         case UPDATE_PLAYER:
-            const updatedPlayer = new Player(action.playerId, action.playerData.name, action.player.isActive)
+            const updatedPlayer = new Player(action.playerId, action.playerData.name, action.playerData.isActive === 1)
 
             const selectedIndex = state.allPlayers.findIndex(
                 (player) => player.id === action.player.id

@@ -24,12 +24,14 @@ const GameSheetItem = ({ gameSheetItem, allScores, allPlayer }: Props) => {
         <TouchableComponent onPress={() => {}} style={Styles.shadow}>
             <View style={styles.textContainer}>
                 <Subheading style={styles.customer}>{date} um {time} Uhr</Subheading>
+                <Text>{JSON.stringify(scores.map(score => score.playerId))}</Text>
+                <Text>{JSON.stringify(allPlayer.map(player => player.id))}</Text>
                     {scores.map((score: Scoring) => {
                         const player = allPlayer.find(player => player.id === score.playerId)
                             ?? helpers.throwError("No player found for this score")
                         return (
                             <View key={player.id + "_" + score.id}>
-                                <Text style={styles.address}>{player.name}: {score.totalScore}</Text>
+                                <Text style={styles.playerScore}>{player.name}: {score.totalScore}</Text>
                             </View>
                         )
                     })}
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     customer: {
         marginVertical: 4
     },
-    address: {
+    playerScore: {
         paddingVertical: 7,
         textAlign: 'right'
     },

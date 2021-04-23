@@ -2,6 +2,11 @@ import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 import * as SQLite from 'expo-sqlite';
 import PlayerEntity from '../models/player/playerEntity';
 
+export const dropPlayersTable = () => {
+    PlayerEntity.dropTable()
+    console.log('Table players dropped successfully');
+};
+
 export const createPlayersTable = () => {
     PlayerEntity.createTable();
     console.log('Table players created successfully');

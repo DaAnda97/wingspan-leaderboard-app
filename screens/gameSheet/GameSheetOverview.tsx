@@ -4,12 +4,16 @@ import * as playerActions from '../../stores/player/playerActions';
 import * as scoringActions from '../../stores/scoring/scoringActions';
 import * as gameSheetActions from '../../stores/gameSheet/gameSheetActions';
 import Styles from '../../constants/Styles';
-import {ActivityIndicator, Button, Divider, Text} from 'react-native-paper';
+import {ActivityIndicator, Button, Divider, IconButton, Text} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import Colors from "../../constants/Colors";
 import {RootState} from "../../stores/main/RootReducer";
 import GameSheet from "../../models/gameSheet/gameSheet";
 import GameSheetItem from "./items/GameSheetItem";
+
+import { dropScoresTable } from '../../repositories/scoringRepository';
+import { dropGameSheetsTable } from '../../repositories/gameSheetRepository';
+import { dropPlayersTable } from '../../repositories/playerRepository';
 
 const GameSheetOverview = ({navigation}) => {
     const dispatch = useDispatch();
@@ -33,6 +37,26 @@ const GameSheetOverview = ({navigation}) => {
     useEffect(() => {
         return navigation.addListener('focus', loadFromDb)
     }, [dispatch, loadFromDb, savedScores, savedGameSheets, allPlayer, isLoading])
+
+
+    // Button in Navigation
+    const dropHandler = useCallback(() => {
+        dropGameSheetsTable()
+        dropScoresTable()
+        dropPlayersTable()
+    }, []);
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <IconButton
+                    icon={'flash'}
+                    color={Colors.primary}
+                    size={30}
+                    onPress={dropHandler}
+                />
+            )
+        });
+    }, [dropHandler]);
 
 
     if (isLoading) {

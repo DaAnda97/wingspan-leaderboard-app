@@ -2,10 +2,14 @@ import GameSheetEntity from '../models/gameSheet/gameSheetEntity';
 import DatabaseLayer from 'expo-sqlite-orm/src/DatabaseLayer';
 import * as SQLite from 'expo-sqlite';
 
+export const dropGameSheetsTable = () => {
+    GameSheetEntity.dropTable()
+    console.log('Table scoringSheets dropped successfully');
+};
+
 export const createGameSheetsTable = () => {
     GameSheetEntity.createTable();
     console.log('Table scoringSheets created successfully');
-    //GameSheetEntity.dropTable()
 };
 
 export async function saveNewGameSheet() {

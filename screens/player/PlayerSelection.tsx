@@ -157,19 +157,19 @@ const PlayerSelection = ({navigation}) => {
                         })
                     ) : (
                         <Text style={styles.defaultTextStyle}>
-                            Noch keine Spieler vorhanden. Lege zuerst Spieler an.
+                            Noch keine Spieler vorhanden. Lege in der Spielerübersicht zuerst Spieler an.
                         </Text>
                     )}
                     <View style={styles.buttonContainer}>
                         <Button
                             style={styles.buttonStyle}
-                            icon={'account-plus'}
+                            icon={'account-multiple'}
                             color={Colors.secondary}
                             onPress={() => {
                                 navigation.navigate('PlayerEdit');
                             }}
                         >
-                            Neuen Spieler anlegen
+                            Zur Spielerübersicht
                         </Button>
                     </View>
                 </View>
