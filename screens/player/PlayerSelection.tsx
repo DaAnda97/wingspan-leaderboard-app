@@ -164,7 +164,6 @@ const PlayerSelection = ({navigation}) => {
                         <Button
                             style={styles.buttonStyle}
                             icon={'account-multiple'}
-                            color={Colors.secondary}
                             onPress={() => {
                                 navigation.navigate('PlayerEdit');
                             }}
@@ -188,12 +187,12 @@ const styles = StyleSheet.create({
         margin: 10,
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: Colors.secondary,
-        backgroundColor: Colors.secondaryBackground,
+        borderColor: Colors.primary,
+        backgroundColor: Colors.primaryBackground,
         alignItems: 'center'
     },
     buttonStyle: {
-        color: Colors.secondary,
+        color: Colors.primary,
         width: '100%'
     },
     defaultTextStyle: {
