@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 import ScoringInputColumn from './items/ScoringInputColumn';
@@ -14,6 +14,8 @@ import { RootState } from '../../stores/main/RootReducer';
 import Scoring from '../../models/scoring/scoring';
 import NameRow from './items/NameRow';
 import * as scoringActions from '../../stores/scoring/scoringActions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 const ScoringInput = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -57,7 +59,7 @@ const ScoringInput = ({ navigation }) => {
 
             <Divider />
 
-            <ScrollView keyboardShouldPersistTaps="handled" >
+            <ScrollView keyboardShouldPersistTaps={"handled"}>
                 <View style={styles.scrollView}>
                     <View style={styles.categoryContainer}>
                         {names.map((name: ScoringFieldName, index: number) => {

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Dialog, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../stores/main/RootReducer";
@@ -44,99 +44,100 @@ const PlayerEdit = ({navigation}) => {
     }, [dispatch]);
 
     return (
-        <ScrollView>
-            <View style={styles.main}>
-                {allActivePlayer.length > 0 ? (
-                    allActivePlayer.map((player: Player) => {
-                        return (
-                            <EditPlayer
-                                key={player.id}
-                                player={player}
-                                players={allPlayer}
-                                setIsAdding={setIsAdding}
-                            />
-                        );
-                    })
-                ) : allPlayer.length > 0
-                    ? (
-                        <Text style={styles.defaultTextStyle}>
-                            Keine aktiven Spieler. Blende deine Spieler über den Button rechts oben wieder ein oder lege neue Spieler an.
-                        </Text>
+        <SafeAreaView>
+            <ScrollView keyboardShouldPersistTaps="handled">
+                <View style={styles.main}>
+                    {allActivePlayer.length > 0 ? (
+                        allActivePlayer.map((player: Player) => {
+                            return (
+                                <EditPlayer
+                                    key={player.id}
+                                    player={player}
+                                    players={allPlayer}
+                                    setIsAdding={setIsAdding}
+                                />
+                            );
+                        })
+                    ) : allPlayer.length > 0
+                        ? (
+                            <Text style={styles.defaultTextStyle}>
+                                Keine aktiven Spieler. Blende deine Spieler über den Button rechts oben wieder ein oder lege neue Spieler an.
+                            </Text>
+                        ) : (
+                            <Text style={styles.defaultTextStyle}>
+                                Noch keine Spieler vorhanden. Lege zuerst Spieler an.
+                            </Text>
+                        )}
+                    {isAdding ? (
+                        <EditPlayer
+                            players={allPlayer}
+                            setIsAdding={setIsAdding}
+                        />
                     ) : (
-                        <Text style={styles.defaultTextStyle}>
-                            Noch keine Spieler vorhanden. Lege zuerst Spieler an.
-                        </Text>
+                        <View style={styles.cautionButtonContainer}>
+                            <Button style={styles.cautionButtonStyle}
+                                    icon={'account-plus'}
+                                    color={Colors.secondary}
+                                    onPress={() => {
+                                        setIsAdding(true);
+                                    }}
+                            >
+                                Neuen Spieler anlegen
+                            </Button>
+                        </View>
+
                     )}
-                {isAdding ? (
-                    <EditPlayer
-                        players={allPlayer}
-                        setIsAdding={setIsAdding}
-                    />
-                ) : (
-                    <View style={styles.cautionButtonContainer}>
-                        <Button style={styles.cautionButtonStyle}
-                                icon={'account-plus'}
-                                color={Colors.secondary}
-                                onPress={() => {
-                                    setIsAdding(true);
-                                }}
-                        >
-                            Neuen Spieler anlegen
-                        </Button>
-                    </View>
+                </View>
 
-                )}
-            </View>
-
-            <Portal>
-                <Dialog
-                    visible={isHiddenPlayersShown}
-                    onDismiss={() => setIsHiddenPlayersShown(false)}
-                >
-                    <Dialog.Title>Ausgeblendete Spieler</Dialog.Title>
-                    <Dialog.Content>
-                        <Paragraph>
-                            Ausgeblendete Spieler werden nicht bei der Spielerauswahl angezeigt. So brauchst du inaktive Spieler nicht zu löschen, was wiederum die Ergebnislisten verfälschen würde.
-                        </Paragraph>
-                        <Paragraph>
-                            Klicke auf das Auge, um den ausgewählten Spieler wieder einzublenden.
-                        </Paragraph>
-                        <ScrollView>
-                            <View style={styles.verticalAligned}>
-                                {
-                                    allHiddenPlayer.map((player: Player) => {
-                                            return (
-                                                <View style={styles.mainContainer} key={player.id}>
-                                                    <IconButton
-                                                        size={23}
-                                                        icon={'eye'}
-                                                        color={Colors.secondary}
-                                                        onPress={() => {
-                                                            showPlayer(player.id, player.name)
-                                                        }}
-                                                    />
-                                                    <View style={styles.nameContainer}>
-                                                        <Paragraph>{player.name}</Paragraph>
+                <Portal>
+                    <Dialog
+                        visible={isHiddenPlayersShown}
+                        onDismiss={() => setIsHiddenPlayersShown(false)}
+                    >
+                        <Dialog.Title>Ausgeblendete Spieler</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph>
+                                Ausgeblendete Spieler werden nicht bei der Spielerauswahl angezeigt. So brauchst du inaktive Spieler nicht zu löschen, was wiederum die Ergebnislisten verfälschen würde.
+                            </Paragraph>
+                            <Paragraph>
+                                Klicke auf das Auge, um den ausgewählten Spieler wieder einzublenden.
+                            </Paragraph>
+                            <ScrollView>
+                                <View style={styles.verticalAligned}>
+                                    {
+                                        allHiddenPlayer.map((player: Player) => {
+                                                return (
+                                                    <View style={styles.mainContainer} key={player.id}>
+                                                        <IconButton
+                                                            size={23}
+                                                            icon={'eye'}
+                                                            color={Colors.secondary}
+                                                            onPress={() => {
+                                                                showPlayer(player.id, player.name)
+                                                            }}
+                                                        />
+                                                        <View style={styles.nameContainer}>
+                                                            <Paragraph>{player.name}</Paragraph>
+                                                        </View>
                                                     </View>
-                                                </View>
-                                            )
-                                        }
-                                    )
-                                }
-                            </View>
-                        </ScrollView>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </View>
+                            </ScrollView>
 
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button
-                            onPress={() => setIsHiddenPlayersShown(false)}
-                        >
-                            Ok
-                        </Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-        </ScrollView>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={() => setIsHiddenPlayersShown(false)}>
+                                Ok
+                            </Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+            </ScrollView>
+        </SafeAreaView>
+
 
     );
 

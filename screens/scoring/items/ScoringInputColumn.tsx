@@ -1,5 +1,5 @@
 import React, { useState, RefObject, useCallback } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import { TextInput as RNTextInput } from 'react-native';
 import {
     HelperText,

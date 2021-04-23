@@ -12,6 +12,7 @@ import { rootReducer } from './stores/main/RootReducer';
 import { createScoresTable } from './repositories/scoringRepository';
 import { createGameSheetsTable } from './repositories/gameSheetRepository';
 import { createPlayersTable } from './repositories/playerRepository';
+import {SafeAreaView} from "react-native";
 
 const createTables = () => {
     createPlayersTable();
