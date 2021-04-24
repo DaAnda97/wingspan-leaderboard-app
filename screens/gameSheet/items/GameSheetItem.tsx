@@ -24,7 +24,7 @@ const GameSheetItem = ({ gameSheetItem, allScores, allPlayer, onPress }: Props) 
     return (
         <TouchableComponent onPress={onPress} style={Styles.shadow}>
             <View style={styles.textContainer}>
-                <Subheading style={styles.date}>{dateTime.toFormat("dd. MMMM yyyy")} um {dateTime.toFormat("HH':'mm")} Uhr</Subheading>
+                <Subheading style={styles.date}>{dateTime.toFormat("dd. MMMM yyyy 'um' HH':'mm 'Uhr")}</Subheading>
                     {scores.map((score: Scoring) => {
                         const player = allPlayer.find(player => player.id === score.playerId)
                             ?? helpers.throwError("No player found for this score")
