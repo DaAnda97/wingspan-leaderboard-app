@@ -6,13 +6,15 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
+import 'intl';
+import 'intl/locale-data/jsonp/de';
+
 import Colors from './constants/Colors';
 import TabScreenNavigator from './navigation/TapScreenNavigator';
 import { rootReducer } from './stores/main/RootReducer';
 import { createScoresTable } from './repositories/scoringRepository';
 import { createGameSheetsTable } from './repositories/gameSheetRepository';
 import { createPlayersTable } from './repositories/playerRepository';
-import {SafeAreaView} from "react-native";
 
 const createTables = () => {
     createPlayersTable();

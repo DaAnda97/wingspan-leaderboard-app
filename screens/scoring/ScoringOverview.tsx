@@ -1,11 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Dialog, Divider, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
-import {
-    SCORING_FIELD_NAMES
-} from '../../models/scoring/SCORING_CONSTANTS';
+import {SCORING_FIELD_NAMES} from '../../models/scoring/SCORING_CONSTANTS';
 import Colors from '../../constants/Colors';
 import ScoringFieldName from '../../models/scoring/scoringFieldName';
 import { RootState } from '../../stores/main/RootReducer';

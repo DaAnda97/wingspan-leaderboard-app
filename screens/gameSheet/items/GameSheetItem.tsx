@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Subheading, Text} from "react-native-paper";
+import DateTime from "luxon/src/datetime.js";
 import Styles from '../../../constants/Styles';
 import TouchableComponent from "../../../components/TouchableComponent";
 import Scoring from "../../../models/scoring/scoring";
@@ -16,15 +17,14 @@ type Props = {
 };
 
 const GameSheetItem = ({ gameSheetItem, allScores, allPlayer, onPress }: Props) => {
-    const [date] = useState(gameSheetItem.timestamp.toLocaleDateString('de-DE', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }))
-    const [time] = useState(gameSheetItem.timestamp.toLocaleTimeString('de-DE', { hour: 'numeric', minute: 'numeric' }))
+    const dateTime: DateTime = DateTime.fromJSDate(gameSheetItem.timestamp).setLocale("de")
 
     const scores = allScores.filter(score => score.gameSheetId === gameSheetItem.id)
 
     return (
         <TouchableComponent onPress={onPress} style={Styles.shadow}>
             <View style={styles.textContainer}>
-                <Subheading style={styles.date}>{date} um {time} Uhr</Subheading>
+                <Subheading style={styles.date}>{dateTime.toFormat("dd. MMMM yyyy")} um {dateTime.toFormat("HH':'mm")} Uhr</Subheading>
                     {scores.map((score: Scoring) => {
                         const player = allPlayer.find(player => player.id === score.playerId)
                             ?? helpers.throwError("No player found for this score")
