@@ -34,41 +34,41 @@ const EditPlayer = ({player = new Player('', '', true), players, setIsAdding}: P
         const playerNames: Array<string> = players.filter(cPlayer => cPlayer !== player).map(player => player.name)
 
         if (playerNames.includes(name)) {
-            setErrorInfo("Dieser Name ist bereits vergeben")
+            return "Dieser Name ist bereits vergeben"
         } else if (name.length <= 1) {
-            setErrorInfo("Ein Name besteht aus mindestens zwei Buchstaben")
+            return "Ein Name besteht aus mindestens zwei Buchstaben"
         } else if (name.length > 9) {
-            setErrorInfo("Ein Name kann max. 9 Buchstaben haben")
+            return "Ein Name kann max. 9 Buchstaben haben"
         } else {
-            setErrorInfo("")
+            return ""
         }
     }, [name])
 
     useEffect(() => {
-        checkNameIsValid()
+        setErrorInfo(checkNameIsValid())
     }, [name])
 
     // dispatch
     const createPlayer = useCallback((playerName: string) => {
-            if (errorInfo === "") {
+            if (checkNameIsValid() === "") {
                 setIsEditMode(false);
                 setIsAdding(false);
                 dispatch(playerActions.createPlayer(playerName));
             } else {
                 setIsErrorDialogShown(true)
             }
-        }, [dispatch]
+        }, [dispatch, checkNameIsValid, name]
     );
 
     const updatePlayer = useCallback((id: string, newName: string, isActive) => {
-            if (errorInfo === "") {
+            if (checkNameIsValid() === "") {
                 setIsEditMode(false);
                 setIsAdding(false);
                 dispatch(playerActions.updatePlayer(new Player(id, newName, isActive)));
             } else {
                 setIsErrorDialogShown(true)
             }
-        }, [dispatch]
+        }, [dispatch, checkNameIsValid, name]
     );
 
     const hidePlayer = useCallback(() => {
@@ -152,7 +152,7 @@ const EditPlayer = ({player = new Player('', '', true), players, setIsAdding}: P
                         <Dialog.Title>Fehlerhafte Eingabe</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph>
-                                Bitte zuerst die fehlerhafte Eingabe korrigieren
+                                Bitte zuerst die fehlerhafte Eingabe korrigieren: {errorInfo}
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>

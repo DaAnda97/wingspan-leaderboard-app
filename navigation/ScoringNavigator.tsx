@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/player/PlayerSelection';
 import PlayerEditScreen, {screenOptions as playerEditScreenOptions} from '../screens/player/PlayerEdit';
@@ -57,13 +57,14 @@ function ScoringNavigator() {
                 options={settingsScreenOptions}
             />
         </ScoringStackNavigator.Navigator>
+
     );
 }
 
 export const screenOptions = () => {
     return {
         tabBarLabel: 'Spielwertung',
-        tabBarIcon: ({ color, focused }) => (
+        tabBarIcon: ({color, focused}) => (
             <MaterialCommunityIcons
                 name={focused ? 'medal' : 'medal-outline'}
                 color={color}

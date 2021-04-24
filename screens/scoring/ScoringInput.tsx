@@ -55,9 +55,10 @@ const ScoringInput = ({ navigation }) => {
 
     return (
         <View style={styles.main}>
-            <NameRow scores={unsavedScores} />
+                <NameRow scores={unsavedScores} />
 
-            <Divider />
+                <Divider />
+
 
             <ScrollView keyboardShouldPersistTaps={"handled"}>
                 <View style={styles.scrollView}>
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     main: {
         flex: 1
     },
+
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',

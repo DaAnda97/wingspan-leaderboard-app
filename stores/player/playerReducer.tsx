@@ -20,10 +20,10 @@ export default (state = initialState, action) => {
             };
 
         case UPDATE_PLAYER:
-            const updatedPlayer = new Player(action.playerId, action.playerData.name, action.playerData.isActive === 1)
+            const updatedPlayer = new Player(action.playerId, action.playerData.name, action.playerData.isActive)
 
             const selectedIndex = state.allPlayers.findIndex(
-                (player) => player.id === action.player.id
+                (player) => player.id === action.playerId
             );
 
             const updatedPlayers = [...state.allPlayers];
