@@ -2,11 +2,9 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/player/PlayerSelection';
-import PlayerEditScreen, {screenOptions as playerEditScreenOptions} from '../screens/player/PlayerEdit';
 import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/scoring/ScoringInput';
 import ScoringOverviewScreen, {screenOptions as scoringOverviewScreenOptions} from '../screens/scoring/ScoringOverview';
 import GameSheetOverviewScreen, {screenOptions as gameSheetOverviewScreenOptions} from '../screens/gameSheet/GameSheetOverview';
-import SettingsScreen, {screenOptions as settingsScreenOptions} from '../screens/settings/SettingsOverview';
 
 import Colors from '../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -42,19 +40,9 @@ function ScoringNavigator() {
                 options={playerSelectionScreenOptions}
             />
             <ScoringStackNavigator.Screen
-                name="PlayerEdit"
-                component={PlayerEditScreen}
-                options={playerEditScreenOptions}
-            />
-            <ScoringStackNavigator.Screen
                 name="ScoringInput"
                 component={ScoringInputScreen}
                 options={scoringInputScreenOptions}
-            />
-            <ScoringStackNavigator.Screen
-                name="Settings"
-                component={SettingsScreen}
-                options={settingsScreenOptions}
             />
         </ScoringStackNavigator.Navigator>
 

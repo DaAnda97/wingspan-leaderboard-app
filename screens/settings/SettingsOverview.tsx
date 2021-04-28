@@ -38,6 +38,8 @@ const SettingsOverview = ({navigation}) => {
                     title={"Einstellungen"}
                 />
             </Appbar.Header>
+
+
             <View style={styles.cautionButtonContainer}>
                 <Button
                     style={styles.cautionButtonStyle}
@@ -79,9 +81,6 @@ const SettingsOverview = ({navigation}) => {
                 </Dialog>
             </Portal>
         </View>
-
-
-
 
     );
 
