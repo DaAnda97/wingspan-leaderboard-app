@@ -1,7 +1,7 @@
 import React from 'react';
-import {createDrawerNavigator, DrawerContentComponentProps} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {SafeAreaView, StyleSheet, View} from "react-native";
-import {Avatar, Drawer, Subheading, Title} from 'react-native-paper';
+import {Avatar, Drawer, Subheading} from 'react-native-paper';
 
 import ScoringNavigator from "./ScoringNavigator";
 import PlayerEdit from "../screens/player/PlayerEdit";
@@ -21,27 +21,39 @@ const DrawerContent = (props) => {
 
     return (
        <SafeAreaView style={Styles.safeArea}>
-           <View style={styles.userInfoSection}>
-               <Avatar.Image
-                   source={require("../assets/icon.png")}
-                   size={50}
-               />
-               <Subheading style={styles.title}>Wingspan Leaderboard</Subheading>
-           </View>
 
 
            <Drawer.Section>
+               <View style={styles.userInfoSection}>
+                   <Avatar.Image
+                       source={require("../assets/icon.png")}
+                       size={50}
+                   />
+                   <Subheading style={styles.title}>Wingspan Leaderboard</Subheading>
+               </View>
+           </Drawer.Section>
+
+           <Drawer.Section>
                <Drawer.Item
+                   icon={"medal-outline"}
                    label="Ergebnisübersicht"
                    active={active === 'ScoringNavigator'}
                    onPress={() => navigateTo('ScoringNavigator')}
                />
                <Drawer.Item
+                   icon={"account-multiple-outline"}
                    label="Spielerübersicht"
                    active={active === 'PlayerEdit'}
                    onPress={() => navigateTo('PlayerEdit')}
                />
            </Drawer.Section>
+
+           <Drawer.Item
+               icon={"tune"}
+               label="Einstellungen"
+               active={active === 'Settings'}
+               onPress={() => navigateTo('Settings')}
+           />
        </SafeAreaView>
     );
 }

@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {Button, Dialog, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
+import {Appbar, Button, Dialog, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../stores/main/RootReducer";
 import EditPlayer from "./items/editPlayer";
@@ -45,6 +45,30 @@ const PlayerEdit = ({navigation}) => {
 
     return (
         <SafeAreaView>
+            <Appbar.Header theme={{ colors: { primary: "white" } }}>
+                <IconButton
+                    icon={'menu'}
+                    color={Colors.primary}
+                    size={30}
+                    onPress={() => {
+                        navigation.openDrawer();
+                    }}
+                />
+                <Appbar.Content
+                    color={Colors.primary}
+                    title={"Spielerübersicht"}
+                />
+                {
+                    allHiddenPlayer.length > 0 &&
+                    <IconButton
+                        icon={'eye-off'}
+                        color={Colors.primary}
+                        size={23}
+                        onPress={() => setIsHiddenPlayersShown(true)}
+                    />
+                }
+            </Appbar.Header>
+
             <ScrollView keyboardShouldPersistTaps="handled">
                 <View style={styles.main}>
                     {allActivePlayer.length > 0 ? (
@@ -190,7 +214,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: 'Spieler bearbeiten'
+        headerTitle: 'Spielerübersicht'
     };
 };
 

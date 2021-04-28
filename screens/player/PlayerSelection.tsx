@@ -156,21 +156,24 @@ const PlayerSelection = ({navigation}) => {
                             );
                         })
                     ) : (
-                        <Text style={styles.defaultTextStyle}>
-                            Noch keine Spieler vorhanden. Lege in der Spielerübersicht zuerst Spieler an.
-                        </Text>
+                        <View>
+                            <Text style={styles.defaultTextStyle}>
+                                Noch keine Spieler vorhanden. Lege in der Spielerübersicht zuerst Spieler an.
+                            </Text>
+                            <View style={styles.buttonContainer}>
+                                <Button
+                                    style={styles.buttonStyle}
+                                    icon={'menu'}
+                                    onPress={() => {
+                                        navigation.openDrawer();
+                                    }}
+                                >
+                                    Menü öffnen
+                                </Button>
+                            </View>
+                        </View>
+
                     )}
-                    <View style={styles.buttonContainer}>
-                        <Button
-                            style={styles.buttonStyle}
-                            icon={'account-multiple'}
-                            onPress={() => {
-                                navigation.navigate('PlayerEdit');
-                            }}
-                        >
-                            Zur Spielerverwaltung
-                        </Button>
-                    </View>
                 </View>
             </ScrollView>
     );

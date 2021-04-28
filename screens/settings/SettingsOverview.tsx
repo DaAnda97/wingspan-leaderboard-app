@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
-import { StyleSheet, View} from 'react-native';
-import {Button, Dialog, Paragraph, Portal} from 'react-native-paper';
+import {DevSettings, StyleSheet, View} from 'react-native';
+import {Appbar, Button, Dialog, IconButton, Paragraph, Portal} from 'react-native-paper';
 import Colors from "../../constants/Colors";
 import { dropScoresTable, createScoresTable } from '../../repositories/scoringRepository';
 import { dropGameSheetsTable, createGameSheetsTable } from '../../repositories/gameSheetRepository';
@@ -18,21 +18,26 @@ const SettingsOverview = ({navigation}) => {
         createGameSheetsTable()
         createScoresTable()
         createPlayersTable()
+
+        DevSettings.reload()
     }, []);
 
     return (
         <View>
-            <View style={styles.buttonContainer}>
-                <Button
-                    style={styles.buttonStyle}
-                    icon={'account-multiple'}
+            <Appbar.Header theme={{ colors: { primary: "white" } }}>
+                <IconButton
+                    icon={'menu'}
+                    color={Colors.primary}
+                    size={30}
                     onPress={() => {
-                        navigation.navigate('PlayerEdit');
+                        navigation.openDrawer();
                     }}
-                >
-                    Zur Spielerverwaltung
-                </Button>
-            </View>
+                />
+                <Appbar.Content
+                    color={Colors.primary}
+                    title={"Einstellungen"}
+                />
+            </Appbar.Header>
             <View style={styles.cautionButtonContainer}>
                 <Button
                     style={styles.cautionButtonStyle}
@@ -116,10 +121,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export const screenOptions = () => {
-    return {
-        headerTitle: 'Einstellungen'
-    };
-};
 
 export default SettingsOverview;
