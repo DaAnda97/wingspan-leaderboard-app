@@ -17,7 +17,7 @@ const TabNavigation = createMaterialBottomTabNavigator();
 
 function TabScreenNavigator() {
     return (
-        <NavigationContainer>
+
             <TabNavigation.Navigator
                 activeColor={Colors.primary}
                 barStyle={{ backgroundColor: 'white' }}
@@ -38,7 +38,6 @@ function TabScreenNavigator() {
                     options={analysisScreenOptions}
                 />
             </TabNavigation.Navigator>
-        </NavigationContainer>
     );
 }
 

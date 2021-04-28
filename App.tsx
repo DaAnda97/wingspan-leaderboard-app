@@ -1,20 +1,22 @@
 import React, {useEffect} from 'react';
-import { Provider as StoreProvider } from 'react-redux';
+import {Provider as StoreProvider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
-import { applyMiddleware, createStore } from 'redux';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {applyMiddleware, createStore} from 'redux';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 
 import 'intl';
 import 'intl/locale-data/jsonp/de';
 
 import Colors from './constants/Colors';
-import TabScreenNavigator from './navigation/TapScreenNavigator';
-import { rootReducer } from './stores/main/RootReducer';
-import { createScoresTable } from './repositories/scoringRepository';
-import { createGameSheetsTable } from './repositories/gameSheetRepository';
-import { createPlayersTable } from './repositories/playerRepository';
+import ScoringNavigator from './navigation/ScoringNavigator';
+import {rootReducer} from './stores/main/RootReducer';
+import {createScoresTable} from './repositories/scoringRepository';
+import {createGameSheetsTable} from './repositories/gameSheetRepository';
+import {createPlayersTable} from './repositories/playerRepository';
+import {NavigationContainer} from "@react-navigation/native";
+import {MainNavigator} from "./navigation/MainNavigator";
 
 const createTables = () => {
     createPlayersTable();
@@ -55,7 +57,9 @@ export default function App() {
         <StoreProvider store={store}>
             <PaperProvider theme={theme}>
                 <SafeAreaProvider>
-                    <TabScreenNavigator />
+                    <NavigationContainer>
+                        <MainNavigator/>
+                    </NavigationContainer>
                 </SafeAreaProvider>
             </PaperProvider>
         </StoreProvider>

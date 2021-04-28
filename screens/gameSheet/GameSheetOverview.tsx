@@ -38,12 +38,14 @@ const GameSheetOverview = ({navigation}) => {
     // Button in Navigation
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => (
+            headerLeft: () => (
                 <IconButton
-                    icon={'tune'}
+                    icon={'menu'}
                     color={Colors.primary}
                     size={30}
-                    onPress={() => {navigation.navigate('Settings')}}
+                    onPress={() => {
+                        navigation.openDrawer();
+                    }}
                 />
             )
         });
