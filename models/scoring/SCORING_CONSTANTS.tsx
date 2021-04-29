@@ -4,7 +4,7 @@ import React from 'react';
 import { TextInput as RNTextInput } from 'react-native';
 
 export const SCORING_FIELD_NAMES: Array<ScoringFieldName> = [
-    new ScoringFieldName('round', 'Rundenzeile'),
+    new ScoringFieldName('round', 'Rundenziele'),
     new ScoringFieldName('bonus', 'Bonuskarten'),
     new ScoringFieldName('egg', 'Eier auf Vögeln'),
     new ScoringFieldName('food', 'gelagertes Futter'),

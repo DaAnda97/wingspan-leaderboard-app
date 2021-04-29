@@ -39,7 +39,8 @@ export const loadScoresFromDb = () => {
                 parseInt(scoringEntity.nectarPoints),
                 parseInt(scoringEntity.birdPoints),
                 parseInt(scoringEntity.cardPoints),
-                parseInt(scoringEntity.totalScore)
+                parseInt(scoringEntity.totalScore),
+                true
             );
             savedScores.push(savedScore);
         });
@@ -74,7 +75,8 @@ export const saveScores = (scores: Array<Scoring>) => {
                 parseInt(scoring.nectarPoints),
                 parseInt(scoring.birdPoints),
                 parseInt(scoring.cardPoints),
-                parseInt(scoring.totalScore)
+                parseInt(scoring.totalScore),
+                true
             );
 
             loadedScores.push(savedScoring);
@@ -96,7 +98,7 @@ export const createScoring = (gameSheetId: string, playerId: string) => {
 };
 
 export const updateScoring = (id: string, gameSheetId: string, playerId: string, roundPoints: number, bonusPoints: number, eggPoints: number,
-                              foodPoints: number, nectarPoints: number, birdsPoints: number, cardPoints: number) => {
+                              foodPoints: number, nectarPoints: number, birdsPoints: number, cardPoints: number, isValid: boolean) => {
     return {
         type: UPDATE_SCORING,
         id: id,
@@ -109,7 +111,8 @@ export const updateScoring = (id: string, gameSheetId: string, playerId: string,
             foodPoints,
             nectarPoints,
             birdsPoints,
-            cardPoints
+            cardPoints,
+            isValid
         }
     };
 };

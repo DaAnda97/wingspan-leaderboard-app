@@ -29,13 +29,13 @@ const ScoringInputColumn = ({playerIndex, playerId, scoringId, scoringSheetId, i
     // methods
     const setOneField = (fieldKey: string, newValue: string, doStateUpdate: boolean) => {
         const updatedFieldIndex = scoringFields.findIndex((field) => field.key === fieldKey);
-        const isNumber = helpers.isNumber(newValue);
+        const isValid = helpers.isNumber(newValue) && parseInt(newValue) >= 0;
 
         const updatedField = new ScoringField(
             fieldKey,
             newValue,
-            isNumber ? parseInt(newValue) : 0,
-            isNumber || newValue === ''
+            isValid ? parseInt(newValue) : 0,
+            isValid || newValue === ''
         );
 
         const updatedFields = [...scoringFields];
@@ -50,6 +50,8 @@ const ScoringInputColumn = ({playerIndex, playerId, scoringId, scoringSheetId, i
     };
 
     const updateScoringPlayer = useCallback((updatedFields: Array<ScoringField>) => {
+        const areFieldsValid = updatedFields.map((field: ScoringField) => helpers.isNumber(field.value) && parseInt(field.value) >= 0)
+        const isValid = !areFieldsValid.includes(false)
             dispatch(
                 scoringActions.updateScoring(
                     scoringId,
@@ -68,7 +70,8 @@ const ScoringInputColumn = ({playerIndex, playerId, scoringId, scoringSheetId, i
                     updatedFields.find((field) => field.key === 'bird')
                         ?.intValue || 0,
                     updatedFields.find((field) => field.key === 'card')
-                        ?.intValue || 0
+                        ?.intValue || 0,
+                    isValid
                 )
             );
         },

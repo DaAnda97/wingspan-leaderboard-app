@@ -10,7 +10,8 @@ class Scoring {
         public nectarPoints: number,
         public birdPoints: number,
         public cardPoints: number,
-        public totalScore: number
+        public totalScore: number,
+        public isValid: boolean
     ) {}
 }
 

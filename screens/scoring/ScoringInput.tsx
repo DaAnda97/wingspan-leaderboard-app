@@ -1,20 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import ScoringInputColumn from './items/ScoringInputColumn';
-import { Divider, IconButton, Text } from 'react-native-paper';
-import {
-    INPUT_REFS,
-    SCORING_FIELD_NAMES
-} from '../../models/scoring/SCORING_CONSTANTS';
+import {Button, Dialog, Divider, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
+import {INPUT_REFS, SCORING_FIELD_NAMES} from '../../models/scoring/SCORING_CONSTANTS';
 import Colors from '../../constants/Colors';
 import ScoringFieldName from '../../models/scoring/scoringFieldName';
 import { RootState } from '../../stores/main/RootReducer';
 import Scoring from '../../models/scoring/scoring';
-import NameRow from './items/NameRow';
 import * as scoringActions from '../../stores/scoring/scoringActions';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import ScoringInputColumn from './items/ScoringInputColumn';
+import NameRow from './items/NameRow';
 
 
 const ScoringInput = ({ navigation }) => {
@@ -24,6 +20,8 @@ const ScoringInput = ({ navigation }) => {
 
     const gamingSheetId = useSelector((state: RootState) => state.scores.unsavedGameSheetId)
     const unsavedScores = useSelector((state: RootState) => state.scores.unsavedScores)
+
+    const [isErrorMessageShown, setIsErrorMessageShown] = useState<boolean>(false)
 
     const goToNext = (colIndex, playerIndex) => {
         if (playerIndex < unsavedScores.length - 1) {
@@ -36,8 +34,14 @@ const ScoringInput = ({ navigation }) => {
     };
 
     const saveHandler = useCallback(() => {
-        dispatch(scoringActions.saveScores(unsavedScores));
-        navigation.popToTop();
+        const areAllScoresValid = !Array.from(unsavedScores.map(unsavedScore => unsavedScore.isValid)).includes(false)
+        if (areAllScoresValid){
+            dispatch(scoringActions.saveScores(unsavedScores));
+            navigation.popToTop();
+        } else {
+            setIsErrorMessageShown(true)
+        }
+
     }, [unsavedScores]);
 
     useEffect(() => {
@@ -55,10 +59,8 @@ const ScoringInput = ({ navigation }) => {
 
     return (
         <View style={styles.main}>
-                <NameRow scores={unsavedScores} />
-
-                <Divider />
-
+            <NameRow scores={unsavedScores} />
+            <Divider />
 
             <ScrollView keyboardShouldPersistTaps={"handled"}>
                 <View style={styles.scrollView}>
@@ -89,6 +91,25 @@ const ScoringInput = ({ navigation }) => {
                     })}
                 </View>
             </ScrollView>
+
+            <Portal>
+                <Dialog
+                    visible={isErrorMessageShown}
+                    onDismiss={() => setIsErrorMessageShown(false)}
+                >
+                    <Dialog.Title>Fehler</Dialog.Title>
+                    <Dialog.Content>
+                        <Paragraph>
+                            Es können keine fehlerhaften Eingaben gespeichert werden. Bitte diese zuerst korrigieren.
+                        </Paragraph>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={() => setIsErrorMessageShown(false)}>
+                            Ok
+                        </Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
         </View>
     );
 };

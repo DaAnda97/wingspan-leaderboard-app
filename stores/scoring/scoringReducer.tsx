@@ -26,7 +26,8 @@ export default (state = initialState, action) => {
                 0,
                 0,
                 0,
-                0
+                0,
+                true
             );
 
             return {
@@ -60,7 +61,8 @@ export default (state = initialState, action) => {
                 action.scoringData.nectarPoints,
                 action.scoringData.birdsPoints,
                 action.scoringData.cardPoints,
-                totalScore
+                totalScore,
+                action.scoringData.isValid
             );
 
             const updatedScores = [...state.unsavedScores];
