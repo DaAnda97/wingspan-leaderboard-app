@@ -8,8 +8,6 @@ import PlayerEdit from "../screens/player/PlayerEdit";
 import SettingsOverview from "../screens/settings/SettingsOverview";
 import Styles from "../constants/Styles";
 
-const DrawerNavigator = createDrawerNavigator();
-
 const DrawerContent = (props) => {
     const [active, setActive] = React.useState('ScoringNavigator');
 
@@ -57,16 +55,24 @@ const DrawerContent = (props) => {
        </SafeAreaView>
     );
 }
+;
 
-
-
-
+const DrawerNavigator = createDrawerNavigator();
 export const MainNavigator = () => {
     return (
         <DrawerNavigator.Navigator drawerContent={(props) => <DrawerContent {...props}/>}>
-            <DrawerNavigator.Screen name="ScoringNavigator" component={ScoringNavigator} />
-            <DrawerNavigator.Screen name="PlayerEdit" component={PlayerEdit} />
-            <DrawerNavigator.Screen name="Settings" component={SettingsOverview} />
+            <DrawerNavigator.Screen
+                name="ScoringNavigator"
+                component={ScoringNavigator}
+            />
+            <DrawerNavigator.Screen
+                name="PlayerEdit"
+                component={PlayerEdit}
+            />
+            <DrawerNavigator.Screen
+                name="Settings"
+                component={SettingsOverview}
+            />
         </DrawerNavigator.Navigator>
     );
 };

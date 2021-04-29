@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import * as playerActions from '../../stores/player/playerActions';
 import * as scoringActions from '../../stores/scoring/scoringActions';
@@ -10,6 +10,8 @@ import Colors from "../../constants/Colors";
 import {RootState} from "../../stores/main/RootReducer";
 import GameSheet from "../../models/gameSheet/gameSheet";
 import GameSheetItem from "./items/GameSheetItem";
+import {IMLocalized} from "../../localization/i18n";
+
 
 const GameSheetOverview = ({navigation}) => {
     const dispatch = useDispatch();
@@ -97,10 +99,6 @@ const GameSheetOverview = ({navigation}) => {
                 </View>
             </ScrollView>
         </View>
-
-
-
-
     );
 
 };
@@ -129,7 +127,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: 'Ergebnisübersicht'
+        headerTitle: IMLocalized('welcome')
     };
 };
 

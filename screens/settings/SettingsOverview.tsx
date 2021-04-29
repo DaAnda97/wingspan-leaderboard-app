@@ -1,7 +1,9 @@
 import React, {useCallback, useState} from 'react';
-import {DevSettings, StyleSheet, View} from 'react-native';
-import {Appbar, Button, Dialog, IconButton, Paragraph, Portal} from 'react-native-paper';
+import {DevSettings, Picker, StyleSheet, View} from 'react-native';
+import {Appbar, Button, Dialog, IconButton, Menu, Paragraph, Portal, Provider} from 'react-native-paper';
 import Colors from "../../constants/Colors";
+
+import {changeLanguage, IMLocalized} from "../../localization/i18n";
 import { dropScoresTable, createScoresTable } from '../../repositories/scoringRepository';
 import { dropGameSheetsTable, createGameSheetsTable } from '../../repositories/gameSheetRepository';
 import { dropPlayersTable, createPlayersTable } from '../../repositories/playerRepository';
@@ -9,6 +11,7 @@ import { dropPlayersTable, createPlayersTable } from '../../repositories/playerR
 
 const SettingsOverview = ({navigation}) => {
     const [isResetDialogShown, setIsResetDialogShown] = useState(false)
+    const [selectedValue, setSelectedValue] = useState("en");
 
     const dropHandler = useCallback(() => {
         dropGameSheetsTable()
@@ -21,6 +24,12 @@ const SettingsOverview = ({navigation}) => {
 
         DevSettings.reload()
     }, []);
+
+    const setLanguage = async(lang: string) =>  {
+        setSelectedValue(lang)
+        await changeLanguage(lang)
+        console.log(IMLocalized("welcome"))
+    }
 
     return (
         <View>
@@ -38,6 +47,15 @@ const SettingsOverview = ({navigation}) => {
                     title={"Einstellungen"}
                 />
             </Appbar.Header>
+
+            <Picker
+                selectedValue={selectedValue}
+                style={{ height: 50, width: 150 }}
+                onValueChange={(itemValue, itemIndex) => setLanguage(itemValue)}
+            >
+                <Picker.Item label="Deutsch" value="de" />
+                <Picker.Item label="Englisch" value="en" />
+            </Picker>
 
 
             <View style={styles.cautionButtonContainer}>
