@@ -71,7 +71,7 @@ const GameSheetOverview = ({navigation}) => {
                         navigation.navigate('PlayerSelection');
                     }}
                 >
-                    Neue Wertung eintragen
+                    Neues Ergebnis eintragen
                 </Button>
             </View>
             <Divider/>
@@ -91,7 +91,7 @@ const GameSheetOverview = ({navigation}) => {
                         })
                     ) : (
                         <Text style={styles.defaultTextStyle}>
-                            Noch keine Spielwertung erfasst.
+                            Noch kein Spielergebnis erfasst.
                         </Text>
                     )}
                 </View>
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: 'Spielwertungen'
+        headerTitle: 'Ergebnisübersicht'
     };
 };
 
