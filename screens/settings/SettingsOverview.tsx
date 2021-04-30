@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
-import {DevSettings, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch, useSelector} from "react-redux";
+import {DevSettings, StyleSheet, View} from 'react-native';
+import {useDispatch} from "react-redux";
 import {
     Appbar,
     Button,
@@ -9,9 +9,7 @@ import {
     Menu,
     Paragraph,
     Portal,
-    Provider,
-    Text,
-    TextInput
+    Subheading,
 } from 'react-native-paper';
 import i18n from 'i18n-js';
 import Colors from "../../constants/Colors";
@@ -19,7 +17,6 @@ import {dropScoresTable, createScoresTable} from '../../repositories/scoringRepo
 import {dropGameSheetsTable, createGameSheetsTable} from '../../repositories/gameSheetRepository';
 import {dropPlayersTable, createPlayersTable} from '../../repositories/playerRepository';
 import {updateLanguage} from "../../localization/localize";
-import  DropDown  from  'react-native-paper-dropdown';
 
 
 const SettingsOverview = ({navigation}) => {
@@ -66,25 +63,24 @@ const SettingsOverview = ({navigation}) => {
 
             <View style={styles.main}>
 
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        margin: 10
-                    }}>
+                <View style={styles.dropdownContainer}>
+                    <View style={styles.dropdownText}>
+                        <Subheading>Sprache:</Subheading>
+                    </View>
                     <Menu
                         visible={showDropDown}
                         onDismiss={() => setShowDropDown(false)}
                         anchor={
-                            <Button onPress={() => setShowDropDown(true)}>Show menu</Button>
+                            <View style={styles.dropdownButton}>
+                                <Button onPress={() => setShowDropDown(true)} icon={'menu-down'}>
+                                    {currentLanguage === "en" ? "Englisch" : "Deutsch"}
+                                </Button>
+                            </View>
+
                         }
                     >
-                        <Menu.Item onPress={() => {
-                            setLanguage("de")
-                        }} title="Deutsch"/>
-                        <Menu.Item onPress={() => {
-                            setLanguage("en")
-                        }} title="Englisch"/>
+                        <Menu.Item onPress={() => {setLanguage("de")}} title="Deutsch" />
+                        <Menu.Item onPress={() => {setLanguage("en")}} title="Englisch"/>
                     </Menu>
                 </View>
 
@@ -141,6 +137,20 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
     },
+    dropdownContainer: {
+        flexDirection: 'row',
+        margin: 10
+    },
+    dropdownText: {
+        alignSelf: "center",
+        marginRight: 5
+    },
+    dropdownButton: {
+        borderWidth: 0.5,
+        borderColor: Colors.primary,
+        margin: 2,
+        borderRadius: 5
+    },
     cautionButtonContainer: {
         margin: 10,
         borderWidth: 1,
@@ -152,20 +162,9 @@ const styles = StyleSheet.create({
         bottom: 0,
         flex: 1
     },
-    containerStyle: {
-        flex: 1,
-        marginHorizontal: 20,
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-    },
     cautionButtonStyle: {
         color: Colors.cation,
         width: '100%'
-    },
-    defaultTextStyle: {
-        textAlign: 'center',
-        padding: 5
     },
 });
 
