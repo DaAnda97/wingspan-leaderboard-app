@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
+import i18n from 'i18n-js';
 import {useDispatch} from 'react-redux';
 import {
     Button,
@@ -34,11 +35,11 @@ const EditPlayer = ({player = new Player('', '', true), players, setIsAdding}: P
         const playerNames: Array<string> = players.filter(cPlayer => cPlayer !== player).map(player => player.name)
 
         if (playerNames.includes(name)) {
-            return "Dieser Name ist bereits vergeben"
+            return i18n.translate('name_already_set')
         } else if (name.length <= 1) {
-            return "Ein Name besteht aus mindestens zwei Buchstaben"
+            return i18n.translate('min_letters_message')
         } else if (name.length > 9) {
-            return "Ein Name kann max. 9 Buchstaben haben"
+            return i18n.translate('max_letters_message')
         } else {
             return ""
         }
@@ -149,10 +150,10 @@ const EditPlayer = ({player = new Player('', '', true), players, setIsAdding}: P
                         visible={isDeleteDialogShown}
                         onDismiss={() => setIsErrorDialogShown(false)}
                     >
-                        <Dialog.Title>Fehlerhafte Eingabe</Dialog.Title>
+                        <Dialog.Title>{i18n.translate('wrong_entry')}</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph>
-                                Bitte zuerst die fehlerhafte Eingabe korrigieren: {errorInfo}
+                                {i18n.translate('correct_message')}{errorInfo}
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>

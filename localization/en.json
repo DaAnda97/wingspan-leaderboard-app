@@ -1,3 +1,48 @@
 {
-  "welcome": "Welcome"
+  "score_overview": "Score Overview",
+  "player_overview": "Player Overview",
+  "settings": "Settings",
+  "select_player": "Select Player",
+  "scoring": "Scoring",
+
+  "end_of_round_goals": "End Of Round Goals",
+  "bonus_cards": "Bonus Cards",
+  "eggs": "Eggs",
+  "food_on_cards": "Food On Cards",
+  "nectar": "Nectar",
+  "birds": "Birds",
+  "tucked_cards": "Trucked Cards",
+  "total": "TOTAL",
+
+  "add_scoring": "Add Scoring",
+  "no_scoring": "There's no scoring yet",
+
+  "show_players_message": "No active players. Show you players with the eye button on the top again or add new players.",
+  "no_player_message": "There's no player yet. Please add players first.",
+  "add_player_button": "Add new player",
+  "hidden_player": "Hidden player",
+  "hidden_player_info": "Hidden player won't be shown in the player selection. Out of this reason you don't have to delete players, which would break your saved scores.",
+  "show_player_info": "Press the eye to show hidden players again.",
+
+  "no_saved_gamers": "No player found. Please add some in 'Player Overview' first.",
+  "open_menu": "Open Menu",
+
+  "wrong_entry": "Wrong Entry",
+  "correct_message": "Please correct wrong entries firs: ",
+  "name_already_set": "This name is already set.",
+  "min_letters_message": "A name has to be 2 letters at least.",
+  "max_letters_message": "A name can have 9 letters at maximum.",
+
+
+  "error": "Error",
+  "warning": "Warning",
+  "language": "Language",
+  "cant_save_wrong_entries": "It's not possible to save wrong entries. Please correct them first.",
+  "really_delete_data": "Really delete all data? Deleted data can't be restored again.",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+
+  "english": "English",
+  "german": "German",
+  "delete_data_button": "Delete all data"
 }

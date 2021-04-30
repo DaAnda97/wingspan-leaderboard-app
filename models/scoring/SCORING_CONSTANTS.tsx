@@ -2,15 +2,16 @@ import ScoringField from './scoringField';
 import ScoringFieldName from './scoringFieldName';
 import React from 'react';
 import { TextInput as RNTextInput } from 'react-native';
+import i18n from 'i18n-js';
 
 export const SCORING_FIELD_NAMES: Array<ScoringFieldName> = [
-    new ScoringFieldName('round', 'Rundenziele'),
-    new ScoringFieldName('bonus', 'Bonuskarten'),
-    new ScoringFieldName('egg', 'Eier auf Vögeln'),
-    new ScoringFieldName('food', 'gelagertes Futter'),
-    new ScoringFieldName('nectar', 'erspielter Nektar'),
-    new ScoringFieldName('bird', 'Vogelpunkte'),
-    new ScoringFieldName('card', 'Karten unter Vögeln')
+    new ScoringFieldName('round', i18n.translate('end_of_round_goals')),
+    new ScoringFieldName('bonus', i18n.translate('bonus_cards')),
+    new ScoringFieldName('egg', i18n.translate('eggs')),
+    new ScoringFieldName('food', i18n.translate('food_on_cards')),
+    new ScoringFieldName('nectar', i18n.translate('nectar')),
+    new ScoringFieldName('bird', i18n.translate('birds')),
+    new ScoringFieldName('card', i18n.translate('tucked_cards'))
 ];
 
 export const INITIAL_SCORING_FIELDS: Array<ScoringField> = [

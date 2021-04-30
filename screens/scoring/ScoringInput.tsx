@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
+import i18n from 'i18n-js';
 import {Button, Dialog, Divider, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
 import {INPUT_REFS, SCORING_FIELD_NAMES} from '../../models/scoring/SCORING_CONSTANTS';
 import Colors from '../../constants/Colors';
@@ -97,10 +98,10 @@ const ScoringInput = ({ navigation }) => {
                     visible={isErrorMessageShown}
                     onDismiss={() => setIsErrorMessageShown(false)}
                 >
-                    <Dialog.Title>Fehler</Dialog.Title>
+                    <Dialog.Title>{i18n.translate('error')}</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph>
-                            Es können keine fehlerhaften Eingaben gespeichert werden. Bitte diese zuerst korrigieren.
+                            i18n.translate('cant_save_wrong_entries')
                         </Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: 'Spielwertung'
+        headerTitle: i18n.translate('scoring')
     };
 };
 

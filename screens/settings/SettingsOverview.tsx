@@ -57,7 +57,7 @@ const SettingsOverview = ({navigation}) => {
                 />
                 <Appbar.Content
                     color={Colors.primary}
-                    title={"Einstellungen"}
+                    title={i18n.translate('settings')}
                 />
             </Appbar.Header>
 
@@ -65,7 +65,7 @@ const SettingsOverview = ({navigation}) => {
 
                 <View style={styles.dropdownContainer}>
                     <View style={styles.dropdownText}>
-                        <Subheading>Sprache:</Subheading>
+                        <Subheading>{i18n.translate('language')}</Subheading>
                     </View>
                     <Menu
                         visible={showDropDown}
@@ -73,14 +73,14 @@ const SettingsOverview = ({navigation}) => {
                         anchor={
                             <View style={styles.dropdownButton}>
                                 <Button onPress={() => setShowDropDown(true)} icon={'menu-down'}>
-                                    {currentLanguage === "en" ? "Englisch" : "Deutsch"}
+                                    {currentLanguage === "en" ? i18n.translate('english') : i18n.translate('german')}
                                 </Button>
                             </View>
 
                         }
                     >
-                        <Menu.Item onPress={() => {setLanguage("de")}} title="Deutsch" />
-                        <Menu.Item onPress={() => {setLanguage("en")}} title="Englisch"/>
+                        <Menu.Item onPress={() => {setLanguage("de")}} title={i18n.translate('german')} />
+                        <Menu.Item onPress={() => {setLanguage("en")}} title={i18n.translate('english')}/>
                     </Menu>
                 </View>
 
@@ -94,7 +94,7 @@ const SettingsOverview = ({navigation}) => {
                             setIsResetDialogShown(true)
                         }}
                     >
-                        Alle Daten löschen
+                        {i18n.translate('delete_data_button')}
                     </Button>
                 </View>
 
@@ -106,16 +106,15 @@ const SettingsOverview = ({navigation}) => {
                     visible={isResetDialogShown}
                     onDismiss={() => setIsResetDialogShown(false)}
                 >
-                    <Dialog.Title>Warnung</Dialog.Title>
+                    <Dialog.Title>{i18n.translate('warning')}</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph>
-                            Wirklich alle Daten löschen und die App zurücksetzen? Gelöschte Daten sind NICHT
-                            wiederherstellbar.
+                            {i18n.translate('really_delete_data')}
                         </Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={() => setIsResetDialogShown(false)}>
-                            Abbrechen
+                            {i18n.translate('cancel')}
                         </Button>
                         <Button
                             color={Colors.cation}
@@ -123,7 +122,7 @@ const SettingsOverview = ({navigation}) => {
                                 setIsResetDialogShown(false)
                                 dropHandler()
                             }}>
-                            Bestätigen
+                            {i18n.translate('confirm')}
                         </Button>
                     </Dialog.Actions>
                 </Dialog>

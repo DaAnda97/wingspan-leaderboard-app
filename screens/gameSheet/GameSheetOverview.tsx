@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import * as playerActions from '../../stores/player/playerActions';
 import * as scoringActions from '../../stores/scoring/scoringActions';
@@ -73,7 +73,7 @@ const GameSheetOverview = ({navigation}) => {
                         navigation.navigate('PlayerSelection');
                     }}
                 >
-                    Neues Ergebnis eintragen
+                    {i18n.translate('add_scoring')}
                 </Button>
             </View>
             <Divider/>
@@ -93,7 +93,7 @@ const GameSheetOverview = ({navigation}) => {
                         })
                     ) : (
                         <Text style={styles.defaultTextStyle}>
-                            Noch kein Spielergebnis erfasst.
+                            {i18n.translate('no_scoring')}
                         </Text>
                     )}
                 </View>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: i18n.translate('welcome')
+        headerTitle: i18n.translate('score_overview')
     };
 };
 

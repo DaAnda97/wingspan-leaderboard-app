@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Subheading } from 'react-native-paper';
 import helpers from '../../../constants/Functions';
 import Colors from '../../../constants/Colors';
@@ -22,7 +22,7 @@ const NameRow = ({ scores }: Props) => {
                 </View>
                 {scores.length > 0 && (
                     <View>
-                        <Subheading>GESAMT:</Subheading>
+                        <Subheading>i18n.translate('total')</Subheading>
                     </View>
                 )}
             </View>

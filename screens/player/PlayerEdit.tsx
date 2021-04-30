@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {Appbar, Button, Dialog, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
 import {useDispatch, useSelector} from "react-redux";
+import i18n from 'i18n-js';
 import {RootState} from "../../stores/main/RootReducer";
 import EditPlayer from "./items/editPlayer";
 import Player from "../../models/player/player";
@@ -56,7 +57,7 @@ const PlayerEdit = ({navigation}) => {
                 />
                 <Appbar.Content
                     color={Colors.primary}
-                    title={"Spielerübersicht"}
+                    title={i18n.translate('player_overview')}
                 />
                 {
                     allHiddenPlayer.length > 0 &&
@@ -85,11 +86,11 @@ const PlayerEdit = ({navigation}) => {
                     ) : allPlayer.length > 0
                         ? (
                             <Text style={styles.defaultTextStyle}>
-                                Keine aktiven Spieler. Blende deine Spieler über den Button rechts oben wieder ein oder lege neue Spieler an.
+                                {i18n.translate('show_players_message')}
                             </Text>
                         ) : (
                             <Text style={styles.defaultTextStyle}>
-                                Noch keine Spieler vorhanden. Lege zuerst Spieler an.
+                                {i18n.translate('no_player_message')}
                             </Text>
                         )}
                     {isAdding ? (
@@ -106,7 +107,7 @@ const PlayerEdit = ({navigation}) => {
                                         setIsAdding(true);
                                     }}
                             >
-                                Neuen Spieler anlegen
+                                {i18n.translate('add_player_button')}
                             </Button>
                         </View>
 
@@ -118,13 +119,13 @@ const PlayerEdit = ({navigation}) => {
                         visible={isHiddenPlayersShown}
                         onDismiss={() => setIsHiddenPlayersShown(false)}
                     >
-                        <Dialog.Title>Ausgeblendete Spieler</Dialog.Title>
+                        <Dialog.Title>{i18n.translate('hidden_player')}</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph>
-                                Ausgeblendete Spieler werden nicht bei der Spielerauswahl angezeigt. So brauchst du inaktive Spieler nicht zu löschen, was wiederum die Ergebnislisten verfälschen würde.
+                                {i18n.translate('hidden_player_info')}
                             </Paragraph>
                             <Paragraph>
-                                Klicke auf das Auge, um den ausgewählten Spieler wieder einzublenden.
+                                {i18n.translate('show_player_info')}
                             </Paragraph>
                             <ScrollView>
                                 <View style={styles.verticalAligned}>
@@ -211,11 +212,5 @@ const styles = StyleSheet.create({
         borderColor: '#bbb',
     },
 });
-
-export const screenOptions = () => {
-    return {
-        headerTitle: 'Spielerübersicht'
-    };
-};
 
 export default PlayerEdit;

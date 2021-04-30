@@ -7,8 +7,6 @@ import ScoringNavigator from "./ScoringNavigator";
 import PlayerEdit from "../screens/player/PlayerEdit";
 import SettingsOverview from "../screens/settings/SettingsOverview";
 import Styles from "../constants/Styles";
-import {useSelector} from "react-redux";
-import {RootState} from "../stores/main/RootReducer";
 import i18n from 'i18n-js';
 
 const DrawerContent = (props) => {
@@ -36,13 +34,13 @@ const DrawerContent = (props) => {
            <Drawer.Section>
                <Drawer.Item
                    icon={"medal-outline"}
-                   label="Ergebnisübersicht"
+                   label={i18n.translate('score_overview')}
                    active={active === 'ScoringNavigator'}
                    onPress={() => navigateTo('ScoringNavigator')}
                />
                <Drawer.Item
                    icon={"account-multiple-outline"}
-                   label="Spielerübersicht"
+                   label={i18n.translate('player_overview')}
                    active={active === 'PlayerEdit'}
                    onPress={() => navigateTo('PlayerEdit')}
                />
@@ -50,7 +48,7 @@ const DrawerContent = (props) => {
 
            <Drawer.Item
                icon={"tune"}
-               label="Einstellungen"
+               label={i18n.translate('settings')}
                active={active === 'Settings'}
                onPress={() => navigateTo('Settings')}
            />

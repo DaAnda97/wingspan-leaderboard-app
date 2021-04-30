@@ -1,3 +1,47 @@
 {
-  "welcome": "Willkommen"
+  "score_overview": "Ergebnisübersicht",
+  "player_overview": "Spielerübersicht",
+  "settings": "Einstellungen",
+  "select_player": "Spieler auswählen",
+  "scoring": "Spielwertung",
+
+  "end_of_round_goals": "Rundenziele",
+  "bonus_cards": "Bonuskarten",
+  "eggs": "Eier auf Vögeln",
+  "food_on_cards": "Gelagertes Futter",
+  "nectar": "Erspielter Nektar",
+  "birds": "Vogelpunkte",
+  "tucked_cards": "Karten unter Vögeln",
+  "total": "GESAMT",
+
+  "add_scoring": "Neues Ergebnis eintragen",
+  "no_scoring": "Noch kein Spielergebnis erfasst",
+
+  "show_players_message": "Keine aktiven Spieler. Blende deine Spieler über den Button rechts oben wieder ein oder lege neue Spieler an.",
+  "no_player_message": "Noch keine Spieler vorhanden. Lege zuerst Spieler an.",
+  "add_player_button": "Neuen Spieler anlegen",
+  "hidden_player": "Ausgeblendete Spieler",
+  "hidden_player_info": "Ausgeblendete Spieler werden nicht bei der Spielerauswahl angezeigt. So brauchst du inaktive Spieler nicht zu löschen, was wiederum die Ergebnislisten verfälschen würde.",
+  "show_player_info": "Klicke auf das Auge, um den ausgewählten Spieler wieder einzublenden.",
+
+  "no_saved_gamers": "Noch keine Spieler vorhanden. Lege in der Spielerübersicht zuert Spieler an",
+  "open_menu": "Menü öffnen",
+
+  "wrong_entry": "Fehlerhafte Eingabe",
+  "correct_message": "Bitte zuerst die fehlerhafte Eingabe korrigieren: ",
+  "name_already_set": "Dieser Name ist bereits vergeben",
+  "min_letters_message": "Ein Name besteht aus mindestens zwei Buchstaben",
+  "max_letters_message": "Ein Name kann max. 9 Buchstaben haben",
+
+  "error": "Fehler",
+  "warning": "Warnung",
+  "language": "Sprache",
+  "cant_save_wrong_entries": "Es können keine fehlerhaften Eingaben gespeichert werden. Bitte diese zuerst korrigieren.",
+  "really_delete_data": "Wirklich alle Daten löschen und die App zurücksetzen? Gelöschte Daten sind NICHT wiederherstellbar.",
+  "cancel": "Abbrechen",
+  "confirm": "Bestätigen",
+
+  "english": "Englisch",
+  "german": "Deutsch",
+  "delete_data_button": "Alle Daten löschen"
 }

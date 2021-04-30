@@ -5,6 +5,7 @@ import {Button, IconButton, Text} from 'react-native-paper';
 import Player from "../../models/player/player";
 import CheckablePlayer from "./items/checkablePlayer";
 import {useDispatch, useSelector} from "react-redux";
+import i18n from 'i18n-js';
 import {RootState} from "../../stores/main/RootReducer";
 import Status from "../../models/player/CheckBoxStatus";
 import * as scoringActions from "../../stores/scoring/scoringActions";
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: 'Spieler auswählen'
+        headerTitle: i18n.translate('select_player')
     };
 };
 
