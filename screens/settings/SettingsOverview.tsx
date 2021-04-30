@@ -1,17 +1,21 @@
 import React, {useCallback, useState} from 'react';
-import {DevSettings, Picker, StyleSheet, View} from 'react-native';
+import {DevSettings, StyleSheet, View} from 'react-native';
+import {useDispatch, useSelector} from "react-redux";
+import {Picker} from '@react-native-picker/picker';
 import {Appbar, Button, Dialog, IconButton, Menu, Paragraph, Portal, Provider} from 'react-native-paper';
+import i18n from 'i18n-js';
 import Colors from "../../constants/Colors";
-
-import {changeLanguage, IMLocalized} from "../../localization/i18n";
 import { dropScoresTable, createScoresTable } from '../../repositories/scoringRepository';
 import { dropGameSheetsTable, createGameSheetsTable } from '../../repositories/gameSheetRepository';
 import { dropPlayersTable, createPlayersTable } from '../../repositories/playerRepository';
+import {updateLanguage} from "../../localization/localize";
+
 
 
 const SettingsOverview = ({navigation}) => {
+    const dispatch = useDispatch();
+    const [currentLanguage, setCurrentLanguage] = useState<string>(i18n.locale)
     const [isResetDialogShown, setIsResetDialogShown] = useState(false)
-    const [selectedValue, setSelectedValue] = useState("en");
 
     const dropHandler = useCallback(() => {
         dropGameSheetsTable()
@@ -25,11 +29,12 @@ const SettingsOverview = ({navigation}) => {
         DevSettings.reload()
     }, []);
 
-    const setLanguage = async(lang: string) =>  {
-        setSelectedValue(lang)
-        await changeLanguage(lang)
-        console.log(IMLocalized("welcome"))
-    }
+
+
+    const setLanguage = useCallback((lang: string) => {
+        updateLanguage(lang).then(r => {DevSettings.reload()})
+        setCurrentLanguage(lang)
+    }, [dispatch]);
 
     return (
         <View>
@@ -49,9 +54,9 @@ const SettingsOverview = ({navigation}) => {
             </Appbar.Header>
 
             <Picker
-                selectedValue={selectedValue}
+                selectedValue={currentLanguage}
                 style={{ height: 50, width: 150 }}
-                onValueChange={(itemValue, itemIndex) => setLanguage(itemValue)}
+                onValueChange={(itemValue, itemIndex) => setLanguage("" + itemValue)}
             >
                 <Picker.Item label="Deutsch" value="de" />
                 <Picker.Item label="Englisch" value="en" />

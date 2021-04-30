@@ -10,7 +10,7 @@ import Colors from "../../constants/Colors";
 import {RootState} from "../../stores/main/RootReducer";
 import GameSheet from "../../models/gameSheet/gameSheet";
 import GameSheetItem from "./items/GameSheetItem";
-import {IMLocalized} from "../../localization/i18n";
+import i18n from 'i18n-js';
 
 
 const GameSheetOverview = ({navigation}) => {
@@ -34,7 +34,7 @@ const GameSheetOverview = ({navigation}) => {
 
     useEffect(() => {
         return navigation.addListener('focus', loadFromDb)
-    }, [dispatch, loadFromDb, savedScores, savedGameSheets, allPlayer, isLoading])
+    }, [dispatch, loadFromDb, savedScores, savedGameSheets, allPlayer, i18n])
 
 
     // Button in Navigation
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: IMLocalized('welcome')
+        headerTitle: i18n.translate('welcome')
     };
 };
 

@@ -7,6 +7,9 @@ import ScoringNavigator from "./ScoringNavigator";
 import PlayerEdit from "../screens/player/PlayerEdit";
 import SettingsOverview from "../screens/settings/SettingsOverview";
 import Styles from "../constants/Styles";
+import {useSelector} from "react-redux";
+import {RootState} from "../stores/main/RootReducer";
+import i18n from 'i18n-js';
 
 const DrawerContent = (props) => {
     const [active, setActive] = React.useState('ScoringNavigator');
@@ -19,7 +22,6 @@ const DrawerContent = (props) => {
 
     return (
        <SafeAreaView style={Styles.safeArea}>
-
 
            <Drawer.Section>
                <View style={styles.userInfoSection}>
@@ -55,10 +57,11 @@ const DrawerContent = (props) => {
        </SafeAreaView>
     );
 }
-;
+
 
 const DrawerNavigator = createDrawerNavigator();
 export const MainNavigator = () => {
+
     return (
         <DrawerNavigator.Navigator drawerContent={(props) => <DrawerContent {...props}/>}>
             <DrawerNavigator.Screen
