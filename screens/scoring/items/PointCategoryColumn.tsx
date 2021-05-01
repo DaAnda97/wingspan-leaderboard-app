@@ -1,37 +1,34 @@
 import React from 'react';
+import i18n from 'i18n-js';
 import {Dimensions, StyleSheet, View, } from 'react-native';
 import {Text} from 'react-native-paper';
-import Scoring from "../../../models/scoring/scoring";
 
-type Props = {
-    scoring: Scoring;
-};
 
-const ScoringColumn = ({scoring}: Props) => {
+const PointCategoryContainer = () => {
 
     return (
         <View style={styles.scoringColumn}>
 
             <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.roundPoints}</Text>
+                <Text style={styles.textStyle}>{i18n.translate('end_of_round_goals')}</Text>
             </View>
             <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.bonusPoints}</Text>
+                <Text style={styles.textStyle}>{i18n.translate('bonus_cards')}</Text>
             </View>
             <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.eggPoints}</Text>
+                <Text style={styles.textStyle}>{i18n.translate('eggs')}</Text>
             </View>
             <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.foodPoints}</Text>
+                <Text style={styles.textStyle}>{i18n.translate('food_on_cards')}</Text>
             </View>
             <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.nectarPoints}</Text>
+                <Text style={styles.textStyle}>{i18n.translate('nectar')}</Text>
             </View>
             <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.birdPoints}</Text>
+                <Text style={styles.textStyle}>{i18n.translate('birds')}</Text>
             </View>
             <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.cardPoints}</Text>
+                <Text style={styles.textStyle}>{i18n.translate('tucked_cards')}</Text>
             </View>
 
         </View>
@@ -45,12 +42,32 @@ const styles = StyleSheet.create({
     score: {
         minHeight: 50,
         height: Dimensions.get('screen').height / 11,
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
     },
     textStyle: {
         margin: 5,
+        textAlign: 'left'
     }
 });
 
-export default ScoringColumn;
+export default PointCategoryContainer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

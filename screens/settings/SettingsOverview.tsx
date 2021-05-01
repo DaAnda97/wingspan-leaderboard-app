@@ -21,7 +21,7 @@ import {updateLanguage} from "../../localization/localize";
 
 const SettingsOverview = ({navigation}) => {
     const dispatch = useDispatch();
-    const [currentLanguage] = useState<string>(i18n.locale)
+    const [currentLanguage, setCurrentLanguage] = useState<string>(i18n.locale)
     const [showDropDown, setShowDropDown] = useState(false);
     const [isResetDialogShown, setIsResetDialogShown] = useState(false)
 
@@ -41,6 +41,8 @@ const SettingsOverview = ({navigation}) => {
     const setLanguage = useCallback((lang: string) => {
         updateLanguage(lang).then(r => {
             DevSettings.reload()
+            setCurrentLanguage(lang)
+            setShowDropDown(false)
         })
     }, [dispatch]);
 

@@ -4,6 +4,7 @@ import { Subheading } from 'react-native-paper';
 import helpers from '../../../constants/Functions';
 import Colors from '../../../constants/Colors';
 import Scoring from '../../../models/scoring/scoring';
+import i18n from 'i18n-js';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../stores/main/RootReducer';
 
@@ -22,7 +23,7 @@ const NameRow = ({ scores }: Props) => {
                 </View>
                 {scores.length > 0 && (
                     <View>
-                        <Subheading>i18n.translate('total')</Subheading>
+                        <Subheading>{i18n.translate('total')}</Subheading>
                     </View>
                 )}
             </View>

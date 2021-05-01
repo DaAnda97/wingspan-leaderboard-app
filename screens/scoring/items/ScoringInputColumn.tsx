@@ -1,15 +1,13 @@
 import React, { useState, RefObject, useCallback } from 'react';
-import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import { TextInput as RNTextInput } from 'react-native';
-import {
-    HelperText,
-    TextInput,
-} from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import {HelperText, TextInput,} from 'react-native-paper';
+import i18n from 'i18n-js';
 import ScoringField from '../../../models/scoring/scoringField';
 import { INITIAL_SCORING_FIELDS } from '../../../models/scoring/SCORING_CONSTANTS';
 import helpers from '../../../constants/Functions';
 import * as scoringActions from '../../../stores/scoring/scoringActions';
-import { useDispatch } from 'react-redux';
 
 type Props = {
     playerIndex: number;
@@ -116,7 +114,7 @@ const ScoringInputColumn = ({playerIndex, playerId, scoringId, scoringSheetId, i
                                         scoringField.isValid ? 'info' : 'error'
                                     }
                                 >
-                                    Fehler
+                                    {i18n.translate("error")}
                                 </HelperText>
                             )}
                         </View>

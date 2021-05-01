@@ -1,5 +1,6 @@
 {
   "score_overview": "Score Overview",
+  "game_overview": "Game Overview",
   "player_overview": "Player Overview",
   "settings": "Settings",
   "select_player": "Select Player",
@@ -39,6 +40,7 @@
   "language": "Language",
   "cant_save_wrong_entries": "It's not possible to save wrong entries. Please correct them first.",
   "really_delete_data": "Really delete all data? Deleted data can't be restored again.",
+  "really_delete_game": "Really delete this game? Deleted data can't be restored again.",
   "cancel": "Cancel",
   "confirm": "Confirm",
 

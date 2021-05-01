@@ -1,5 +1,6 @@
 {
   "score_overview": "Ergebnisübersicht",
+  "game_overview": "Spielübersicht",
   "player_overview": "Spielerübersicht",
   "settings": "Einstellungen",
   "select_player": "Spieler auswählen",
@@ -38,6 +39,7 @@
   "language": "Sprache",
   "cant_save_wrong_entries": "Es können keine fehlerhaften Eingaben gespeichert werden. Bitte diese zuerst korrigieren.",
   "really_delete_data": "Wirklich alle Daten löschen und die App zurücksetzen? Gelöschte Daten sind NICHT wiederherstellbar.",
+  "really_delete_game": "Dieses Spiel wirklich löschen? Gelöschte Daten sind NICHT wiederherstellbar.",
   "cancel": "Abbrechen",
   "confirm": "Bestätigen",
 

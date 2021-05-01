@@ -2,20 +2,19 @@ import React, {useCallback, useEffect, useState} from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Dialog, Divider, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
-import {SCORING_FIELD_NAMES} from '../../models/scoring/SCORING_CONSTANTS';
 import Colors from '../../constants/Colors';
-import ScoringFieldName from '../../models/scoring/scoringFieldName';
+import i18n from 'i18n-js';
 import { RootState } from '../../stores/main/RootReducer';
 import Scoring from '../../models/scoring/scoring';
 import NameRow from './items/NameRow';
 import ScoringColumn from "./items/ScoringColumn";
 import * as scoringActions from "../../stores/scoring/scoringActions";
 import * as gameSheetActions from "../../stores/gameSheet/gameSheetActions";
+import PointCategoryContainer from "./items/PointCategoryColumn";
 
 
 const ScoringOverview = ({ navigation, route }) => {
     const dispatch = useDispatch();
-    const scoringFieldNames = SCORING_FIELD_NAMES;
     const scores = useSelector((state: RootState) => state.scores.savedScores).filter((score : Scoring) => score.gameSheetId === route.params.gameSheetId)
     const [isDeleteDialogShown, setIsDeleteDialogShown] = useState(false)
 
@@ -56,15 +55,7 @@ const ScoringOverview = ({ navigation, route }) => {
             <View>
                 <View style={styles.scrollView}>
                     <View style={styles.categoryContainer}>
-                        {scoringFieldNames.map((name: ScoringFieldName, index: number) => {
-                            return (
-                                <View key={'scoreFieldName_' + index} style={styles.score}>
-                                    <Text style={styles.textStyle}>
-                                        {name.name}
-                                    </Text>
-                                </View>
-                            );
-                        })}
+                        <PointCategoryContainer />
                     </View>
 
                     {scores.map((scoring: Scoring) => {
@@ -83,15 +74,15 @@ const ScoringOverview = ({ navigation, route }) => {
                     visible={isDeleteDialogShown}
                     onDismiss={() => setIsDeleteDialogShown(false)}
                 >
-                    <Dialog.Title>Warnung</Dialog.Title>
+                    <Dialog.Title>{i18n.translate("warning")}</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph>
-                            Dieses Spiel wirklich löschen? Gelöschte Daten sind NICHT wiederherstellbar.
+                            {i18n.translate("really_delete_game")}
                         </Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={() => setIsDeleteDialogShown(false)}>
-                            Abbrechen
+                            {i18n.translate("cancel")}
                         </Button>
                         <Button
                             color={Colors.cation}
@@ -99,7 +90,7 @@ const ScoringOverview = ({ navigation, route }) => {
                                 setIsDeleteDialogShown(false)
                                 deleteHandler()
                             }}>
-                            Bestätigen
+                            {i18n.translate("confirm")}
                         </Button>
                     </Dialog.Actions>
                 </Dialog>
@@ -141,7 +132,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
     return {
-        headerTitle: 'Spielübersicht'
+        headerTitle: i18n.translate("game_overview")
     };
 };
 
