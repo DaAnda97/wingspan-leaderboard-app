@@ -49,5 +49,8 @@
   "delete_data_button": "Alle Daten löschen",
 
   "european_extension": "Europa-Eweiterung:",
-  "pacific_extension": "Pazifik-Erweiterung:"
+  "pacific_extension": "Pazifik-Erweiterung:",
+
+  "fatal_error": "Fataler Fehler",
+  "restart_app": "App neu starten"
 }

@@ -66,7 +66,7 @@ const ScoringInput = ({ navigation }) => {
             <ScrollView keyboardShouldPersistTaps={"handled"}>
                 <View style={styles.scrollView}>
                     <View style={styles.categoryContainer}>
-                        <PointCategoryContainer isPacificEnabled={unsavedScores[0].isPacific} />
+                        <PointCategoryContainer isPacificEnabled={settings.isPacificEnabled} />
                     </View>
 
                     {unsavedScores.map((scoring: Scoring, index: number) => {

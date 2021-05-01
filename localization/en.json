@@ -50,5 +50,8 @@
   "delete_data_button": "Delete all data",
 
   "european_extension": "European Extension:",
-  "pacific_extension": "Pacific Extension:"
+  "pacific_extension": "Pacific Extension:",
+
+  "fatal_error": "Fatal Error",
+  "restart_app": "Restart App"
 }

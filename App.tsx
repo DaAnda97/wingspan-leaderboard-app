@@ -7,6 +7,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
+import ErrorBoundary from 'react-native-error-boundary'
 
 import Colors from './constants/Colors';
 import {rootReducer} from './stores/main/RootReducer';
@@ -15,6 +16,7 @@ import {createGameSheetsTable} from './repositories/gameSheetRepository';
 import {createPlayersTable} from './repositories/playerRepository';
 import {MainNavigator} from "./navigation/MainNavigator";
 import * as localize from "./localization/localize"
+import ErrorFatal from "./components/ErrorFatal";
 
 
 const init = async () => {
@@ -64,9 +66,14 @@ export default function App() {
         <StoreProvider store={store}>
             <PaperProvider theme={theme}>
                 <SafeAreaProvider>
-                    <NavigationContainer>
-                        <MainNavigator/>
-                    </NavigationContainer>
+                    <ErrorBoundary
+                        FallbackComponent={({error, resetError}) =>
+                            <ErrorFatal error={error} resetError={resetError}/>
+                        }>
+                        <NavigationContainer>
+                            <MainNavigator/>
+                        </NavigationContainer>
+                    </ErrorBoundary>
                 </SafeAreaProvider>
             </PaperProvider>
         </StoreProvider>
