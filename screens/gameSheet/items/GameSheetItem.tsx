@@ -20,6 +20,7 @@ type Props = {
 
 const GameSheetItem = ({ gameSheetItem, allScores, allPlayer, onPress }: Props) => {
     const scores = allScores.filter(score => score.gameSheetId === gameSheetItem.id)
+    const sortedScores = scores.sort((a: Scoring, b: Scoring) => {return b.totalScore - a.totalScore })
 
     let dateTime: DateTime = DateTime.fromJSDate(gameSheetItem.timestamp)
     if(i18n.locale === "en"){
@@ -32,7 +33,7 @@ const GameSheetItem = ({ gameSheetItem, allScores, allPlayer, onPress }: Props) 
         <TouchableComponent onPress={onPress} style={Styles.shadow}>
             <View style={styles.textContainer}>
                 <Subheading style={styles.date}>{dateTime}</Subheading>
-                    {scores.map((score: Scoring) => {
+                    {sortedScores.map((score: Scoring) => {
                         const player = allPlayer.find(player => player.id === score.playerId)
                             ?? helpers.throwError("No player found for this score")
                         return (

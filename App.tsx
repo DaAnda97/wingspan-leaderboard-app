@@ -1,22 +1,20 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Provider as StoreProvider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import {applyMiddleware, createStore} from 'redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import i18n from 'i18n-js';
+import {NavigationContainer} from "@react-navigation/native";
+import AppLoading from "expo-app-loading";
 
 import Colors from './constants/Colors';
 import {rootReducer} from './stores/main/RootReducer';
 import {createScoresTable} from './repositories/scoringRepository';
 import {createGameSheetsTable} from './repositories/gameSheetRepository';
 import {createPlayersTable} from './repositories/playerRepository';
-import {NavigationContainer} from "@react-navigation/native";
 import {MainNavigator} from "./navigation/MainNavigator";
 import * as localize from "./localization/localize"
-import AppLoading from "expo-app-loading";
-
 
 
 const init = async () => {
@@ -26,8 +24,6 @@ const init = async () => {
 
     await localize.initI18n()
 };
-
-
 
 
 let store;
@@ -51,6 +47,7 @@ const theme = {
 
 export default function App() {
     const [isInitialized, setIsInitialized] = useState(false)
+
     if (!isInitialized) {
         return (
             <AppLoading
@@ -65,11 +62,11 @@ export default function App() {
     return (
         <StoreProvider store={store}>
             <PaperProvider theme={theme}>
-                    <SafeAreaProvider>
-                        <NavigationContainer>
-                            <MainNavigator/>
-                        </NavigationContainer>
-                    </SafeAreaProvider>
+                <SafeAreaProvider>
+                    <NavigationContainer>
+                        <MainNavigator/>
+                    </NavigationContainer>
+                </SafeAreaProvider>
             </PaperProvider>
         </StoreProvider>
     );
