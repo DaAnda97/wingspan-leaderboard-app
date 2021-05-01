@@ -3,6 +3,7 @@ class Scoring {
         public id: string,
         public gameSheetId: string,
         public playerId: string,
+        public isPacific: boolean,
         public roundPoints: number,
         public bonusPoints: number,
         public eggPoints: number,

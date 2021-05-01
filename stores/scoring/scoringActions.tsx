@@ -32,6 +32,7 @@ export const loadScoresFromDb = () => {
                 "" + scoringEntity.id,
                 "" + parseInt(scoringEntity.gameSheetId),
                 "" + parseInt(scoringEntity.playerId),
+                scoringEntity.isPacific === "true",
                 parseInt(scoringEntity.roundPoints),
                 parseInt(scoringEntity.bonusPoints),
                 parseInt(scoringEntity.eggPoints),
@@ -68,6 +69,7 @@ export const saveScores = (scores: Array<Scoring>) => {
                 "" + scoring.id,
                 "" + parseInt(scoring.gameSheetId),
                 "" + parseInt(scoring.playerId),
+                scoring.isPacific === "true",
                 parseInt(scoring.roundPoints),
                 parseInt(scoring.bonusPoints),
                 parseInt(scoring.eggPoints),
@@ -86,18 +88,19 @@ export const saveScores = (scores: Array<Scoring>) => {
     };
 };
 
-export const createScoring = (gameSheetId: string, playerId: string) => {
+export const createScoring = (gameSheetId: string, playerId: string, isPacific: boolean) => {
     return {
         type: CREATE_SCORING,
         id: "tmp_unsaved_" + gameSheetId + "_" + playerId,
         scoringData: {
             gameSheetId,
-            playerId
+            playerId,
+            isPacific
         }
     };
 };
 
-export const updateScoring = (id: string, gameSheetId: string, playerId: string, roundPoints: number, bonusPoints: number, eggPoints: number,
+export const updateScoring = (id: string, gameSheetId: string, playerId: string, isPacific: boolean, roundPoints: number, bonusPoints: number, eggPoints: number,
                               foodPoints: number, nectarPoints: number, birdsPoints: number, cardPoints: number, isValid: boolean) => {
     return {
         type: UPDATE_SCORING,
@@ -106,6 +109,7 @@ export const updateScoring = (id: string, gameSheetId: string, playerId: string,
             gameSheetId,
             playerId,
             roundPoints,
+            isPacific,
             bonusPoints,
             eggPoints,
             foodPoints,

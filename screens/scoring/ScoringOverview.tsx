@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Button, Dialog, Divider, IconButton, Paragraph, Portal, Text} from 'react-native-paper';
+import {Button, Dialog, Divider, IconButton, Paragraph, Portal} from 'react-native-paper';
 import Colors from '../../constants/Colors';
 import i18n from 'i18n-js';
 import { RootState } from '../../stores/main/RootReducer';
@@ -55,7 +55,7 @@ const ScoringOverview = ({ navigation, route }) => {
             <View>
                 <View style={styles.scrollView}>
                     <View style={styles.categoryContainer}>
-                        <PointCategoryContainer />
+                        <PointCategoryContainer isPacificEnabled={scores[0].isPacific}/>
                     </View>
 
                     {scores.map((scoring: Scoring) => {
@@ -63,6 +63,7 @@ const ScoringOverview = ({ navigation, route }) => {
                             <ScoringColumn
                                 key={scoring.id}
                                 scoring={scoring}
+                                isPacificEnabled={scores[0].isPacific}
                             />
                         );
                     })}

@@ -19,6 +19,7 @@ export default class ScoringEntity extends BaseModel {
             id: { type: types.INTEGER, primary_key: true },
             gameSheetId: { type: types.TEXT, not_null: true },
             playerId: { type: types.TEXT, not_null: true },
+            isPacific: { type: types.TEXT, not_null: true },
             roundPoints: { type: types.Integer, not_null: true },
             bonusPoints: { type: types.Integer, not_null: true },
             eggPoints: { type: types.Integer, not_null: true },

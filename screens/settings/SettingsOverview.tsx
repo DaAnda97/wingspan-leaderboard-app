@@ -1,16 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {DevSettings, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from "react-redux";
-import {
-    Appbar,
-    Button,
-    Dialog, Divider,
-    IconButton,
-    Menu,
-    Paragraph,
-    Portal,
-    Subheading, Switch,
-} from 'react-native-paper';
+import {Appbar, Button, Dialog, Divider, IconButton, Menu, Paragraph, Portal, Subheading, Switch,} from 'react-native-paper';
 import i18n from 'i18n-js';
 import * as settingsActions from "../../stores/settings/settingsActions"
 import Colors from "../../constants/Colors";
@@ -47,11 +38,7 @@ const SettingsOverview = ({navigation}) => {
         )
     }, []);
 
-    useEffect(() => {
-        dispatch (
-            settingsActions.initSettings()
-        )
-    }, []) // initial
+
 
 
     const setLanguage = useCallback((lang: string) => {

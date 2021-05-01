@@ -22,6 +22,7 @@ export async function saveScoringArray(scores) {
             gameSheetId: gameSheetEntity.id,
             playerId: score.playerId,
             roundPoints: score.roundPoints,
+            isPacific: Boolean(score.isPacific).toString(),
             bonusPoints: score.bonusPoints,
             eggPoints: score.eggPoints,
             foodPoints: score.foodPoints,

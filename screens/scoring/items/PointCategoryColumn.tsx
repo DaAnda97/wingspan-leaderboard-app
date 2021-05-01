@@ -2,9 +2,14 @@ import React from 'react';
 import i18n from 'i18n-js';
 import {Dimensions, StyleSheet, View, } from 'react-native';
 import {Text} from 'react-native-paper';
+import {useSelector} from "react-redux";
+import {RootState} from "../../../stores/main/RootReducer";
 
+type Props = {
+    isPacificEnabled: boolean
+}
 
-const PointCategoryContainer = () => {
+const PointCategoryContainer = ({isPacificEnabled}: Props) => {
 
     return (
         <View style={styles.scoringColumn}>
@@ -21,9 +26,13 @@ const PointCategoryContainer = () => {
             <View style={styles.score}>
                 <Text style={styles.textStyle}>{i18n.translate('food_on_cards')}</Text>
             </View>
-            <View style={styles.score}>
-                <Text style={styles.textStyle}>{i18n.translate('nectar')}</Text>
-            </View>
+            {
+                isPacificEnabled && (
+                    <View style={styles.score}>
+                        <Text style={styles.textStyle}>{i18n.translate('nectar')}</Text>
+                    </View>
+                )
+            }
             <View style={styles.score}>
                 <Text style={styles.textStyle}>{i18n.translate('birds')}</Text>
             </View>

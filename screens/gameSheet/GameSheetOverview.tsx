@@ -11,6 +11,7 @@ import {RootState} from "../../stores/main/RootReducer";
 import GameSheet from "../../models/gameSheet/gameSheet";
 import GameSheetItem from "./items/GameSheetItem";
 import i18n from 'i18n-js';
+import * as settingsActions from "../../stores/settings/settingsActions";
 
 
 const GameSheetOverview = ({navigation}) => {
@@ -35,6 +36,12 @@ const GameSheetOverview = ({navigation}) => {
     useEffect(() => {
         return navigation.addListener('focus', loadFromDb)
     }, [dispatch, loadFromDb, savedScores, savedGameSheets, allPlayer, i18n])
+
+    useEffect(() => {
+        dispatch (
+            settingsActions.initSettings()
+        )
+    }, []) // initial
 
 
     // Button in Navigation

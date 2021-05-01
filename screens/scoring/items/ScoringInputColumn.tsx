@@ -1,13 +1,14 @@
 import React, { useState, RefObject, useCallback } from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import { TextInput as RNTextInput } from 'react-native';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {HelperText, TextInput,} from 'react-native-paper';
 import i18n from 'i18n-js';
 import ScoringField from '../../../models/scoring/scoringField';
-import { INITIAL_SCORING_FIELDS_PACIFIC } from '../../../models/scoring/SCORING_CONSTANTS';
 import helpers from '../../../constants/Functions';
 import * as scoringActions from '../../../stores/scoring/scoringActions';
+import {RootState} from "../../../stores/main/RootReducer";
+import {INITIAL_SCORING_FIELDS, INITIAL_SCORING_FIELDS_PACIFIC} from "../../../models/scoring/SCORING_CONSTANTS";
 
 type Props = {
     playerIndex: number;
@@ -20,9 +21,11 @@ type Props = {
 
 const ScoringInputColumn = ({playerIndex, playerId, scoringId, scoringSheetId, inputRefs, goToNext}: Props) => {
     const dispatch = useDispatch();
+    const settings = useSelector((state: RootState) => state.settings)
+    const initialScoringFields = settings.isPacificEnabled ? INITIAL_SCORING_FIELDS_PACIFIC : INITIAL_SCORING_FIELDS
 
     //states
-    const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS_PACIFIC);
+    const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(initialScoringFields);
 
     // methods
     const setOneField = (fieldKey: string, newValue: string, doStateUpdate: boolean) => {
@@ -55,6 +58,7 @@ const ScoringInputColumn = ({playerIndex, playerId, scoringId, scoringSheetId, i
                     scoringId,
                     scoringSheetId,
                     playerId,
+                    settings.isPacificEnabled,
                     updatedFields.find((field) => field.key === 'round')
                         ?.intValue || 0,
                     updatedFields.find((field) => field.key === 'bonus')

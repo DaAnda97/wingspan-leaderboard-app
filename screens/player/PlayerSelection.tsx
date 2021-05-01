@@ -5,7 +5,6 @@ import {Button, IconButton, Text} from 'react-native-paper';
 import Player from "../../models/player/player";
 import CheckablePlayer from "./items/checkablePlayer";
 import {useDispatch, useSelector} from "react-redux";
-import i18n from 'i18n-js';
 import {RootState} from "../../stores/main/RootReducer";
 import Status from "../../models/player/CheckBoxStatus";
 import * as scoringActions from "../../stores/scoring/scoringActions";
@@ -17,6 +16,7 @@ const PlayerSelection = ({navigation}) => {
     const allPlayer = useSelector((state: RootState) => state.players.allPlayers).filter((player) => player.isActive);
     const unsavedScores = useSelector((state: RootState) => state.scores.unsavedScores)
     const gamingSheetId = useSelector((state: RootState) => state.scores.unsavedGameSheetId)
+    const settings = useSelector((state: RootState) => state.settings)
 
 
     // states
@@ -27,7 +27,7 @@ const PlayerSelection = ({navigation}) => {
     // dispatch
     const createNewScoringOfPlayer = useCallback(
         (playerId: string) => {
-            dispatch(scoringActions.createScoring(gamingSheetId, playerId));
+            dispatch(scoringActions.createScoring(gamingSheetId, playerId, settings.isPacificEnabled));
         },
         [dispatch, gamingSheetId]
     );

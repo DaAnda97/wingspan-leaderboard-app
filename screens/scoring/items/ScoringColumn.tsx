@@ -5,9 +5,10 @@ import Scoring from "../../../models/scoring/scoring";
 
 type Props = {
     scoring: Scoring;
+    isPacificEnabled: boolean
 };
 
-const ScoringColumn = ({scoring}: Props) => {
+const ScoringColumn = ({scoring, isPacificEnabled}: Props) => {
 
     return (
         <View style={styles.scoringColumn}>
@@ -24,9 +25,13 @@ const ScoringColumn = ({scoring}: Props) => {
             <View style={styles.score}>
                 <Text style={styles.textStyle}>{scoring.foodPoints}</Text>
             </View>
-            <View style={styles.score}>
-                <Text style={styles.textStyle}>{scoring.nectarPoints}</Text>
-            </View>
+            {
+                isPacificEnabled && (
+                    <View style={styles.score}>
+                        <Text style={styles.textStyle}>{scoring.nectarPoints}</Text>
+                    </View>
+                )
+            }
             <View style={styles.score}>
                 <Text style={styles.textStyle}>{scoring.birdPoints}</Text>
             </View>
