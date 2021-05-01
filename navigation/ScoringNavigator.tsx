@@ -1,10 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import i18n from 'i18n-js';
 
-import PlayerSelectionScreen, {screenOptions as playerSelectionScreenOptions} from '../screens/player/PlayerSelection';
-import ScoringInputScreen, {screenOptions as scoringInputScreenOptions} from '../screens/scoring/ScoringInput';
-import ScoringOverviewScreen, {screenOptions as scoringOverviewScreenOptions} from '../screens/scoring/ScoringOverview';
-import GameSheetOverviewScreen, {screenOptions as gameSheetOverviewScreenOptions} from '../screens/gameSheet/GameSheetOverview';
+import PlayerSelectionScreen from '../screens/player/PlayerSelection';
+import ScoringInputScreen from '../screens/scoring/ScoringInput';
+import ScoringOverviewScreen from '../screens/scoring/ScoringOverview';
+import GameSheetOverviewScreen from '../screens/gameSheet/GameSheetOverview';
 
 import Colors from '../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,22 +28,22 @@ function ScoringNavigator() {
             <ScoringStackNavigator.Screen
                 name="GameSheetOverview"
                 component={GameSheetOverviewScreen}
-                options={gameSheetOverviewScreenOptions}
+                options={{headerTitle: i18n.translate('score_overview')}}
             />
             <ScoringStackNavigator.Screen
                 name="ScoringOverview"
                 component={ScoringOverviewScreen}
-                options={scoringOverviewScreenOptions}
+                options={{headerTitle: i18n.translate("game_overview")}}
             />
             <ScoringStackNavigator.Screen
                 name="PlayerSelection"
                 component={PlayerSelectionScreen}
-                options={playerSelectionScreenOptions}
+                options={{headerTitle: i18n.translate('select_player')}}
             />
             <ScoringStackNavigator.Screen
                 name="ScoringInput"
                 component={ScoringInputScreen}
-                options={scoringInputScreenOptions}
+                options={{headerTitle: i18n.translate('scoring')}}
             />
         </ScoringStackNavigator.Navigator>
 

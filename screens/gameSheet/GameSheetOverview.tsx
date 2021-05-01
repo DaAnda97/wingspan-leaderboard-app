@@ -125,10 +125,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export const screenOptions = () => {
-    return {
-        headerTitle: i18n.translate('score_overview')
-    };
-};
-
 export default GameSheetOverview;

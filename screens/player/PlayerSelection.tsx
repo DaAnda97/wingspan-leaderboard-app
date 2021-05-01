@@ -205,10 +205,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export const screenOptions = () => {
-    return {
-        headerTitle: i18n.translate('select_player')
-    };
-};
 
 export default PlayerSelection;

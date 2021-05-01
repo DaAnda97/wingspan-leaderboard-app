@@ -140,10 +140,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export const screenOptions = () => {
-    return {
-        headerTitle: i18n.translate('scoring')
-    };
-};
-
 export default ScoringInput;
