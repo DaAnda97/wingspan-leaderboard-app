@@ -5,7 +5,6 @@ import { ERROR } from '../main/errorAction';
 
 export const CREATE_PLAYER = 'CREATE_PLAYER';
 export const UPDATE_PLAYER = 'UPDATE_PLAYER';
-export const DELETE_PLAYER = 'DELETE_PLAYER';
 export const LOAD_PLAYERS_FROM_DB = 'LOAD_PLAYERS_FROM_DB';
 
 export const createPlayer = (name: string) => {
@@ -58,12 +57,6 @@ export const updatePlayer = (player: Player) => {
     };
 };
 
-export const deletePlayer = (playerId) => {
-    return {
-        type: DELETE_PLAYER,
-        id: playerId
-    };
-};
 
 export const loadPlayersFromDb = () => {
     return async (dispatch) => {

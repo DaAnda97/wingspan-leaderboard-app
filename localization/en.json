@@ -37,7 +37,8 @@
 
   "error": "Error",
   "warning": "Warning",
-  "language": "Language",
+  "language": "Language:",
+  "back": "back",
   "cant_save_wrong_entries": "It's not possible to save wrong entries. Please correct them first.",
   "really_delete_data": "Really delete all data? Deleted data can't be restored again.",
   "really_delete_game": "Really delete this game? Deleted data can't be restored again.",
@@ -46,5 +47,8 @@
 
   "english": "English",
   "german": "German",
-  "delete_data_button": "Delete all data"
+  "delete_data_button": "Delete all data",
+
+  "european_extension": "European Extension:",
+  "pacific_extension": "Pacific Extension:"
 }

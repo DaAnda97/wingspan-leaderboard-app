@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import {HelperText, TextInput,} from 'react-native-paper';
 import i18n from 'i18n-js';
 import ScoringField from '../../../models/scoring/scoringField';
-import { INITIAL_SCORING_FIELDS } from '../../../models/scoring/SCORING_CONSTANTS';
+import { INITIAL_SCORING_FIELDS_PACIFIC } from '../../../models/scoring/SCORING_CONSTANTS';
 import helpers from '../../../constants/Functions';
 import * as scoringActions from '../../../stores/scoring/scoringActions';
 
@@ -22,7 +22,7 @@ const ScoringInputColumn = ({playerIndex, playerId, scoringId, scoringSheetId, i
     const dispatch = useDispatch();
 
     //states
-    const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS);
+    const [scoringFields, setScoringFields] = useState<Array<ScoringField>>(INITIAL_SCORING_FIELDS_PACIFIC);
 
     // methods
     const setOneField = (fieldKey: string, newValue: string, doStateUpdate: boolean) => {

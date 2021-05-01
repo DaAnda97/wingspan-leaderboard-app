@@ -17,7 +17,7 @@ const defaultNavOptions = {
         fontSize: 12,
         color: Colors.primary
     },
-    headerBackTitle: 'Zurück'
+    headerBackTitle: i18n.translate('back')
 };
 
 const ScoringStackNavigator = createStackNavigator();

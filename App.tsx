@@ -48,6 +48,7 @@ const theme = {
 export default function App() {
     const [isInitialized, setIsInitialized] = useState(false)
 
+
     if (!isInitialized) {
         return (
             <AppLoading

@@ -1,22 +1,24 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {DevSettings, StyleSheet, View} from 'react-native';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     Appbar,
     Button,
-    Dialog,
+    Dialog, Divider,
     IconButton,
     Menu,
     Paragraph,
     Portal,
-    Subheading,
+    Subheading, Switch,
 } from 'react-native-paper';
 import i18n from 'i18n-js';
+import * as settingsActions from "../../stores/settings/settingsActions"
 import Colors from "../../constants/Colors";
 import {dropScoresTable, createScoresTable} from '../../repositories/scoringRepository';
 import {dropGameSheetsTable, createGameSheetsTable} from '../../repositories/gameSheetRepository';
 import {dropPlayersTable, createPlayersTable} from '../../repositories/playerRepository';
 import {updateLanguage} from "../../localization/localize";
+import {RootState} from "../../stores/main/RootReducer";
 
 
 const SettingsOverview = ({navigation}) => {
@@ -24,6 +26,8 @@ const SettingsOverview = ({navigation}) => {
     const [currentLanguage, setCurrentLanguage] = useState<string>(i18n.locale)
     const [showDropDown, setShowDropDown] = useState(false);
     const [isResetDialogShown, setIsResetDialogShown] = useState(false)
+
+    const settings = useSelector((state: RootState) => state.settings)
 
     const dropHandler = useCallback(() => {
         dropGameSheetsTable()
@@ -36,6 +40,18 @@ const SettingsOverview = ({navigation}) => {
 
         DevSettings.reload()
     }, []);
+
+    const updateSettings = useCallback((isEuropeanEnabled, isPacificEnabled) => {
+        dispatch(
+            settingsActions.updateSettings(isEuropeanEnabled, isPacificEnabled)
+        )
+    }, []);
+
+    useEffect(() => {
+        dispatch (
+            settingsActions.initSettings()
+        )
+    }, []) // initial
 
 
     const setLanguage = useCallback((lang: string) => {
@@ -65,8 +81,34 @@ const SettingsOverview = ({navigation}) => {
 
             <View style={styles.main}>
 
-                <View style={styles.dropdownContainer}>
-                    <View style={styles.dropdownText}>
+                <View style={styles.rowContainer}>
+                    <View style={styles.text}>
+                        <Subheading>{i18n.translate('european_extension')}</Subheading>
+                    </View>
+                    <Switch
+                        value={settings.isEuropeanEnabled}
+                        onValueChange={() => {
+                            updateSettings(!settings.isEuropeanEnabled, settings.isPacificEnabled)
+                        }}
+                    />
+                </View>
+
+                <View style={styles.rowContainer}>
+                    <View style={styles.text}>
+                        <Subheading>{i18n.translate('pacific_extension')}</Subheading>
+                    </View>
+                    <Switch
+                        value={settings.isPacificEnabled}
+                        onValueChange={() => {
+                            updateSettings(settings.isEuropeanEnabled, !settings.isPacificEnabled)
+                        }}
+                    />
+                </View>
+
+                <Divider/>
+
+                <View style={styles.rowContainer}>
+                    <View style={styles.text}>
                         <Subheading>{i18n.translate('language')}</Subheading>
                     </View>
                     <Menu
@@ -74,7 +116,7 @@ const SettingsOverview = ({navigation}) => {
                         onDismiss={() => setShowDropDown(false)}
                         anchor={
                             <View style={styles.dropdownButton}>
-                                <Button onPress={() => setShowDropDown(true)} icon={'menu-down'}>
+                                <Button onPress={() => setShowDropDown(true)} icon={'menu-down'} color={Colors.secondary}>
                                     {currentLanguage === "en" ? i18n.translate('english') : i18n.translate('german')}
                                 </Button>
                             </View>
@@ -85,6 +127,8 @@ const SettingsOverview = ({navigation}) => {
                         <Menu.Item onPress={() => {setLanguage("en")}} title={i18n.translate('english')}/>
                     </Menu>
                 </View>
+
+                <Divider/>
 
 
                 <View style={styles.cautionButtonContainer}>
@@ -138,17 +182,18 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
     },
-    dropdownContainer: {
+    rowContainer: {
         flexDirection: 'row',
         margin: 10
     },
-    dropdownText: {
+    text: {
         alignSelf: "center",
+        textAlign: 'left',
         marginRight: 5
     },
     dropdownButton: {
         borderWidth: 0.5,
-        borderColor: Colors.primary,
+        borderColor: Colors.secondary,
         margin: 2,
         borderRadius: 5
     },

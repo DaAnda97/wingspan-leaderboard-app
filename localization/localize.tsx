@@ -16,7 +16,6 @@ export const initI18n = async () => {
         language = "en"
     }
 
-    console.log(language)
     // update layout direction
     I18nManager.forceRTL(Localization.isRTL);
     // set i18n-js config

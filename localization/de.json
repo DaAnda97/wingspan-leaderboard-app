@@ -36,7 +36,8 @@
 
   "error": "Fehler",
   "warning": "Warnung",
-  "language": "Sprache",
+  "language": "Sprache:",
+  "back": "zurück",
   "cant_save_wrong_entries": "Es können keine fehlerhaften Eingaben gespeichert werden. Bitte diese zuerst korrigieren.",
   "really_delete_data": "Wirklich alle Daten löschen und die App zurücksetzen? Gelöschte Daten sind NICHT wiederherstellbar.",
   "really_delete_game": "Dieses Spiel wirklich löschen? Gelöschte Daten sind NICHT wiederherstellbar.",
@@ -45,5 +46,8 @@
 
   "english": "Englisch",
   "german": "Deutsch",
-  "delete_data_button": "Alle Daten löschen"
+  "delete_data_button": "Alle Daten löschen",
+
+  "european_extension": "Europaerweiterung:",
+  "pacific_extension": "Pacifikerweiterung:"
 }
