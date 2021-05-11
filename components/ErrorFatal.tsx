@@ -26,7 +26,7 @@ const ErrorFatal: FC<Props> = props => {
                     </ScrollView>
                 </Dialog.Content>
                 <Dialog.Actions>
-                    <Button onPress={() => onDismiss()}>{i18n.translate('v')}</Button>
+                    <Button onPress={() => onDismiss()}>{i18n.translate('restart_app')}</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>

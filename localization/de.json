@@ -17,6 +17,7 @@
 
   "add_scoring": "Neues Ergebnis eintragen",
   "no_scoring": "Noch kein Spielergebnis erfasst",
+  "refreshing": "Aktualisiere",
 
   "show_players_message": "Keine aktiven Spieler. Blende deine Spieler über den Button rechts oben wieder ein oder lege neue Spieler an.",
   "no_player_message": "Noch keine Spieler vorhanden. Lege zuerst Spieler an.",
@@ -43,6 +44,7 @@
   "really_delete_game": "Dieses Spiel wirklich löschen? Gelöschte Daten sind NICHT wiederherstellbar.",
   "cancel": "Abbrechen",
   "confirm": "Bestätigen",
+
 
   "english": "Englisch",
   "german": "Deutsch",

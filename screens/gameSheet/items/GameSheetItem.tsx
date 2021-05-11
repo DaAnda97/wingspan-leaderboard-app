@@ -26,7 +26,7 @@ const GameSheetItem = ({ gameSheetItem, allScores, allPlayer, onPress }: Props) 
     if(i18n.locale === "en"){
         dateTime = dateTime.setLocale("en").toFormat("ff")
     } else {
-        dateTime = dateTime.setLocale("de").toFormat("dd. MMMM yyyy 'um' HH':'mm 'Uhr")
+        dateTime = dateTime.setLocale("de").toFormat("dd.MM.yyyy 'um' HH':'mm 'Uhr")
     }
 
     return (

@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, Dialog, Divider, IconButton, Paragraph, Portal} from 'react-native-paper';
 import Colors from '../../constants/Colors';
 import i18n from 'i18n-js';
-import { RootState } from '../../stores/main/RootReducer';
+import {RootState} from '../../stores/main/RootReducer';
 import Scoring from '../../models/scoring/scoring';
 import NameRow from './items/NameRow';
 import ScoringColumn from "./items/ScoringColumn";
@@ -13,24 +13,21 @@ import * as gameSheetActions from "../../stores/gameSheet/gameSheetActions";
 import PointCategoryContainer from "./items/PointCategoryColumn";
 
 
-const ScoringOverview = ({ navigation, route }) => {
+const ScoringOverview = ({navigation, route}) => {
     const dispatch = useDispatch();
-    const scores = useSelector((state: RootState) => state.scores.savedScores).filter((score : Scoring) => score.gameSheetId === route.params.gameSheetId)
+    const scores = useSelector((state: RootState) => state.scores.savedScores).filter((score: Scoring) => score.gameSheetId === route.params.gameSheetId)
     const [isDeleteDialogShown, setIsDeleteDialogShown] = useState(false)
+    const [isPacific] = useState(scores.length > 0 ? scores[0].isPacific : true)
 
     // Button in Navigation
     const deleteHandler = useCallback(() => {
-        try {
-            dispatch(gameSheetActions.deleteGameSheet(route.params.gameSheetId));
-            scores.forEach((scoring) => {
-                dispatch(scoringActions.deleteScoring(scoring.id));
-            })
-        } catch (err) {
-            throw new Error(err);
-        }
-
+        dispatch(gameSheetActions.deleteGameSheet(route.params.gameSheetId));
+        scores.forEach((scoring) => {
+            dispatch(scoringActions.deleteScoring(scoring.id));
+        })
         navigation.goBack()
-    }, []);
+    }, [dispatch, navigation, scores]);
+
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -45,17 +42,16 @@ const ScoringOverview = ({ navigation, route }) => {
     }, []);
 
 
-
     return (
         <View style={styles.main}>
-            <NameRow scores={scores} />
+            <NameRow scores={scores}/>
 
-            <Divider />
+            <Divider/>
 
             <View>
                 <View style={styles.scrollView}>
                     <View style={styles.categoryContainer}>
-                        <PointCategoryContainer isPacificEnabled={scores[0].isPacific}/>
+                        <PointCategoryContainer isPacificEnabled={isPacific}/>
                     </View>
 
                     {scores.map((scoring: Scoring) => {
@@ -63,7 +59,7 @@ const ScoringOverview = ({ navigation, route }) => {
                             <ScoringColumn
                                 key={scoring.id}
                                 scoring={scoring}
-                                isPacificEnabled={scores[0].isPacific}
+                                isPacificEnabled={isPacific}
                             />
                         );
                     })}

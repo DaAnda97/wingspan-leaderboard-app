@@ -65,12 +65,12 @@ const GameSheetOverview = ({navigation}) => {
         return (
             <View style={Styles.centered}>
                 <ActivityIndicator animating={true}/>
-                <Text>Aktualisiere</Text>
+                <Text>{i18n.translate('refreshing')}</Text>
             </View>
         );
     }
     return (
-        <View>
+        <View style={styles.wholeSpace}>
             <View style={styles.buttonContainer}>
                 <Button
                     style={styles.buttonStyle}
@@ -84,35 +84,38 @@ const GameSheetOverview = ({navigation}) => {
                 </Button>
             </View>
             <Divider/>
-            <ScrollView>
-                <View>
-                    {savedGameSheets.length > 0 ? (
-                        savedGameSheets.map((gameSheet: GameSheet) => {
-                            return (
-                                <GameSheetItem
-                                    key={gameSheet.id}
-                                    gameSheetItem={gameSheet}
-                                    allScores={savedScores}
-                                    allPlayer={allPlayer}
-                                    onPress={() => {navigation.navigate('ScoringOverview', {gameSheetId: gameSheet.id})}}
-                                />
-                            );
-                        })
-                    ) : (
-                        <Text style={styles.defaultTextStyle}>
-                            {i18n.translate('no_scoring')}
-                        </Text>
-                    )}
-                </View>
-            </ScrollView>
+            <View style={styles.wholeSpace}>
+                <ScrollView>
+                    <View>
+                        {savedGameSheets.length > 0 ? (
+                            savedGameSheets.map((gameSheet: GameSheet) => {
+                                return (
+                                    <GameSheetItem
+                                        key={gameSheet.id}
+                                        gameSheetItem={gameSheet}
+                                        allScores={savedScores}
+                                        allPlayer={allPlayer}
+                                        onPress={() => {navigation.navigate('ScoringOverview', {gameSheetId: gameSheet.id})}}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <Text style={styles.defaultTextStyle}>
+                                {i18n.translate('no_scoring')}
+                            </Text>
+                        )}
+                    </View>
+                </ScrollView>
+            </View>
+
         </View>
     );
 
 };
 
 const styles = StyleSheet.create({
-    main: {
-        marginTop: 15,
+    wholeSpace: {
+        flex: 1
     },
     buttonContainer: {
         margin: 10,

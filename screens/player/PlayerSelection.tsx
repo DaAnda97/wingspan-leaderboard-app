@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../stores/main/RootReducer";
 import Status from "../../models/player/CheckBoxStatus";
 import * as scoringActions from "../../stores/scoring/scoringActions";
+import i18n from 'i18n-js';
 import helpers from "../../constants/Functions";
 
 const PlayerSelection = ({navigation}) => {
@@ -159,7 +160,7 @@ const PlayerSelection = ({navigation}) => {
                     ) : (
                         <View>
                             <Text style={styles.defaultTextStyle}>
-                                Noch keine Spieler vorhanden. Lege in der Spielerübersicht zuerst Spieler an.
+                                {i18n.translate('no_saved_gamers')}
                             </Text>
                             <View style={styles.buttonContainer}>
                                 <Button
@@ -169,7 +170,7 @@ const PlayerSelection = ({navigation}) => {
                                         navigation.openDrawer();
                                     }}
                                 >
-                                    Menü öffnen
+                                    {i18n.translate('open_menu')}
                                 </Button>
                             </View>
                         </View>
