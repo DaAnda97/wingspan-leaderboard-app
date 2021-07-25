@@ -8,7 +8,6 @@ import ScoringOverviewScreen from '../screens/scoring/ScoringOverview';
 import GameSheetOverviewScreen from '../screens/gameSheet/GameSheetOverview';
 
 import Colors from '../constants/Colors';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const defaultNavOptions = {
     headerTintColor: Colors.primary,
@@ -49,18 +48,5 @@ function ScoringNavigator() {
 
     );
 }
-
-export const screenOptions = () => {
-    return {
-        tabBarLabel: 'Spielwertung',
-        tabBarIcon: ({color, focused}) => (
-            <MaterialCommunityIcons
-                name={focused ? 'medal' : 'medal-outline'}
-                color={color}
-                size={22}
-            />
-        )
-    };
-};
 
 export default ScoringNavigator;
