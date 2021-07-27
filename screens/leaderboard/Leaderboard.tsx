@@ -1,12 +1,6 @@
 import React, {useMemo, useRef, useState} from 'react';
-import { ScrollView, StyleSheet, View} from 'react-native';
-import {Appbar, IconButton, Subheading, Text} from 'react-native-paper';
-import {
-    Table,
-    Row,
-    Rows,
-    Col,
-} from 'react-native-table-component';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {Appbar, Button, Divider, IconButton, Menu, Subheading, Text} from 'react-native-paper';
 import i18n from 'i18n-js';
 import ErrorView from '../../components/ErrorView';
 import Colors from "../../constants/Colors";
@@ -16,81 +10,56 @@ import Player from "../../models/player/player";
 import Scoring from "../../models/scoring/scoring";
 import PlayerWithScores from "../../models/leaderboard/PlayerWithScores";
 
-const borderColor = '#C1C0B9';
-const primaryColor = 'dodgerblue';
-const backgroundColor = '#F7F6E7';
-
 const Leaderboard = ({navigation}) => {
     const [errorMsg, setErrorMsg] = useState('');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [category, setCategory] = useState("avgTotalScore")
+    const [categoryMap] = useState<Map<string, string>>(new Map<string, string>([
+        ["avgTotalScore", `Ø ${i18n.translate('total_points')}`],
+        ["avgRoundPoints", `Ø ${i18n.translate('end_of_round_goals')}`],
+        ["avgBonusPoints", `Ø ${i18n.translate('bonus_cards')}`],
+        ["avgEggPoints", `Ø ${i18n.translate('eggs')}`],
+        ["avgFoodPoints", `Ø ${i18n.translate('food_on_cards')}`],
+        ["avgNectarPoints", `Ø ${i18n.translate('nectar')}`],
+        ["avgBirdPoints", `Ø ${i18n.translate('birds')}`],
+        ["avgCardPoints", `Ø ${i18n.translate('tucked_cards')}`],
+    ]))
+
 
     const allPlayers: Array<Player> = useSelector((state: RootState) => state.players.allPlayers).filter((player: Player) => player.isActive)
     const allScores: Array<Scoring> = useSelector((state: RootState) => state.scores.savedScores)
 
-    const leftRef = useRef<ScrollView>(null);
-    const rightRef = useRef<ScrollView>(null);
-
-    const tableHead = [
-        'Head1',
-        'Head2',
-        'Head3',
-        'Head4',
-        'Head5',
-        'Head6',
-        'Head7',
-        'Head8',
-        'Head9',
-    ]
-
-    const widthArr = [50, 60, 80, 100, 120, 140, 160, 180, 200]
-
-    const headerHeight = 40;
-    const leftColumnWidth = 100;
-
-    const recordData: Array<String> = [];
-    for (let i = 0; i < 60; i += 1) {
-        const rowData = [];
-        // @ts-ignore
-        rowData.push(`Record ${i}`);
-        // @ts-ignore
-        recordData.push(rowData);
-    }
-
-    const tableData = [];
-    for (let i = 0; i < 60; i += 1) {
-        const rowData = [];
-        for (let j = 0; j < 9; j += 1) {
-            // @ts-ignore
-            rowData.push(`${i}${j}`);
-        }
-        // @ts-ignore
-        tableData.push(rowData);
-    }
 
     const playersWithScores: Array<PlayerWithScores> = useMemo(() => {
         const items: Array<PlayerWithScores> = []
         allPlayers.forEach((player: Player) => {
             const scoresOfPlayer: Array<Scoring> = allScores.filter((score: Scoring) => score.playerId === player.id)
 
-            const playerWithScores: PlayerWithScores = {
-                id: player.id,
-                name: player.name,
-                totalGames: scoresOfPlayer.length,
-                pacificGames: scoresOfPlayer.filter((score: Scoring) => score.isPacific).length,
-                avgRoundPoints: scoresOfPlayer.reduce((sum, current) => sum + current.roundPoints, 0) / scoresOfPlayer.length,
-                avgBonusPoints: scoresOfPlayer.reduce((sum, current) => sum + current.birdPoints, 0) / scoresOfPlayer.length,
-                avgEggPoints: scoresOfPlayer.reduce((sum, current) => sum + current.eggPoints, 0) / scoresOfPlayer.length,
-                avgFoodPoints: scoresOfPlayer.reduce((sum, current) => sum + current.foodPoints, 0) / scoresOfPlayer.length,
-                avgNectarPoints: scoresOfPlayer.reduce((sum, current) => sum + current.nectarPoints, 0) / scoresOfPlayer.filter((score: Scoring) => score.isPacific).length,
-                avgBirdPoints: scoresOfPlayer.reduce((sum, current) => sum + current.birdPoints, 0) / scoresOfPlayer.length,
-                avgCardPoints: scoresOfPlayer.reduce((sum, current) => sum + current.cardPoints, 0) / scoresOfPlayer.length,
-                avgTotalScore: scoresOfPlayer.reduce((sum, current) => sum + current.totalScore, 0) / scoresOfPlayer.length,
-            }
+            const playerWithScores = new PlayerWithScores(
+                player.id,
+                player.name,
+                scoresOfPlayer.length,
+                scoresOfPlayer.filter((score: Scoring) => score.isPacific).length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.roundPoints, 0) / scoresOfPlayer.length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.birdPoints, 0) / scoresOfPlayer.length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.eggPoints, 0) / scoresOfPlayer.length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.foodPoints, 0) / scoresOfPlayer.length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.nectarPoints, 0) / scoresOfPlayer.filter((score: Scoring) => score.isPacific).length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.birdPoints, 0) / scoresOfPlayer.length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.cardPoints, 0) / scoresOfPlayer.length,
+                scoresOfPlayer.reduce((sum, current) => sum + current.totalScore, 0) / scoresOfPlayer.length,
+        )
             items.push(playerWithScores)
         })
 
-        return items;
-    }, [allPlayers, allScores])
+        return items
+            .filter((item: PlayerWithScores) => !isNaN(item.get(category)))
+            .sort((a: PlayerWithScores, b: PlayerWithScores) => {
+                return b.get(category) - a.get(category)
+            });
+    }, [allPlayers, allScores, category])
 
+    console.log(playersWithScores)
 
     return (
         <View style={styles.main}>
@@ -109,104 +78,35 @@ const Leaderboard = ({navigation}) => {
                 />
             </Appbar.Header>
 
-            <View
-                style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    backgroundColor: '#eee',
-                }}
-            >
-                {/* Left Column */}
-                <View
-                    style={{
-                        width: leftColumnWidth,
-                        backgroundColor: 'yellow',
-                        borderRightWidth: 1,
-                        borderRightColor: borderColor,
-                    }}
-                >
-                    {/* Blank Cell */}
-                    <View
-                        style={{
-                            height: headerHeight,
-                            backgroundColor: primaryColor,
-                            borderBottomWidth: 1,
-                            borderBottomColor: borderColor,
-                        }}
-                    ></View>
-                    {/* Left Container : scroll synced */}
-                    <ScrollView
-                        ref={leftRef}
-                        style={{
-                            flex: 1,
-                            backgroundColor: 'white',
-                        }}
-                        scrollEnabled={false}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <Table
-                            borderStyle={{
-                                borderWidth: 1,
-                                borderColor,
-                            }}
-                        >
-                            {recordData.map((rowData, index) => (
-                                <Row
-                                    key={index}
-                                    data={rowData}
-                                    widthArr={[leftColumnWidth]}
-                                    style={index % 2 ? styles.row : { backgroundColor }}
-                                    textStyle={styles.text}
-                                />
-                            ))}
-                        </Table>
-                    </ScrollView>
-                </View>
-                {/* Right Column */}
-                <View
-                    style={{
-                        flex: 1,
-                        backgroundColor: 'white',
-                    }}
-                >
-                    <ScrollView horizontal={true} bounces={false}>
-                        <View>
-                            <Table borderStyle={{ borderWidth: 1, borderColor }}>
-                                <Row
-                                    data={tableHead}
-                                    widthArr={widthArr}
-                                    style={styles.head}
-                                    textStyle={{ ...styles.text, color: 'white' }}
-                                />
-                            </Table>
-                            <ScrollView
-                                ref={rightRef}
-                                style={styles.dataWrapper}
-                                scrollEventThrottle={16}
-                                bounces={false}
-                                onScroll={(e) => {
-                                    const { y } = e.nativeEvent.contentOffset;
-                                    leftRef.current?.scrollTo({ y, animated: false });
-                                }}
-                            >
-                                <Table borderStyle={{ borderWidth: 1, borderColor }}>
-                                    {tableData.map((rowData, index) => (
-                                        <Row
-                                            key={index}
-                                            data={rowData}
-                                            widthArr={widthArr}
-                                            style={index % 2 ? styles.row : { backgroundColor }}
-                                            textStyle={styles.text}
-                                        />
-                                    ))}
-                                </Table>
-                            </ScrollView>
-                        </View>
-                    </ScrollView>
-                </View>
+            <View style={{flexDirection: "row", height: 50, alignItems: "center", paddingLeft: 5}}>
+                <Subheading style={{flex:1}}>Spieler</Subheading>
+                <Menu
+                    visible={isMenuOpen}
+                    onDismiss={() => setIsMenuOpen(false)}
+                    anchor={
+                        <Button style={{flex:2}} onPress={() => setIsMenuOpen(true)}>{categoryMap.get(category)}</Button>
+                    }>
+                    {[...categoryMap].map(([key, value]) => (
+                        <Menu.Item key={key} onPress={() => {
+                            setIsMenuOpen(false)
+                            setCategory(key)
+                        }} title={value}/>
+                    ))}
+                </Menu>
+
             </View>
-
-
+            <Divider/>
+            
+            <FlatList
+                data={playersWithScores}
+                renderItem={({item, index}: { item: PlayerWithScores, index: number }) => {
+                    return(
+                        <View key={item.id} style={{flexDirection: "row", height: 40, alignItems: "center", paddingLeft: 5}}>
+                            <Text style={{flex:1}}>{index+1}. {item.name}</Text>
+                            <Text style={{flex:2}}>{item.get(category).toFixed(2)}</Text>
+                        </View>
+                    )}}
+            />
             <ErrorView errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
         </View>
     );
@@ -216,13 +116,6 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
     },
-    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#eee' },
-    head: { height: 40, backgroundColor: primaryColor },
-    wrapper: { flexDirection: 'row' },
-    title: { flex: 1, backgroundColor: '#f6f8fa' },
-    row: { height: 28 },
-    text: { textAlign: 'center' },
-    dataWrapper: { marginTop: -1 },
 });
 
 
