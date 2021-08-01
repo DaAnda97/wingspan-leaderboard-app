@@ -2,9 +2,11 @@
   "score_overview": "Score Overview",
   "game_overview": "Game Overview",
   "player_overview": "Player Overview",
+  "leaderboard": "Leaderboard",
   "settings": "Settings",
   "select_player": "Select Player",
   "scoring": "Scoring",
+  "player": "Player",
 
   "end_of_round_goals": "End Of Round Goals",
   "bonus_cards": "Bonus Cards",
@@ -14,10 +16,17 @@
   "birds": "Birds",
   "tucked_cards": "Trucked Cards",
   "total": "TOTAL",
+  "total_points": "Total Points",
+  "total_games": "Total Games",
 
   "add_scoring": "Add Scoring",
   "no_scoring": "There's no scoring yet",
   "refreshing": "Refreshing",
+
+  "no_points_text": "There are no points for this category.",
+  "no_nectar_points_text": "Go to settings and activate the pacific extension to enter nectar points.",
+  "no_games_points_text": "You haven't played a game yet. Go to score overview and enter your first game results.",
+
 
   "show_players_message": "No active players. Show you players with the eye button on the top again or add new players.",
   "no_player_message": "There's no player yet. Please add players first.",

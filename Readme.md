@@ -11,7 +11,7 @@ expo start -i
 ```
 
 ### publish
-publishing to prod will update the app on all user devices. Check out over the air updates.
+publishing to prod will update the app on all user devices, if you enable over the air updates and set `updates.fallbackToCacheTimeout` to `0`
 ```
 expo publish
 expo publish --release-channel prod
@@ -24,7 +24,8 @@ expo build:android --release-channel prod
 --> Check out status time: https://expo.io/turtle-status
 
 
-
+### debug
+Android-Emulator: Ctrl+m
 
 
 

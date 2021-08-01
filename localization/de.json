@@ -2,9 +2,11 @@
   "score_overview": "Ergebnisübersicht",
   "game_overview": "Spielübersicht",
   "player_overview": "Spielerübersicht",
+  "leaderboard": "Bestenliste",
   "settings": "Einstellungen",
   "select_player": "Spieler auswählen",
   "scoring": "Spielwertung",
+  "player": "Spieler",
 
   "end_of_round_goals": "Rundenziele",
   "bonus_cards": "Bonuskarten",
@@ -14,10 +16,16 @@
   "birds": "Vogelpunkte",
   "tucked_cards": "Karten unter Vögeln",
   "total": "GESAMT",
+  "total_points": "Gesamtpunkte",
+  "total_games": "gesamt Spiele",
 
   "add_scoring": "Neues Ergebnis eintragen",
   "no_scoring": "Noch kein Spielergebnis erfasst",
   "refreshing": "Aktualisiere",
+
+  "no_points_text": "Es wurden noch keine Ergebnisse für diese Kathegorie erfasst.",
+  "no_nectar_points_text": "Aktiviere in den Einstellungen die Pazifik-Erweiterung, um Nektar-Punkte einzugeben.",
+  "no_games_points_text": "Du hast noch kein Spiel gespielt. Gib deine Spielergebnisse in der Ergebnisübersicht ein.",
 
   "show_players_message": "Keine aktiven Spieler. Blende deine Spieler über den Button rechts oben wieder ein oder lege neue Spieler an.",
   "no_player_message": "Noch keine Spieler vorhanden. Lege zuerst Spieler an.",

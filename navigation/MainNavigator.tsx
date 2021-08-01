@@ -5,6 +5,7 @@ import {Avatar, Drawer, Subheading} from 'react-native-paper';
 
 import ScoringNavigator from "./ScoringNavigator";
 import PlayerEdit from "../screens/player/PlayerEdit";
+import Leaderboard from "../screens/leaderboard/Leaderboard";
 import SettingsOverview from "../screens/settings/SettingsOverview";
 import Styles from "../constants/Styles";
 import i18n from 'i18n-js';
@@ -39,6 +40,12 @@ const DrawerContent = (props) => {
                    onPress={() => navigateTo('ScoringNavigator')}
                />
                <Drawer.Item
+                   icon={"podium-gold"}
+                   label={i18n.translate('leaderboard')}
+                   active={active === 'Leaderboard'}
+                   onPress={() => navigateTo('Leaderboard')}
+               />
+               <Drawer.Item
                    icon={"account-multiple-outline"}
                    label={i18n.translate('player_overview')}
                    active={active === 'PlayerEdit'}
@@ -65,6 +72,10 @@ export const MainNavigator = () => {
             <DrawerNavigator.Screen
                 name="ScoringNavigator"
                 component={ScoringNavigator}
+            />
+            <DrawerNavigator.Screen
+                name="Leaderboard"
+                component={Leaderboard}
             />
             <DrawerNavigator.Screen
                 name="PlayerEdit"
