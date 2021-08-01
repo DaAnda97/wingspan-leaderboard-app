@@ -19,7 +19,7 @@ expo publish --release-channel prod
 
 ### build
 ```
-expo build:android --release-channel prod
+expo build:android --release-channel prod -t app-bundle
 ```
 --> Check out status time: https://expo.io/turtle-status
 
