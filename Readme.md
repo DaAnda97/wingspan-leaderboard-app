@@ -24,7 +24,8 @@ expo build:android --release-channel prod
 --> Check out status time: https://expo.io/turtle-status
 
 
-
+### debug
+Android-Emulator: Ctrl+M
 
 
 

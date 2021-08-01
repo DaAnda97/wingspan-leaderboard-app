@@ -1,53 +1,56 @@
+import Points from "./Points";
+
 class PlayerWithScores {
     id: string;
     name: string;
     totalGames: number;
     pacificGames: number;
-    avgRoundPoints: number;
-    avgBonusPoints: number;
-    avgEggPoints: number;
-    avgFoodPoints: number;
-    avgNectarPoints: number;
-    avgBirdPoints: number;
-    avgCardPoints: number;
-    avgTotalScore: number;
+    roundPoints: Points;
+    bonusPoints: Points;
+    eggPoints: Points;
+    foodPoints: Points;
+    nectarPoints: Points;
+    birdPoints: Points;
+    cardPoints: Points;
+    totalScore: Points;
 
-    constructor(id, name, totalGames, pacificGames, avgRoundPoints, avgBonusPoints, avgEggPoints, avgFoodPoints,
-                avgNectarPoints, avgBirdPoints, avgCardPoints, avgTotalScore) {
+    constructor(id: string, name: string, totalGames: number, pacificGames: number, roundPoints: Points,
+                bonusPoints: Points, eggPoints: Points, foodPoints: Points, nectarPoints: Points, birdPoints: Points,
+                cardPoints: Points, totalScore: Points) {
         this.id = id;
         this.name = name;
         this.totalGames = totalGames;
         this.pacificGames = pacificGames;
-        this.avgRoundPoints = avgRoundPoints;
-        this.avgBonusPoints = avgBonusPoints;
-        this.avgEggPoints = avgEggPoints;
-        this.avgFoodPoints = avgFoodPoints;
-        this.avgNectarPoints = avgNectarPoints;
-        this.avgBirdPoints = avgBirdPoints;
-        this.avgCardPoints = avgCardPoints;
-        this.avgTotalScore = avgTotalScore;
+        this.roundPoints = roundPoints;
+        this.bonusPoints = bonusPoints;
+        this.eggPoints = eggPoints;
+        this.foodPoints = foodPoints;
+        this.nectarPoints = nectarPoints;
+        this.birdPoints = birdPoints;
+        this.cardPoints = cardPoints;
+        this.totalScore = totalScore;
     }
 
-    get(attributeName: string): number {
+    get(attributeName: string): Points {
         switch (attributeName) {
-            case "avgRoundPoints":
-                return this.avgTotalScore;
-            case "avgBonusPoints":
-                return this.avgBonusPoints;
-            case "avgEggPoints":
-                return this.avgEggPoints;
-            case "avgFoodPoints":
-                return this.avgFoodPoints;
-            case "avgNectarPoints":
-                return this.avgNectarPoints;
-            case "avgBirdPoints":
-                return this.avgBirdPoints;
-            case "avgCardPoints":
-                return this.avgCardPoints;
-            case "avgTotalScore":
-                return this.avgTotalScore;
+            case "roundPoints":
+                return this.totalScore;
+            case "bonusPoints":
+                return this.bonusPoints;
+            case "eggPoints":
+                return this.eggPoints;
+            case "foodPoints":
+                return this.foodPoints;
+            case "nectarPoints":
+                return this.nectarPoints;
+            case "birdPoints":
+                return this.birdPoints;
+            case "cardPoints":
+                return this.cardPoints;
+            case "totalScore":
+                return this.totalScore;
         }
-        return this.avgTotalScore;
+        return this.totalScore;
     }
 }
 
