@@ -15,6 +15,7 @@ const Leaderboard = ({navigation}) => {
     const [errorMsg, setErrorMsg] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [category, setCategory] = useState("totalScore")
+    const [sortByPoints, setSortByPoints] = useState("avg")
     const [categoryMap] = useState<Map<string, string>>(new Map<string, string>([
         ["totalScore", `${i18n.translate('total_points')}`],
         ["roundPoints", `${i18n.translate('end_of_round_goals')}`],
@@ -86,11 +87,16 @@ const Leaderboard = ({navigation}) => {
         })
 
         return items
+    }, [allPlayers, allScores])
+
+
+    const sortedPlayersWithScores: Array<PlayerWithScores> = useMemo(() => {
+        return playersWithScores
             .filter((item: PlayerWithScores) => !isNaN(item.get(category).avg))
             .sort((a: PlayerWithScores, b: PlayerWithScores) => {
-                return b.get(category).avg - a.get(category).avg
+                return b.get(category).get(sortByPoints) - a.get(category).get(sortByPoints)
             });
-    }, [allPlayers, allScores, category])
+    }, [category, sortByPoints])
 
 
     return (
@@ -132,20 +138,29 @@ const Leaderboard = ({navigation}) => {
             </View>
             <Divider/>
 
-            {playersWithScores.length > 0 ?
+            {sortedPlayersWithScores.length > 0 ?
                 <View style={styles.main}>
                     <View style={styles.nameAndPointsRow}>
                         <Text style={styles.playerCol}> </Text>
                         <View style={styles.pointsCol}>
-                            <Text style={styles.textStyle}>Ø</Text>
-                            <Text style={styles.textStyle}>Max</Text>
-                            <Text style={styles.textStyle}>Min</Text>
+                            <Button
+                                style={styles.buttonStyle}
+                                color={sortByPoints === "avg" ? Colors.secondary : "black"}
+                                onPress={() => setSortByPoints("avg")}>Ø</Button>
+                            <Button
+                                style={styles.buttonStyle}
+                                color={sortByPoints === "max" ? Colors.secondary : "black"}
+                                onPress={() => setSortByPoints("max")}>Max</Button>
+                            <Button
+                                style={styles.buttonStyle}
+                                color={sortByPoints === "min" ? Colors.secondary : "black"}
+                                onPress={() => setSortByPoints("min")}>Min</Button>
                         </View>
                     </View>
 
 
                     <FlatList
-                        data={playersWithScores}
+                        data={sortedPlayersWithScores}
                         renderItem={({item, index}: { item: PlayerWithScores, index: number }) => {
                             return(
                                 <View key={item.id} style={styles.nameAndPointsRow}>
@@ -200,10 +215,14 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         height: 40
     },
+    buttonStyle: {
+        flex:1,
+    },
     textStyle: {
         flex:1,
         textAlign: "center"
-    }
+    },
+
 });
 
 
