@@ -34,7 +34,7 @@ class PlayerWithScores {
     get(attributeName: string): Points {
         switch (attributeName) {
             case "roundPoints":
-                return this.totalScore;
+                return this.roundPoints;
             case "bonusPoints":
                 return this.bonusPoints;
             case "eggPoints":

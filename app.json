@@ -2,7 +2,7 @@
     "expo": {
         "name": "wingspan-leaderboard",
         "slug": "wingspan-leaderboard",
-        "version": "1.1.0",
+        "version": "21.3",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -16,12 +16,12 @@
         "assetBundlePatterns": ["**/*"],
         "ios": {
             "bundleIdentifier": "de.andreasriepl.wingspan-leaderboard",
-            "buildNumber": "1.1.0",
+            "buildNumber": "21.3",
             "supportsTablet": true
         },
         "android": {
             "package": "de.andreasriepl.wingspan_leaderboard",
-            "versionCode": 1,
+            "versionCode": 3,
             "softwareKeyboardLayoutMode": "resize",
             "adaptiveIcon": {
                 "foregroundImage": "./assets/icon.png",
