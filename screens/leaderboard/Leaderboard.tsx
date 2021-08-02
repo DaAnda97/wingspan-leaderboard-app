@@ -48,9 +48,9 @@ const Leaderboard = ({navigation}) => {
                     Math.min(...scoresOfPlayer.map(o => o.roundPoints), Infinity),
                 ),
                 new Points(
-                    scoresOfPlayer.reduce((sum, current) => sum + current.birdPoints, 0) / scoresOfPlayer.length,
-                    Math.max(...scoresOfPlayer.map(o => o.birdPoints), -Infinity),
-                    Math.min(...scoresOfPlayer.map(o => o.birdPoints), Infinity),
+                    scoresOfPlayer.reduce((sum, current) => sum + current.bonusPoints, 0) / scoresOfPlayer.length,
+                    Math.max(...scoresOfPlayer.map(o => o.bonusPoints), -Infinity),
+                    Math.min(...scoresOfPlayer.map(o => o.bonusPoints), Infinity),
                 ),
                 new Points(
                     scoresOfPlayer.reduce((sum, current) => sum + current.eggPoints, 0) / scoresOfPlayer.length,
