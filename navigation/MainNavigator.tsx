@@ -28,7 +28,7 @@ const DrawerContent = (props) => {
                        source={require("../assets/icon.png")}
                        size={50}
                    />
-                   <Subheading style={styles.title}>Wingspan Leaderboard</Subheading>
+                   <Subheading style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{i18n.translate('wingspan_leaderboard')}</Subheading>
                </View>
            </Drawer.Section>
 
@@ -95,6 +95,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     title: {
+        flex: 1,
+        width: '100%',
         marginLeft: 10,
         marginTop: 20,
         fontWeight: 'bold',

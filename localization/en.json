@@ -1,4 +1,5 @@
 {
+  "wingspan_leaderboard": "Wingspan Leaderboard",
   "score_overview": "Score Overview",
   "game_overview": "Game Overview",
   "player_overview": "Player Overview",
@@ -14,7 +15,7 @@
   "food_on_cards": "Food On Cards",
   "nectar": "Nectar",
   "birds": "Birds",
-  "tucked_cards": "Trucked Cards",
+  "tucked_cards": "Tucked Cards",
   "total": "TOTAL",
   "total_points": "Total Points",
   "total_games": "Total Games",

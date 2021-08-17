@@ -1,8 +1,8 @@
 {
     "expo": {
-        "name": "wingspan-leaderboard",
+        "name": "Wingspan Leaderboard",
         "slug": "wingspan-leaderboard",
-        "version": "21.3",
+        "version": "21.5",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -16,12 +16,12 @@
         "assetBundlePatterns": ["**/*"],
         "ios": {
             "bundleIdentifier": "de.andreasriepl.wingspan-leaderboard",
-            "buildNumber": "21.3",
+            "buildNumber": "21.5",
             "supportsTablet": true
         },
         "android": {
             "package": "de.andreasriepl.wingspan_leaderboard",
-            "versionCode": 3,
+            "versionCode": 5,
             "softwareKeyboardLayoutMode": "resize",
             "adaptiveIcon": {
                 "foregroundImage": "./assets/icon.png",
